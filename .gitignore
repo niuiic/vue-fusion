@@ -1,4 +1,5 @@
 node_modules/
 .turbo/
 dist/
-.nvim/session
+.nvim/
+.vscode/
