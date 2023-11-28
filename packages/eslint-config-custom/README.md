@@ -9,7 +9,7 @@
 ```json
 {
   "devDependencies": {
-    "eslint-config-custom": "workspace/*"
+    "eslint-config-custom": "workspace:*"
   }
 }
 ```

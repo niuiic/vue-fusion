@@ -9,7 +9,7 @@
 ```json
 {
   "devDependencies": {
-    "stylelint-config-custom": "workspace/*"
+    "stylelint-config-custom": "workspace:*"
   }
 }
 ```
