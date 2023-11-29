@@ -1,0 +1,9 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "vite-config#build": {},
+    "fetch#build": {
+      "dependsOn": ["vite-config#build"]
+    }
+  }
+}
