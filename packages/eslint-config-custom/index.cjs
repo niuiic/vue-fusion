@@ -59,7 +59,6 @@ module.exports = {
         max: 1
       }
     ],
-    'no-redeclare': 2,
     'no-trailing-spaces': 2,
     'no-undef': 2,
     'no-unused-vars': ['off'],
