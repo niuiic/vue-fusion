@@ -3,7 +3,7 @@ import type { UserConfig } from 'vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 
-export const lib = () =>
+export const lib = (external?: string[]) =>
   defineConfig((): UserConfig => {
     return {
       build: {
@@ -11,6 +11,9 @@ export const lib = () =>
           entry: join(process.cwd(), 'src/index.ts'),
           formats: ['es', 'cjs'],
           fileName: 'index'
+        },
+        rollupOptions: {
+          external
         }
       },
       plugins: [

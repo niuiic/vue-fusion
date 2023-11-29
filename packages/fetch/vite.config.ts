@@ -1,3 +1,3 @@
 import { lib } from 'vite-config'
 
-export default lib()
+export default lib(['axios', 'result'])
