@@ -4,10 +4,19 @@
   "scripts": {
     "build": "turbo build"
   },
+  "config": {
+    "commitizen": {
+      "path": "@commitlint/cz-commitlint"
+    }
+  },
   "devDependencies": {
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "@commitlint/cz-commitlint": "^18.4.3",
     "@types/node": "^20.10.0",
     "@vitejs/plugin-vue": "^4.5.0",
     "eslint": "^8.54.0",
+    "lefthook": "^1.5.4",
     "prettier": "^3.1.0",
     "prettier-plugin-organize-imports": "^3.2.4",
     "stylelint": "^15.11.0",
