@@ -20,11 +20,6 @@ module.exports = {
     'import-notation': 'string',
     'color-hex-length': 'long',
     indentation: 2,
-    'plugin/no-low-performance-animation-properties': true,
-    'plugin/z-index-value-constraint': {
-      min: 1,
-      max: 10
-    },
     'color-function-notation': 'legacy',
     'alpha-value-notation': 'number',
     'comment-empty-line-before': [
