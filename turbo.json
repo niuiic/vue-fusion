@@ -10,6 +10,9 @@
     },
     "mock#build": {
       "dependsOn": ["vite-config#build", "result#build"]
+    },
+    "business#build": {
+      "dependsOn": ["vite-config#build", "result#build"]
     }
   }
 }
