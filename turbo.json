@@ -13,6 +13,8 @@
     },
     "business#build": {
       "dependsOn": ["vite-config#build", "result#build"]
-    }
+    },
+    "components#build": {},
+    "components#dev": {}
   }
 }
