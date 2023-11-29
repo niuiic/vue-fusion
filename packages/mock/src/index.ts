@@ -1,37 +1,45 @@
 import type { Result } from 'result'
 
 let modules: Record<string, () => Promise<object>> = {}
+let prefix: string | undefined
 
-export const useMock = async (module: string, fn: string) => {
-  const targetModule = Reflect.get(modules, module)
+export const useMock =
+  (module: string, fn: string) =>
+  (...args: any[]) => {
+    const moduleName = prefix ? `${prefix}${module}` : module
 
-  if (!targetModule) {
-    throw new ReferenceError(`cannot found module ${module}`)
-  }
+    const targetModule = Reflect.get(modules, moduleName)
 
-  return targetModule().then(
-    (x) => {
-      const targetFn = Reflect.get(x, fn)
-
-      if (!targetFn) {
-        throw new ReferenceError(`cannot found function ${fn} in module ${module}`)
-      }
-
-      if (typeof targetFn !== 'function') {
-        throw new TypeError(`${fn} is not a function`)
-      }
-
-      return targetFn
-    },
-    () => {
-      throw new ReferenceError(`cannot import module ${module}`)
+    if (!targetModule) {
+      throw new ReferenceError(`cannot found module ${moduleName}`)
     }
-  )
-}
+
+    return targetModule().then(
+      (x) => {
+        const targetFn = Reflect.get(x, fn)
+
+        if (!targetFn) {
+          throw new ReferenceError(`cannot found function ${fn} in module ${moduleName}`)
+        }
+
+        if (typeof targetFn !== 'function') {
+          throw new TypeError(`${fn} is not a function`)
+        }
+
+        return targetFn(...args)
+      },
+      () => {
+        throw new ReferenceError(`cannot import module ${moduleName}`)
+      }
+    )
+  }
 
 export const mock =
   <A, R>(fn: (args: A) => Promise<Result<R>>) =>
   (args: A) =>
     fn(args)
 
-export const registerMock = (args: Record<string, () => Promise<object>>) => (modules = args)
+export const registerMock = (mods: Record<string, () => Promise<object>>, modPrefix?: string) => {
+  modules = mods
+  prefix = modPrefix
+}
