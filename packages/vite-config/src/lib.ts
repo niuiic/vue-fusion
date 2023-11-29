@@ -14,7 +14,8 @@ export const lib = (external?: string[]) =>
         },
         rollupOptions: {
           external
-        }
+        },
+        sourcemap: true
       },
       plugins: [
         dts({

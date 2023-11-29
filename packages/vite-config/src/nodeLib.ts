@@ -15,7 +15,8 @@ export const nodeLib = () =>
         },
         rollupOptions: {
           external: [...builtinModules, ...builtinModules.map((x) => `node:${x}`), 'vite', 'vite-plugin-dts']
-        }
+        },
+        sourcemap: true
       },
       plugins: [
         dts({
