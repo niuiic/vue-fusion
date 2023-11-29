@@ -2,6 +2,7 @@ import { join } from 'path'
 import type { UserConfig } from 'vite'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
+import eslint from 'vite-plugin-eslint'
 
 export const lib = (external?: string[]) =>
   defineConfig((): UserConfig => {
@@ -20,7 +21,8 @@ export const lib = (external?: string[]) =>
       plugins: [
         dts({
           exclude: 'vite.config.ts'
-        })
+        }),
+        eslint()
       ]
     }
   })
