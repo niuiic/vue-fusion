@@ -5,6 +5,7 @@ import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import eslint from 'vite-plugin-eslint'
 import stylelint from 'vite-plugin-stylelint'
+import topLevelAwait from 'vite-plugin-top-level-await'
 
 export default defineConfig(({ command }) => {
   const buildOnlyPlugins =
@@ -19,7 +20,7 @@ export default defineConfig(({ command }) => {
       : []
 
   return {
-    plugins: [vue(), ...buildOnlyPlugins],
+    plugins: [vue(), topLevelAwait(), ...buildOnlyPlugins],
     resolve: {
       alias: {
         '@': join(process.cwd(), 'src')
