@@ -8,6 +8,8 @@
 
 组件依赖的包应在`vite.config.ts`中的`build.rollupOptions.external`处设置为使用外部依赖。
 
+组件库中不可全局注册`element-plus`，需要时手动引入。
+
 ## 使用组件
 
 1. 引入包。
