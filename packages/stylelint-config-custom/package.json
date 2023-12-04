@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "main": "index.cjs",
   "devDependencies": {
-    "postcss": "^8.4.31",
+    "postcss": "^8.4.32",
     "postcss-html": "^1.5.0",
     "postcss-scss": "^4.0.9",
     "stylelint-config-standard-scss": "^11.1.0",
