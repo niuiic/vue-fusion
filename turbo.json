@@ -17,6 +17,9 @@
     "postcss-plugins#build": {
       "dependsOn": ["vite-config#build"]
     },
+    "vite-plugins#build": {
+      "dependsOn": ["vite-config#build"]
+    },
     "components#build": {},
     "components#dev": {}
   }
