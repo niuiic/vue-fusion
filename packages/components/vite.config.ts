@@ -44,7 +44,7 @@ export default defineConfig(({ command }) => {
       },
       minify: true,
       lib: {
-        entry: './src/index.ts',
+        entry: join(process.cwd(), 'src/index.ts'),
         formats: ['es']
       },
       sourcemap: true

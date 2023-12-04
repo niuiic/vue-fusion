@@ -23,7 +23,8 @@ export const nodeLib = () =>
             'vite-plugin-eslint'
           ]
         },
-        sourcemap: true
+        sourcemap: true,
+        minify: true
       },
       plugins: [
         dts({

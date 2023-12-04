@@ -16,7 +16,8 @@ export const lib = (external?: string[]) =>
         rollupOptions: {
           external
         },
-        sourcemap: true
+        sourcemap: true,
+        minify: true
       },
       plugins: [
         dts({
