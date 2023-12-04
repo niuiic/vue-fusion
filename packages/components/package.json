@@ -2,6 +2,8 @@
   "name": "components",
   "version": "0.1.0",
   "type": "module",
+  "module": "dist/js/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite --host",
     "build": "vite build"
