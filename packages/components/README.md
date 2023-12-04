@@ -46,7 +46,7 @@ import 'components/dist/css/style.css'
 ```json
 {
   "compilerOptions": {
-    "types": ["components/src/components"]
+    "types": ["components/dist/components"]
   }
 }
 ```

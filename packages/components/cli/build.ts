@@ -1,5 +1,6 @@
 import { readdirSync, writeFileSync } from 'fs'
 import { join } from 'path'
+import { build } from 'vite'
 
 const getComponentNames = () => {
   const workDir = join(process.cwd(), 'src/components')
@@ -40,6 +41,8 @@ const autoExport = () => {
 }
 autoExport()
 
+await build()
+
 const typesTemplate = `#1
 
 declare module 'vue' {
@@ -53,6 +56,6 @@ const autoFillTypes = () => {
   const content = typesTemplate
     .replace('#1', components.map((x) => `import type \{ ${toUpperCase(x)} \} from './components/${x}'`).join('\n'))
     .replace('#2', components.map((x) => `    ${toUpperCase(x)}: typeof ${toUpperCase(x)}`).join('\n'))
-  writeFileSync(join(process.cwd(), 'src/components.d.ts'), content)
+  writeFileSync(join(process.cwd(), 'dist/components.d.ts'), content)
 }
 autoFillTypes()
