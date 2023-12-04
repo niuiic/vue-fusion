@@ -7,5 +7,5 @@
     }
   },
   "extends": "tsconfig/vite.json",
-  "include": ["src/**/*.ts", "vite.config.ts", "declare/**/*.d.ts", "src/**/*.vue", "src/**/*.js"]
+  "include": ["src/**/*.ts", "vite.config.ts", "declare/**/*.d.ts", "src/**/*.vue", "src/**/*.js", "cli/**/*.ts"]
 }
