@@ -1,0 +1,24 @@
+{
+  "name": "website",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host",
+    "build": "vite build"
+  },
+  "dependencies": {
+    "components": "workspace:*",
+    "fetch": "workspace:*",
+    "mock": "workspace:*",
+    "utils": "workspace:*",
+    "hooks": "workspace:*",
+    "types": "workspace:*"
+  },
+  "devDependencies": {
+    "eslint-config-custom": "workspace:*",
+    "stylelint-config-custom": "workspace:*",
+    "tsconfig": "workspace:*",
+    "postcss-plugins": "workspace:*",
+    "vite-plugins": "workspace:*"
+  }
+}
