@@ -297,6 +297,10 @@ importers:
         version: link:../tsconfig
 
   packages/utils:
+    dependencies:
+      types:
+        specifier: workspace:*
+        version: link:../types
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*
