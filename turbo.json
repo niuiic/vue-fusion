@@ -14,6 +14,12 @@
     "business#build": {
       "dependsOn": ["vite-config#build", "result#build"]
     },
+    "hooks#build": {
+      "dependsOn": ["vite-config#build", "result#build", "utils#build"]
+    },
+    "utils#build": {
+      "dependsOn": ["vite-config#build", "result#build"]
+    },
     "postcss-plugins#build": {
       "dependsOn": ["vite-config#build"]
     },
@@ -21,6 +27,8 @@
       "dependsOn": ["vite-config#build"]
     },
     "components#build": {},
-    "components#dev": {}
+    "components#dev": {},
+    "website#build": {},
+    "website#dev": {}
   }
 }
