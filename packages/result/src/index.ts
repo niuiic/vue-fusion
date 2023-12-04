@@ -155,3 +155,5 @@ function ok<T = undefined>(data: T): Result<T> {
 }
 
 export { Result, err, ok }
+
+export type UnwrapResult<T> = T extends Result<infer D> ? D : unknown
