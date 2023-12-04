@@ -87,9 +87,18 @@ importers:
       fetch:
         specifier: workspace:*
         version: link:../../packages/fetch
+      hooks:
+        specifier: workspace:*
+        version: link:../../packages/hooks
       mock:
         specifier: workspace:*
         version: link:../../packages/mock
+      types:
+        specifier: workspace:*
+        version: link:../../packages/types
+      utils:
+        specifier: workspace:*
+        version: link:../../packages/utils
     devDependencies:
       eslint-config-custom:
         specifier: workspace:*
@@ -263,6 +272,18 @@ importers:
       stylelint-scss:
         specifier: ^5.3.1
         version: 5.3.1(stylelint@15.11.0)
+
+  packages/styles:
+    devDependencies:
+      eslint-config-custom:
+        specifier: workspace:*
+        version: link:../eslint-config-custom
+      stylelint-config-custom:
+        specifier: workspace:*
+        version: link:../stylelint-config-custom
+      tsconfig:
+        specifier: workspace:*
+        version: link:../tsconfig
 
   packages/tsconfig: {}
 
