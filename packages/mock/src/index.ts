@@ -8,7 +8,7 @@ export const useMock =
   (...args: any[]) => {
     const moduleName = prefix ? `${prefix}${module}` : module
 
-    const targetModule = Reflect.get(modules, moduleName)
+    const targetModule = Reflect.get(modules, moduleName + '.ts') ?? Reflect.get(modules, moduleName + '/index.ts')
 
     if (!targetModule) {
       throw new ReferenceError(`cannot found module ${moduleName}`)

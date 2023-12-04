@@ -34,12 +34,16 @@ import { registerMock } from 'mock'
 registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
 ```
 
+使用`import.meta.glob('./mock/**/*.ts')`会使匹配的文件被打包到最终产物中，可利用插件实现仅在mock模式下插入该语句。
+
+> 这些文件虽会被打包，但只有在使用mock的时才会被引入。若不在意打包大小，可直接写死。
+
 3. 使用mock。
 
 ```typescript
 useMock('模块名', 'mock函数名')
 ```
 
-本质上以上语句的值为`(...args) => import(模块名).then((module) => module[mock函数名](...args))`。
+`useMock`的返回值相当于`(...args) => import(模块名).then((module) => module[mock函数名](...args))`。
 
-模块名一般为项目根目录到指定文件的相对位置，如`./mock/xxx.ts`。若`registerMock`指定了第二个参数，则可以省略这部分，直接写成`xxx.ts`。
+实际文件路径为`./mock/xxx/index.ts`和`./mock/xxx.ts`的两个文件模块名为`./mock/xxx`。若`registerMock`指定了第二个参数，则省略这部分，直接写成`xxx`。
