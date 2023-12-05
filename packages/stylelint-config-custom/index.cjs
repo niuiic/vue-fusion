@@ -75,6 +75,7 @@ module.exports = {
       }
     ],
     'at-rule-empty-line-before': ['always', { ignore: ['inside-block', 'blockless-after-same-name-blockless'] }],
+    'media-feature-range-notation': 'off',
     'order/properties-order': [
       // position
       'position',
