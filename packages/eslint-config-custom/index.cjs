@@ -13,7 +13,6 @@ module.exports = {
     browser: true,
     node: true
   },
-  globals: { defineModel: true },
   rules: {
     'no-var': 'error',
     'prefer-const': [
@@ -24,8 +23,6 @@ module.exports = {
       }
     ],
     '@typescript-eslint/no-unused-vars': ['error', { varsIgnorePattern: '^_', argsIgnorePattern: '^_' }],
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'space-infix-ops': ['error', { int32Hint: false }],
     'one-var': ['error', 'never'],
     'brace-style': [
