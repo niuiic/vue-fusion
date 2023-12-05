@@ -23,6 +23,9 @@
     "styles#build": {
       "dependsOn": ["vite-config#build"]
     },
+    "router#build": {
+      "dependsOn": ["vite-config#build"]
+    },
     "postcss-plugins#build": {
       "dependsOn": ["vite-config#build"]
     },
@@ -69,7 +72,8 @@
         "styles#build",
         "postcss-plugins#build",
         "vite-plugins#build",
-        "components#build"
+        "components#build",
+        "router#build"
       ]
     },
     "website#dev": {
@@ -84,7 +88,8 @@
         "styles#build",
         "postcss-plugins#build",
         "vite-plugins#build",
-        "components#build"
+        "components#build",
+        "router#build"
       ]
     }
   }
