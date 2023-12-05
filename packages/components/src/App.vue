@@ -35,7 +35,7 @@ const onClickEntry = (pageName: string) => {
 <template>
   <div class="app">
     <ol v-if="isHome">
-      <li v-for="(x, i) in pageNameList" :key="i" class="page" @click="onClickEntry(x)">{{ x }}</li>
+      <li v-for="(x, i) in pageNameList" :key="i" class="page" @click="onClickEntry(x)">{{ `${i + 1}. ${x}` }}</li>
     </ol>
     <component :is="page" v-else> </component>
   </div>
@@ -48,6 +48,8 @@ const onClickEntry = (pageName: string) => {
 }
 
 .page {
+  margin-top: 8px;
+  font-size: 16px;
   user-select: none;
   cursor: pointer;
 }
