@@ -20,7 +20,7 @@
 ```typescript
 import { registerMode } from 'business'
 
-registerMode(import.meta.env.MODE.includes('mode') ? 'mode' : 'other')
+registerMode(import.meta.env.MODE.includes('mock') ? 'mock' : 'other')
 ```
 
 3. 注册business。
