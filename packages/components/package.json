@@ -8,6 +8,9 @@
     "dev": "vite --host",
     "build": "tsx cli/build.ts"
   },
+  "dependencies": {
+    "styles": "workspace:*"
+  },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "stylelint-config-custom": "workspace:*",

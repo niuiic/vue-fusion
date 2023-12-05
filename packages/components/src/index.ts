@@ -1,9 +1,10 @@
 import type { App } from 'vue'
 import { GIcon } from './components/gIcon'
+import { GLayout } from './components/gLayout'
 
 export default {
   install(app: App) {
-    const components = [GIcon]
+    const components = [GIcon, GLayout]
 
     components.forEach((x) =>
       app.component(
@@ -18,3 +19,4 @@ export default {
 }
 
 export * from './components/gIcon'
+export * from './components/gLayout'

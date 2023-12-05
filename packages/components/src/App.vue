@@ -43,6 +43,10 @@ const onClickEntry = (pageName: string) => {
 
 <!-- %%=========================== style ===========================%% -->
 <style lang="scss" scoped>
+.app {
+  height: 100vh;
+}
+
 .page {
   user-select: none;
   cursor: pointer;

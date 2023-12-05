@@ -16,14 +16,14 @@ const fixedName = computed(() => `#${props.name}`)
 
 <!-- %%=========================== template ===========================%% -->
 <template>
-  <svg class="svg-icon" aria-hidden="true">
+  <svg class="g-icon" aria-hidden="true">
     <use :xlink:href="fixedName" :fill="color" />
   </svg>
 </template>
 
 <!-- %%=========================== style ===========================%% -->
 <style lang="scss" scoped>
-.svg-icon {
+.g-icon {
   width: 14px;
   height: 14px;
 }

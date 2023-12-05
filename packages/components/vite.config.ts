@@ -40,7 +40,7 @@ export default defineConfig(({ command }) => {
           chunkFileNames: 'js/[name].js',
           assetFileNames: '[ext]/[name].[ext]'
         },
-        external: ['vue', 'element-plus']
+        external: ['vue', 'element-plus', 'styles']
       },
       minify: true,
       lib: {
