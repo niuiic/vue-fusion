@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "type": "module",
   "module": "dist/js/index.js",
-  "types": "dist/src/index.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite --host",
     "build": "tsx cli/build.ts"

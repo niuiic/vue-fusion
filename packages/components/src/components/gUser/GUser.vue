@@ -48,7 +48,7 @@ const buttonRef = ref()
 </style>
 
 <style lang="scss">
-.el-popover.exit-btn {
+.el-popover.el-popover.exit-btn {
   font-size: 16px;
   color: #ffffff;
   padding-inline: 20px;
