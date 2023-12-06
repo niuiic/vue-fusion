@@ -3,7 +3,10 @@ import autoprefixer from 'autoprefixer'
 import { join } from 'path'
 import { removeComment, transformPx } from 'postcss-plugins'
 import { defineConfig, loadEnv } from 'vite'
+import viteCompression from 'vite-plugin-compression'
 import eslint from 'vite-plugin-eslint'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
+import projectInfoPlugin from 'vite-plugin-project-info'
 import stylelint from 'vite-plugin-stylelint'
 import topLevelAwait from 'vite-plugin-top-level-await'
 import { viteChunks, viteHtml } from 'vite-plugins'
@@ -11,7 +14,22 @@ import { viteChunks, viteHtml } from 'vite-plugins'
 export default defineConfig(({ command, mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
-  const buildOnlyPlugins = command === 'build' ? [eslint(), stylelint()] : []
+  const buildOnlyPlugins =
+    command === 'build'
+      ? [
+          eslint(),
+          stylelint(),
+          viteCompression({
+            verbose: false,
+            threshold: 1025,
+            deleteOriginFile: false,
+            algorithm: 'gzip',
+            ext: '.gz'
+          }),
+          projectInfoPlugin(),
+          ViteImageOptimizer()
+        ]
+      : []
 
   return {
     plugins: [
