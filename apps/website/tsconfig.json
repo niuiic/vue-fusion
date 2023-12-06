@@ -5,7 +5,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["components/dist/components"]
+    "types": ["components/dist/components", "element-plus/global"]
   },
   "extends": "tsconfig/vite.json",
   "include": ["src/**/*.ts", "vite.config.ts", "declare/**/*.d.ts", "src/**/*.vue", "src/**/*.js"]
