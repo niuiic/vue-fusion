@@ -9,6 +9,7 @@ const getComponentNames = () => {
 const components = getComponentNames()
 
 const indexTemplate = `import type { App } from 'vue'
+import './assets/icon.js'
 import './assets/styles/index.scss'
 #1
 

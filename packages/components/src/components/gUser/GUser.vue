@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { ElPopover } from 'element-plus'
-import '@/assets/icons/gUser/icon.js'
 import { GIcon } from '../gIcon'
 
 // %%--------------------------- 组件配置 ---------------------------%%
@@ -22,7 +21,7 @@ const buttonRef = ref()
   <div class="g-user">
     <div ref="buttonRef" class="btn">
       <span>{{ user }}</span>
-      <GIcon name="icon-xiala" color="#ffffff"></GIcon>
+      <GIcon name="icon-c-down" color="#ffffff"></GIcon>
     </div>
     <el-popover :virtual-ref="buttonRef" popper-class="exit-btn" virtual-triggering>
       <span @click="emit('exit')">退出</span>
