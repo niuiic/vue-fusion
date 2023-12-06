@@ -2,7 +2,6 @@ import libAssetsPlugin from '@laynezh/vite-plugin-lib-assets'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import { join } from 'path'
-import { removeComment, transformPx } from 'postcss-plugins'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import eslint from 'vite-plugin-eslint'
@@ -32,7 +31,7 @@ export default defineConfig(({ command }) => {
     },
     css: {
       postcss: {
-        plugins: [autoprefixer, transformPx, removeComment]
+        plugins: [autoprefixer]
       }
     },
     build: {
