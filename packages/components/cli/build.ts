@@ -1,4 +1,4 @@
-import { readdirSync, writeFileSync } from 'fs'
+import { readdirSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { build } from 'vite'
 
@@ -61,3 +61,5 @@ const autoFillTypes = () => {
   writeFileSync(join(process.cwd(), 'dist/components.d.ts'), content)
 }
 autoFillTypes()
+
+unlinkSync(join(process.cwd(), 'src/index.ts'))
