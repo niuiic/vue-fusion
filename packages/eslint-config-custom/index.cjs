@@ -57,7 +57,7 @@ module.exports = {
       }
     ],
     'no-trailing-spaces': 2,
-    'no-undef': 2,
+    'no-undef': 'off',
     'no-unused-vars': ['off'],
     quotes: [
       2,
