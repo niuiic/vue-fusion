@@ -49,7 +49,7 @@
 以下是一个案例，`转换参数->调用接口->转换返回值->统一错误信息`。
 
 ```typescript
-;async (args) =>
+;(args) =>
   flow(
     ok(args),
     into((data) => ({ companyCode: data.company })),

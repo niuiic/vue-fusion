@@ -18,7 +18,6 @@
     "mock": "workspace:*",
     "utils": "workspace:*",
     "hooks": "workspace:*",
-    "types": "workspace:*",
     "business": "workspace:*",
     "styles": "workspace:*",
     "router": "workspace:*"
@@ -28,6 +27,7 @@
     "stylelint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
     "postcss-plugins": "workspace:*",
-    "vite-plugins": "workspace:*"
+    "vite-plugins": "workspace:*",
+    "types": "workspace:*"
   }
 }

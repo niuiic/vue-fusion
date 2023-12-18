@@ -12,12 +12,10 @@
   "scripts": {
     "build": "vite build"
   },
-  "dependencies": {
-    "types": "workspace:*"
-  },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "vite-config": "workspace:*"
+    "vite-config": "workspace:*",
+    "types": "workspace:*"
   }
 }

@@ -8,10 +8,18 @@
 
 ```json
 {
-  "dependencies": {
+  "devDependencies": {
     "types": "workspace:*"
   }
 }
 ```
 
-2. 使用`import type`引入类型。
+2. 在`tsconfig.json`中全局引入。
+
+```json
+{
+  "compilerOptions": {
+    "types": ["types/dist/index"]
+  }
+}
+```

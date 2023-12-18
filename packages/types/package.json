@@ -2,9 +2,13 @@
   "name": "types",
   "version": "0.1.0",
   "type": "module",
-  "types": "src/index.d.ts",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsx cli/build.ts"
+  },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "vite-config": "workspace:*"
   }
 }

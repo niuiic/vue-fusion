@@ -5,6 +5,9 @@
     "result#build": {
       "dependsOn": ["vite-config#build"]
     },
+    "types#build": {
+      "dependsOn": ["vite-config#build"]
+    },
     "fetch#build": {
       "dependsOn": ["vite-config#build", "result#build"]
     },
@@ -18,7 +21,7 @@
       "dependsOn": ["vite-config#build", "result#build", "utils#build"]
     },
     "utils#build": {
-      "dependsOn": ["vite-config#build", "result#build"]
+      "dependsOn": ["vite-config#build", "result#build", "types#build"]
     },
     "styles#build": {
       "dependsOn": ["vite-config#build"]
@@ -80,6 +83,7 @@
       "dependsOn": [
         "vite-config#build",
         "result#build",
+        "types#build",
         "fetch#build",
         "mock#build",
         "business#build",

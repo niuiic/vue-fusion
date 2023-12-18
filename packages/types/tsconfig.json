@@ -4,5 +4,5 @@
     "baseUrl": "."
   },
   "extends": "tsconfig/vite.json",
-  "include": ["src/**/*.d.ts"]
+  "include": ["src/**/*.ts", "cli/**/*.ts"]
 }
