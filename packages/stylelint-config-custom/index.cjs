@@ -19,7 +19,6 @@ module.exports = {
     'font-family-no-missing-generic-family-keyword': null,
     'import-notation': 'string',
     'color-hex-length': 'long',
-    indentation: 2,
     'color-function-notation': 'legacy',
     'alpha-value-notation': 'number',
     'comment-empty-line-before': [
