@@ -8,6 +8,7 @@
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "stylelint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
+    "tsconfig": "workspace:*",
+    "vite-config": "workspace:*"
   }
 }
