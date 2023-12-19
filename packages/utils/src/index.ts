@@ -1,4 +1,5 @@
 export * from './asset'
 export * from './enum'
 export * from './factory'
+export * from './id'
 export * from './notify'
