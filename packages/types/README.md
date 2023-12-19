@@ -23,3 +23,5 @@
   }
 }
 ```
+
+使用依赖该package的library时需要同时配置当前package，否则全局类型不生效。
