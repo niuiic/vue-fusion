@@ -14,12 +14,12 @@
   },
   "dependencies": {
     "result": "workspace:*",
-    "types": "workspace:*",
     "utils": "workspace:*"
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
     "tsconfig": "workspace:*",
-    "vite-config": "workspace:*"
+    "vite-config": "workspace:*",
+    "types": "workspace:*"
   }
 }
