@@ -1,4 +1,5 @@
 export * from './expand'
 export * from './function'
 export * from './object'
+export * from './property'
 export * from './vue'
