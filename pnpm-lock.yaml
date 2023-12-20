@@ -171,9 +171,6 @@ importers:
       eslint-config-custom:
         specifier: workspace:*
         version: link:../eslint-config-custom
-      hooks:
-        specifier: workspace:*
-        version: link:../hooks
       postcss-plugins:
         specifier: workspace:*
         version: link:../postcss-plugins
@@ -183,9 +180,6 @@ importers:
       tsconfig:
         specifier: workspace:*
         version: link:../tsconfig
-      types:
-        specifier: workspace:*
-        version: link:../types
 
   packages/eslint-config-custom:
     devDependencies:
