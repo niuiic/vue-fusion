@@ -1,23 +1,22 @@
 export type Enum<T extends string | symbol | number, R> = {
-  [K in T | '_']: R
+  [K in T]: R
 }
 
-export function useEnum<A extends string | symbol | number, R>(args: Enum<A, R>) {
+export function useEnum<A extends string | symbol | number, R>(args: Enum<A, R>, defaultValue?: R) {
   function map(key: A): R
   function map(value: R, reverse: true): A
   function map(search: A | R, reverse?: true): any {
     if (reverse) {
-      for (const [key, value] of Object.entries(args)) {
-        if (value === search) {
-          return key
-        }
+      const target = Object.entries(args).find(([_, value]) => value === search)
+      if (target) {
+        return target[0]
       }
-      return '_'
+      return
     }
     if (Reflect.has(args, search as A)) {
       return Reflect.get(args, search as A)
     }
-    return args['_']
+    return defaultValue ?? '-'
   }
 
   return map
