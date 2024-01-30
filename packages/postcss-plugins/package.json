@@ -13,8 +13,8 @@
     "build": "vite build"
   },
   "devDependencies": {
-    "postcss": "^8.4.32",
     "eslint-config-custom": "workspace:*",
+    "postcss": "^8.4.33",
     "tsconfig": "workspace:*",
     "vite-config": "workspace:*"
   }
