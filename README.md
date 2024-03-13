@@ -46,9 +46,9 @@ mindmap
 
 ### 渐进式扩展
 
-- 根据实际需求灵活改变项目结构，选用扩展功能。
-- 组件内通过hook注入的方式扩展功能。hook之间使用getter和setter进行交互。
-- ts代码利用`import 'xxx'`与`import 'xxx/index'`等效的特性变文件为目录进行扩展。
+- 函数内功能分支利用策略模式进行扩展。
+- 组件内通过hook注入的方式扩展功能。hook之间使用getter和setter进行通信。
+- 在文件的级别利用`import 'xxx'`与`import 'xxx/index'`等效的特性变文件为目录进行扩展。
 
 ### 数据驱动视图
 
