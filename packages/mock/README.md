@@ -34,9 +34,7 @@ import { registerMock } from 'mock'
 registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
 ```
 
-使用`import.meta.glob('./mock/**/*.ts')`会使匹配的文件被打包到最终产物中，可利用插件实现仅在mock模式下插入该语句。
-
-> 这些文件虽会被打包，但只有在`useMock`的返回值被调用时才会被引入，即不影响运行性能。若不在意打包大小，可直接写死。
+使用`import.meta.glob('./mock/**/*.ts')`会使匹配的文件被打包到最终产物中，可利用tree shaking在非mock模式下去除该语句。
 
 3. 使用mock。
 
