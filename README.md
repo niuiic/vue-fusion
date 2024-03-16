@@ -153,8 +153,8 @@ flowchart TB
     end
     api
     business <--> view
-    mock <--> business
-    api <--> business
+    mock <-- in mock mode --> business
+    api <-- in normal mode --> business
 ```
 
 以上结构适用于开发复杂应用。实际情况下需根据项目难度、时间等因素合理简化结构。比如在项目难度低且接口准备充分的情况下，可令api直接对接view，加快开发速度。一般情况下也无需使用mock层中模拟的内存数据库。
