@@ -1,35 +1,16 @@
-import { localUniqId } from 'utils'
-import type { App, Component } from 'vue'
-import { createApp } from 'vue'
+import { shallowRef, type Component } from 'vue'
 
-export const useComponent = <T extends Component>(args: {
-  component: T
-  mountPoint: Element
-  extendApp?: (app: App) => void
-}) => {
-  let container: Element | undefined
-  let app: App | undefined
-  const id = 'component' + localUniqId()
+export const useComponent = <T extends Component>(component: () => Promise<{ default: T }>) => {
+  const dynComp = shallowRef<T>()
+  const compProps = shallowRef<ComponentProps<T>>()
 
-  const destroy = () => {
-    if (!container || !app) {
-      return
+  const render = (props?: ComponentProps<T>) => {
+    if (props) {
+      compProps.value = props
     }
-
-    app.unmount()
-    args.mountPoint.removeChild(container)
-    container = undefined
-    app = undefined
+    component().then((x) => (dynComp.value = x.default))
   }
+  const destory = () => (dynComp.value = undefined)
 
-  const render = (props: ComponentProps<T>) => {
-    app = createApp(args.component, props)
-    args.extendApp && args.extendApp(app)
-    container = document.createElement('div')
-    container.setAttribute('id', id)
-    args.mountPoint.appendChild(container)
-    app.mount(`#${id}`)
-  }
-
-  return { render, destroy }
+  return [dynComp, compProps, render, destory]
 }
