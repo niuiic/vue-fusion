@@ -5,9 +5,7 @@ export const useComponent = <T extends Component>(component: () => Promise<{ def
   const compProps = shallowRef<ComponentProps<T>>()
 
   const render = (props?: ComponentProps<T>) => {
-    if (props) {
-      compProps.value = props
-    }
+    compProps.value = props
     component().then((x) => (dynComp.value = x.default))
   }
   const destory = () => (dynComp.value = undefined)
