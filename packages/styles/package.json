@@ -4,11 +4,5 @@
   "type": "module",
   "scripts": {
     "build": "vite build"
-  },
-  "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "stylelint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
-    "vite-config": "workspace:*"
   }
 }

@@ -19,7 +19,8 @@ export default defineConfig((): UserConfig => {
           ...builtinModules.map((x) => `node:${x}`),
           'vite',
           'vite-plugin-dts',
-          'vite-plugin-eslint'
+          'vite-plugin-eslint',
+          'postcss'
         ]
       },
       sourcemap: true,

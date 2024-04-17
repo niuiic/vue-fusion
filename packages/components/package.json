@@ -12,9 +12,6 @@
     "styles": "workspace:*"
   },
   "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "stylelint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
-    "postcss-plugins": "workspace:*"
+    "build": "workspace:*"
   }
 }

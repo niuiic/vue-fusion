@@ -78,6 +78,15 @@ importers:
       lefthook:
         specifier: ^1.6.10
         version: 1.6.10
+      postcss:
+        specifier: ^8.4.38
+        version: 8.4.38
+      postcss-html:
+        specifier: ^1.6.0
+        version: 1.6.0
+      postcss-scss:
+        specifier: ^4.0.9
+        version: 4.0.9(postcss@8.4.38)
       prettier:
         specifier: ^3.2.5
         version: 3.2.5
@@ -90,6 +99,15 @@ importers:
       stylelint:
         specifier: ^16.3.1
         version: 16.3.1(typescript@5.4.5)
+      stylelint-config-standard-scss:
+        specifier: ^13.1.0
+        version: 13.1.0(postcss@8.4.38)(stylelint@16.3.1)
+      stylelint-order:
+        specifier: ^6.0.4
+        version: 6.0.4(stylelint@16.3.1)
+      stylelint-scss:
+        specifier: ^6.2.1
+        version: 6.2.1(stylelint@16.3.1)
       tsx:
         specifier: ^4.7.2
         version: 4.7.2
@@ -132,65 +150,22 @@ importers:
 
   apps/website:
     dependencies:
-      business:
+      build:
         specifier: workspace:*
-        version: link:../../packages/business
+        version: link:../../packages/build
+      builtins:
+        specifier: workspace:*
+        version: link:../../packages/builtins
       components:
         specifier: workspace:*
         version: link:../../packages/components
-      fetch:
-        specifier: workspace:*
-        version: link:../../packages/fetch
-      hooks:
-        specifier: workspace:*
-        version: link:../../packages/hooks
-      mock:
-        specifier: workspace:*
-        version: link:../../packages/mock
-      router:
-        specifier: workspace:*
-        version: link:../../packages/router
       styles:
         specifier: workspace:*
         version: link:../../packages/styles
-      utils:
-        specifier: workspace:*
-        version: link:../../packages/utils
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../../packages/eslint-config-custom
-      postcss-plugins:
-        specifier: workspace:*
-        version: link:../../packages/postcss-plugins
-      stylelint-config-custom:
-        specifier: workspace:*
-        version: link:../../packages/stylelint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../../packages/tsconfig
-      types:
-        specifier: workspace:*
-        version: link:../../packages/types
-      vite-plugins:
-        specifier: workspace:*
-        version: link:../../packages/vite-plugins
 
-  packages/business:
-    dependencies:
-      result:
-        specifier: workspace:*
-        version: link:../result
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
+  packages/build: {}
+
+  packages/builtins: {}
 
   packages/components:
     dependencies:
@@ -198,199 +173,13 @@ importers:
         specifier: workspace:*
         version: link:../styles
     devDependencies:
-      eslint-config-custom:
+      build:
         specifier: workspace:*
-        version: link:../eslint-config-custom
-      postcss-plugins:
-        specifier: workspace:*
-        version: link:../postcss-plugins
-      stylelint-config-custom:
-        specifier: workspace:*
-        version: link:../stylelint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
+        version: link:../build
 
-  packages/eslint-config-custom: {}
+  packages/styles: {}
 
-  packages/fetch:
-    dependencies:
-      result:
-        specifier: workspace:*
-        version: link:../result
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/hooks:
-    dependencies:
-      result:
-        specifier: workspace:*
-        version: link:../result
-      utils:
-        specifier: workspace:*
-        version: link:../utils
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      types:
-        specifier: workspace:*
-        version: link:../types
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/mock:
-    dependencies:
-      result:
-        specifier: workspace:*
-        version: link:../result
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/postcss-plugins:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      postcss:
-        specifier: ^8.4.38
-        version: 8.4.38
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/result:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/router:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/stylelint-config-custom:
-    devDependencies:
-      postcss:
-        specifier: ^8.4.38
-        version: 8.4.38
-      postcss-html:
-        specifier: ^1.6.0
-        version: 1.6.0
-      postcss-scss:
-        specifier: ^4.0.9
-        version: 4.0.9(postcss@8.4.38)
-      stylelint-config-standard-scss:
-        specifier: ^13.1.0
-        version: 13.1.0(postcss@8.4.38)(stylelint@16.3.1)
-      stylelint-order:
-        specifier: ^6.0.4
-        version: 6.0.4(stylelint@16.3.1)
-      stylelint-scss:
-        specifier: ^6.2.1
-        version: 6.2.1(stylelint@16.3.1)
-
-  packages/styles:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      stylelint-config-custom:
-        specifier: workspace:*
-        version: link:../stylelint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/tsconfig: {}
-
-  packages/types:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/utils:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      types:
-        specifier: workspace:*
-        version: link:../types
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
-
-  packages/vite-config:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-
-  packages/vite-plugins:
-    devDependencies:
-      eslint-config-custom:
-        specifier: workspace:*
-        version: link:../eslint-config-custom
-      tsconfig:
-        specifier: workspace:*
-        version: link:../tsconfig
-      vite-config:
-        specifier: workspace:*
-        version: link:../vite-config
+  packages/types: {}
 
 packages:
 

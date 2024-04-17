@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "outDir": "dist",
-    "baseUrl": ".",
-    "types": ["types/dist/index"]
-  },
-  "extends": "tsconfig/vite.json",
-  "include": ["src/**/*.ts", "vite.config.ts"]
-}

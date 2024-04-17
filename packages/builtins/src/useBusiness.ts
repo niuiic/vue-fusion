@@ -1,9 +1,10 @@
-import type { Result, UnwrapResult } from 'result'
-import { err } from 'result'
-import { notify } from 'utils'
+import type { Result } from 'fx-flow'
+import { err } from 'fx-flow'
 import { onUnmounted, ref } from 'vue'
+import { notify } from './notify'
 
 type Fn = (args: any) => Result<any> | Promise<Result<any>>
+type UnwrapResult<T> = T extends Result<infer U> ? U : T
 
 interface Options<T> {
   throttling: boolean

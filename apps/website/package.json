@@ -14,20 +14,8 @@
   },
   "dependencies": {
     "components": "workspace:*",
-    "fetch": "workspace:*",
-    "mock": "workspace:*",
-    "utils": "workspace:*",
-    "hooks": "workspace:*",
-    "business": "workspace:*",
-    "styles": "workspace:*",
-    "router": "workspace:*"
-  },
-  "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "stylelint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
-    "postcss-plugins": "workspace:*",
-    "vite-plugins": "workspace:*",
-    "types": "workspace:*"
+    "build": "workspace:*",
+    "builtins": "workspace:*",
+    "styles": "workspace:*"
   }
 }
