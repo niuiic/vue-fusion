@@ -1,100 +1,20 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
-    "vite-config#build": {},
-    "result#build": {
-      "dependsOn": ["vite-config#build"]
-    },
-    "types#build": {
-      "dependsOn": ["vite-config#build"]
-    },
-    "fetch#build": {
-      "dependsOn": ["vite-config#build", "result#build"]
-    },
-    "mock#build": {
-      "dependsOn": ["vite-config#build", "result#build"]
-    },
-    "business#build": {
-      "dependsOn": ["vite-config#build", "result#build"]
-    },
-    "hooks#build": {
-      "dependsOn": ["vite-config#build", "result#build", "utils#build"]
-    },
-    "utils#build": {
-      "dependsOn": ["vite-config#build", "result#build", "types#build"]
-    },
-    "styles#build": {
-      "dependsOn": ["vite-config#build"]
-    },
-    "router#build": {
-      "dependsOn": ["vite-config#build"]
-    },
-    "postcss-plugins#build": {
-      "dependsOn": ["vite-config#build"]
-    },
-    "vite-plugins#build": {
-      "dependsOn": ["vite-config#build"]
-    },
+    "build#build": {},
+    "builtins#build": {},
+    "styles#build": {},
     "components#build": {
-      "dependsOn": [
-        "vite-config#build",
-        "result#build",
-        "fetch#build",
-        "mock#build",
-        "business#build",
-        "hooks#build",
-        "utils#build",
-        "styles#build",
-        "postcss-plugins#build",
-        "vite-plugins#build"
-      ]
+      "dependsOn": ["build#build", "builtins#build", "styles#build"]
     },
     "components#dev": {
-      "dependsOn": [
-        "vite-config#build",
-        "result#build",
-        "fetch#build",
-        "mock#build",
-        "business#build",
-        "hooks#build",
-        "utils#build",
-        "styles#build",
-        "postcss-plugins#build",
-        "vite-plugins#build"
-      ]
+      "dependsOn": ["build#build", "builtins#build", "styles#build"]
     },
     "website#build": {
-      "dependsOn": [
-        "vite-config#build",
-        "result#build",
-        "fetch#build",
-        "mock#build",
-        "business#build",
-        "hooks#build",
-        "utils#build",
-        "styles#build",
-        "postcss-plugins#build",
-        "vite-plugins#build",
-        "components#build",
-        "router#build"
-      ]
+      "dependsOn": ["build#build", "builtins#build", "styles#build", "components#build"]
     },
     "website#dev": {
-      "dependsOn": [
-        "vite-config#build",
-        "result#build",
-        "types#build",
-        "fetch#build",
-        "mock#build",
-        "business#build",
-        "hooks#build",
-        "utils#build",
-        "styles#build",
-        "postcss-plugins#build",
-        "vite-plugins#build",
-        "components#build",
-        "router#build"
-      ]
+      "dependsOn": ["build#build", "builtins#build", "styles#build", "components#build"]
     }
   }
 }

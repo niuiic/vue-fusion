@@ -1,4 +1,4 @@
-# postcss-plugins
+# vite-plugins
 
 ## 用法
 
@@ -9,7 +9,7 @@
 ```json
 {
   "devDependencies": {
-    "postcss-plugins": "workspace:*"
+    "build": "workspace:*"
   }
 }
 ```

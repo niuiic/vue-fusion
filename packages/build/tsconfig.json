@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
     "target": "ESNext",
     "useDefineForClassFields": true,
     "module": "ESNext",
@@ -13,5 +15,6 @@
     "skipLibCheck": true,
     "noErrorTruncation": true,
     "noEmit": true
-  }
+  },
+  "include": ["src/**/*.ts", "vite.config.ts"]
 }

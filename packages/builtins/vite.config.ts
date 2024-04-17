@@ -11,11 +11,16 @@ export default defineConfig((): UserConfig => {
         entry: join(process.cwd(), 'src/index.ts'),
         formats: ['es'],
         fileName: 'index'
-      }
+      },
+      rollupOptions: {
+        external: ['fx-flow']
+      },
+      sourcemap: true,
+      minify: true
     },
     plugins: [
       dts({
-        rollupTypes: true
+        exclude: 'vite.config.ts'
       }),
       eslint()
     ]

@@ -1,4 +1,4 @@
-export const viteHtml = (args: { [key: string]: string }) => {
+export const viteHtml = (args: Record<string, string>) => {
   return {
     name: 'vite-plugin-html',
     transformIndexHtml: (html: string) => {

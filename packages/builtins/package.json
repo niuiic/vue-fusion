@@ -1,5 +1,5 @@
 {
-  "name": "business",
+  "name": "builtins",
   "version": "0.1.0",
   "type": "module",
   "main": "dist/index.cjs",
@@ -11,13 +11,5 @@
   },
   "scripts": {
     "build": "vite build"
-  },
-  "dependencies": {
-    "result": "workspace:*"
-  },
-  "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*",
-    "vite-config": "workspace:*"
   }
 }

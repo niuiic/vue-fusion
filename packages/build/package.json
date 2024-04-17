@@ -1,5 +1,5 @@
 {
-  "name": "vite-config",
+  "name": "vite-plugins",
   "version": "0.1.0",
   "type": "module",
   "main": "dist/index.cjs",
@@ -11,9 +11,5 @@
   },
   "scripts": {
     "build": "vite build"
-  },
-  "devDependencies": {
-    "eslint-config-custom": "workspace:*",
-    "tsconfig": "workspace:*"
   }
 }

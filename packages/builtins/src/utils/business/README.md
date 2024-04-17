@@ -2,32 +2,19 @@
 
 ## 用法
 
-1. 引入包。
-
-`package.json`
-
-```json
-{
-  "dependencies": {
-    "business": "workspace:*",
-    "result": "workspace:*"
-  }
-}
-```
-
-2. 注册模式。
+1. 注册模式。
 
 ```typescript
-import { registerMode } from 'business'
+import { registerMode } from 'builtins'
 
 registerMode(import.meta.env.MODE.includes('mock') ? 'mock' : 'other')
 ```
 
-3. 注册business。
+2. 注册business。
 
 ```typescript
-import { business } from 'business'
-import { ok } from 'result'
+import { business } from 'builtins'
+import { ok } from 'fx-flow'
 
 const queryXxxBiz = business<{ input: string }, { output: string }>(
   async (args) => ok({ output: args.input }),
