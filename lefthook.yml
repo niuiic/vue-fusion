@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     eslint:
-      glob: '*.{js,ts,vue}'
+      glob: '*.{cjs,mjs,js,ts,vue,json}'
       run: 'npx eslint --rule no-console:error --rule no-debugger:error -f unix {staged_files} && git add {staged_files}'
     stylelint:
       glob: '*.{css,scss,vue}'
