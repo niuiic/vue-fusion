@@ -11,17 +11,13 @@ from = "main"
 to = [
   { name = "main", strategy = "merge" },
   { name = "dev", strategy = "merge" },
-  { name = "feature/*", strategy = "merge" },
 ]
 
 [[branch_types]]
 name = "bugfix"
 create = "bugfix/{NAME}"
 from = "dev"
-to = [
-  { name = "dev", strategy = "merge" },
-  { name = "feature/*", strategy = "merge" },
-]
+to = [{ name = "dev", strategy = "merge" }]
 
 [[branch_types]]
 name = "release"
