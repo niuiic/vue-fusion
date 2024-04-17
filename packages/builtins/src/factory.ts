@@ -1,3 +1,5 @@
+import type { AnyObject } from './types'
+
 type AnyClass = new (id: string, ...rest: any[]) => AnyObject
 
 export const useEntityFactory = <T extends AnyClass>(constructor: T) => {

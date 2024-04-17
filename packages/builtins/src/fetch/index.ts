@@ -1,7 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
 import axios from 'axios'
-import type { Result } from 'result'
-import { err, ok } from 'result'
+import type { Result } from 'fx-flow'
+import { err, ok } from 'fx-flow'
 
 type RequestData = Record<string | symbol | number, any>
 

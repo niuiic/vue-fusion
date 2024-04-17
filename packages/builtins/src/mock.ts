@@ -1,4 +1,4 @@
-import type { Result } from 'result'
+import type { Result } from 'fx-flow'
 
 let modules: Record<string, () => Promise<object>> = {}
 let prefix: string | undefined

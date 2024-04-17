@@ -9,9 +9,10 @@
     "build": "tsx build.ts"
   },
   "dependencies": {
-    "styles": "workspace:*"
+    "styles": "workspace:*",
+    "builtins": "workspace:*"
   },
   "devDependencies": {
-    "build": "workspace:*"
+    "dev": "workspace:*"
   }
 }
