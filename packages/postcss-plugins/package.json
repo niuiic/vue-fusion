@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "eslint-config-custom": "workspace:*",
-    "postcss": "^8.4.35",
+    "postcss": "^8.4.38",
     "tsconfig": "workspace:*",
     "vite-config": "workspace:*"
   }
