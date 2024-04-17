@@ -27,6 +27,12 @@ importers:
         specifier: ^4.3.0
         version: 4.3.0(vue@3.4.23)
     devDependencies:
+      '@babel/core':
+        specifier: ^7.24.4
+        version: 7.24.4
+      '@babel/eslint-parser':
+        specifier: ^7.24.1
+        version: 7.24.1(@babel/core@7.24.4)(eslint@8.57.0)
       '@commitlint/cli':
         specifier: ^19.2.2
         version: 19.2.2(@types/node@20.12.7)(typescript@5.4.5)
@@ -42,15 +48,30 @@ importers:
       '@types/node':
         specifier: ^20.12.7
         version: 20.12.7
+      '@typescript-eslint/eslint-plugin':
+        specifier: ^7.7.0
+        version: 7.7.0(@typescript-eslint/parser@7.7.0)(eslint@8.57.0)(typescript@5.4.5)
+      '@typescript-eslint/parser':
+        specifier: ^7.7.0
+        version: 7.7.0(eslint@8.57.0)(typescript@5.4.5)
       '@vitejs/plugin-vue':
         specifier: ^5.0.4
         version: 5.0.4(vite@5.2.9)(vue@3.4.23)
+      '@vue/eslint-config-typescript':
+        specifier: ^13.0.0
+        version: 13.0.0(eslint-plugin-vue@9.25.0)(eslint@8.57.0)(typescript@5.4.5)
       autoprefixer:
         specifier: ^10.4.19
         version: 10.4.19(postcss@8.4.38)
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
+      eslint-config-alloy:
+        specifier: ^5.1.2
+        version: 5.1.2(@babel/eslint-parser@7.24.1)(@typescript-eslint/eslint-plugin@7.7.0)(@typescript-eslint/parser@7.7.0)(eslint-plugin-vue@9.25.0)(eslint@8.57.0)(typescript@5.4.5)(vue-eslint-parser@9.4.2)
+      eslint-plugin-vue:
+        specifier: ^9.25.0
+        version: 9.25.0(eslint@8.57.0)
       inquirer:
         specifier: ^9.2.19
         version: 9.2.19
@@ -102,6 +123,9 @@ importers:
       vite-plugin-top-level-await:
         specifier: ^1.4.1
         version: 1.4.1(vite@5.2.9)
+      vue-eslint-parser:
+        specifier: ^9.4.2
+        version: 9.4.2(eslint@8.57.0)
       vue-tsc:
         specifier: ^2.0.13
         version: 2.0.13(typescript@5.4.5)
@@ -187,32 +211,7 @@ importers:
         specifier: workspace:*
         version: link:../tsconfig
 
-  packages/eslint-config-custom:
-    devDependencies:
-      '@babel/core':
-        specifier: ^7.24.4
-        version: 7.24.4
-      '@babel/eslint-parser':
-        specifier: ^7.24.1
-        version: 7.24.1(@babel/core@7.24.4)(eslint@8.57.0)
-      '@typescript-eslint/eslint-plugin':
-        specifier: ^7.7.0
-        version: 7.7.0(@typescript-eslint/parser@7.7.0)(eslint@8.57.0)(typescript@5.4.5)
-      '@typescript-eslint/parser':
-        specifier: ^7.7.0
-        version: 7.7.0(eslint@8.57.0)(typescript@5.4.5)
-      '@vue/eslint-config-typescript':
-        specifier: ^13.0.0
-        version: 13.0.0(eslint-plugin-vue@9.25.0)(eslint@8.57.0)(typescript@5.4.5)
-      eslint-config-alloy:
-        specifier: ^5.1.2
-        version: 5.1.2(@babel/eslint-parser@7.24.1)(@typescript-eslint/eslint-plugin@7.7.0)(@typescript-eslint/parser@7.7.0)(eslint-plugin-vue@9.25.0)(eslint@8.57.0)(typescript@5.4.5)(vue-eslint-parser@9.4.2)
-      eslint-plugin-vue:
-        specifier: ^9.25.0
-        version: 9.25.0(eslint@8.57.0)
-      vue-eslint-parser:
-        specifier: ^9.4.2
-        version: 9.4.2(eslint@8.57.0)
+  packages/eslint-config-custom: {}
 
   packages/fetch:
     dependencies:
