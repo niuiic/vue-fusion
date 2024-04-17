@@ -1,20 +1,20 @@
 {
   "$schema": "https://turbo.build/schema.json",
   "pipeline": {
-    "build#build": {},
+    "dev#build": {},
     "builtins#build": {},
     "styles#build": {},
     "components#build": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build"]
+      "dependsOn": ["dev#build", "builtins#build", "styles#build"]
     },
     "components#dev": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build"]
+      "dependsOn": ["dev#build", "builtins#build", "styles#build"]
     },
     "website#build": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build", "components#build"]
+      "dependsOn": ["dev#build", "builtins#build", "styles#build", "components#build"]
     },
     "website#dev": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build", "components#build"]
+      "dependsOn": ["dev#build", "builtins#build", "styles#build", "components#build"]
     }
   }
 }

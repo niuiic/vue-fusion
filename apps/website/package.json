@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "components": "workspace:*",
-    "build": "workspace:*",
+    "dev": "workspace:*",
     "builtins": "workspace:*",
     "styles": "workspace:*"
   }
