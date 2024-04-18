@@ -2,6 +2,7 @@ import libAssetsPlugin from '@laynezh/vite-plugin-lib-assets'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import { join } from 'path'
+import removeComments from 'postcss-discard-comments'
 // @ts-expect-error
 import pxtorem from 'postcss-pxtorem'
 import { defineConfig } from 'vite'
@@ -33,7 +34,7 @@ export default defineConfig(({ command }) => {
     },
     css: {
       postcss: {
-        plugins: [autoprefixer(['chrome > 100']), pxtorem({ rootValue: 12 })]
+        plugins: [autoprefixer(['chrome > 100']), pxtorem({ rootValue: 12 }), removeComments({ removeAll: true })]
       }
     },
     build: {
