@@ -1,5 +1,4 @@
-import type { AnyFunction } from './function'
-import type { AnyObject } from './object'
+import type { AnyFunction, AnyObject } from 'fx-flow'
 
 export type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
 
