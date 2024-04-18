@@ -10,7 +10,7 @@ export default defineConfig((): UserConfig => {
     build: {
       lib: {
         entry: join(process.cwd(), 'src/index.ts'),
-        formats: ['es', 'cjs'],
+        formats: ['es'],
         fileName: 'index'
       },
       rollupOptions: {
