@@ -48,9 +48,12 @@ const onClickEntry = (pageName: string) => {
 }
 
 .page {
-  margin-top: 8px;
   font-size: 16px;
   user-select: none;
   cursor: pointer;
+}
+
+.page + .page {
+  margin-top: 8px;
 }
 </style>

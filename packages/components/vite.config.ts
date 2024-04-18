@@ -35,7 +35,14 @@ export default defineConfig(({ command }) => {
     },
     css: {
       postcss: {
-        plugins: [autoprefixer(['chrome > 100']), pxtorem({ rootValue: 12 }), removeComments({ removeAll: true })]
+        plugins: [
+          autoprefixer(['chrome > 100']),
+          pxtorem({
+            rootValue: 100,
+            propList: ['*']
+          }),
+          removeComments({ removeAll: true })
+        ]
       }
     },
     build: {

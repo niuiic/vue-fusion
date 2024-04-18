@@ -3,27 +3,25 @@
 $draft-width: 1920;
 $draft-height: 980;
 $normal-font: 14;
+$root-font: 100;
 $min-font: 12;
 $scaling-scale: 0.75;
+$min-zoom-radio: math.div($min-font, $normal-font);
 
 @function px($num) {
-  @return $num * math.div(96, 72) * 1pt;
+  @return $num * math.div(72, 96) * 1pt;
 }
 
 html {
-  min-width: max(
-    100vw,
-    calc(
-      $scaling-scale * $draft-width / $draft-height * max(100vh, px(math.div($draft-height, $normal-font) * $min-font))
-    )
-  );
-  font-size: max(px($min-font), math.div($min-font, $draft-height) * 100vh);
+  font-size: max(px($root-font * $min-zoom-radio), math.div($root-font, $draft-height) * 100vh);
 }
 
 body {
+  width: max(
+    100vw,
+    $scaling-scale * math.div($draft-width, $draft-height) * 100vh,
+    $scaling-scale * math.div($draft-width, $draft-height) * px($draft-height * $min-zoom-radio)
+  );
+  height: max(100vh, px($draft-height * $min-zoom-radio));
   font-size: $normal-font * 1px;
-}
-
-#app {
-  height: max(100vh, px(math.div($draft-height, $normal-font) * $min-font));
 }
