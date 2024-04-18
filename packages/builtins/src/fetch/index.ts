@@ -1,49 +1,30 @@
-import type { AxiosRequestConfig } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axios'
 import axios from 'axios'
-import type { Result } from 'fx-flow'
+import type { AnyObject, Result } from 'fx-flow'
 import { err, ok } from 'fx-flow'
 
-type RequestData = Record<string | symbol | number, any>
-
-axios.defaults.timeout = 10000
+type RequestData = AnyObject
 
 export class Fetch {
-  public static async get<D>(url: string, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await axios.get(url, options).then(
+  private instance: AxiosInstance
+
+  public constructor(args: CreateAxiosDefaults) {
+    this.instance = axios.create(args)
+  }
+
+  public async get<D>(url: string, options?: AxiosRequestConfig): Promise<Result<D>> {
+    return await this.instance.get(url, options).then(
       (response) => okRes(response),
       (err) => errRes(err)
     )
   }
 
-  public static async post<D>(url: string, data?: RequestData, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await axios.post(url, data, options).then(
+  public async post<D>(url: string, data?: RequestData, options?: AxiosRequestConfig): Promise<Result<D>> {
+    return await this.instance.post(url, data, options).then(
       (response) => okRes(response),
       (err) => errRes(err)
     )
   }
-
-  public static async put<D>(url: string, data?: RequestData, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await axios.put(url, data, options).then(
-      (response) => okRes(response),
-      (err) => errRes(err)
-    )
-  }
-
-  public static async delete<D>(url: string, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await axios.delete(url, options).then(
-      (response) => okRes(response),
-      (err) => errRes(err)
-    )
-  }
-
-  public static async patch<D>(url: string, data?: RequestData, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await axios.patch(url, data, options).then(
-      (response) => okRes(response),
-      (err) => errRes(err)
-    )
-  }
-
-  private constructor() {}
 }
 
 const errRes = (error: any): Result<any> =>

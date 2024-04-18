@@ -2,18 +2,14 @@
 
 ## 用法
 
-1. 使用以下函数发起不同类型的请求。
+使用以下方式发起请求。
 
 ```typescript
 import { Fetch } from 'fetch'
 
-Fetch.get()
-Fetch.post()
-Fetch.put()
-Fetch.delete()
-Fetch.patch()
+const fetch = new Fetch({ timeout: 10000 })
+fetch.get()
+fetch.post()
 ```
 
-参数与axios对应的方法保持一致。
-
-2. 内设接口超时时间为10秒，要设置其他全局参数直接在`axios`全局实例上修改即可。
+一般情况下全局存在一个`fetch`变量即可。
