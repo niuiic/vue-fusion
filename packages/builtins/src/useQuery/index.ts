@@ -7,7 +7,7 @@ type Fn = (args: any) => Result<any> | Promise<Result<any>>
 type UnwrapResult<T> = T extends Result<infer U> ? U : T
 
 interface Options<T> {
-  throttling: number | false
+  debounce: number | false
   polling: number | false
   onSuccess: (data: T) => void
   onError: (err: string) => void
@@ -28,16 +28,14 @@ export const useQuery = <T extends Fn>(
   const data = options?.shallowRefData ? shallowRef<Data>() : ref<Data>()
   const setData = (newData: Data) => (data.value = newData)
   const loading = ref(false)
-  let timer: any
-
-  let lastExecTime: number
-  let taskWaiting: { args: Args; options: Options<Data> } | undefined
+  let pollingTimer: any
+  let debounceTimer: any
   let requestCount = 0
 
   const query = (args: Args, options?: Partial<Options<Data>>): void => {
     const updateData = (_: Data | undefined, newData: Data, setData: (data: Data) => void) => setData(newData)
     const fixedOptions: Options<Data> = {
-      throttling: options?.throttling ?? 500,
+      debounce: options?.debounce ?? false,
       polling: options?.polling ?? false,
       onSuccess: options?.onSuccess ?? doNothing,
       onError: options?.onError ?? notify('error'),
@@ -48,7 +46,6 @@ export const useQuery = <T extends Fn>(
       requestCount = requestCount + 1
       const requestNum = requestCount
 
-      lastExecTime = new Date().getTime()
       loading.value = true
 
       let res
@@ -69,40 +66,27 @@ export const useQuery = <T extends Fn>(
       const resData = res.unwrap()
       fixedOptions.updateData(data.value, resData, setData)
       options.onSuccess(resData)
-
-      if (options.polling !== false) {
-        if (timer) {
-          clearInterval(timer)
-        }
-        timer = setInterval(() => task(args, options), options.polling)
-      }
     }
 
-    if (fixedOptions.throttling === false) {
+    if (fixedOptions.polling !== false) {
+      pollingTimer && clearInterval(pollingTimer)
+      pollingTimer = setInterval(() => task(args, fixedOptions), fixedOptions.polling)
+      return
+    }
+
+    if (fixedOptions.debounce === false) {
       task(args, fixedOptions)
       return
     }
 
-    const now = new Date().getTime()
-    if (lastExecTime && now - lastExecTime < fixedOptions.throttling) {
-      if (!taskWaiting) {
-        setTimeout(
-          () => {
-            task(taskWaiting!.args, taskWaiting!.options)
-            taskWaiting = undefined
-          },
-          fixedOptions.throttling + lastExecTime - now
-        )
-      }
-      taskWaiting = { args, options: fixedOptions }
-    }
-
-    if (!taskWaiting) {
-      task(args, fixedOptions)
-    }
+    debounceTimer && clearTimeout(debounceTimer)
+    debounceTimer = setTimeout(() => task(args, fixedOptions), fixedOptions.debounce)
   }
 
-  onUnmounted(() => timer && clearInterval(timer))
+  onUnmounted(() => {
+    pollingTimer && clearInterval(pollingTimer)
+    debounceTimer && clearTimeout(debounceTimer)
+  })
 
   return [data, loading, query]
 }
