@@ -4,9 +4,7 @@ export const viteHtml = (args: Record<string, string>) => {
     transformIndexHtml: (html: string) => {
       let res = html
       const keys = Object.keys(args)
-      keys.forEach((k) => {
-        res = res.replace(k, args[k])
-      })
+      keys.forEach((k) => (res = res.replace(k, args[k])))
       return res
     }
   }

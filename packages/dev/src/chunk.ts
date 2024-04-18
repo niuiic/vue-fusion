@@ -2,7 +2,7 @@ const isCSS = (filePath: string) => new RegExp(/\.(css|less|sass|scss|styl|stylu
 
 export const viteChunks = (id: string, { getModuleInfo }: { getModuleInfo: any }) => {
   if (isCSS(id)) {
-    return 'index'
+    return 'style'
   }
 
   if (id.includes('node_modules')) {
