@@ -3,13 +3,13 @@ import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import { join } from 'path'
 import removeComments from 'postcss-discard-comments'
+import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 // @ts-expect-error
 import pxtorem from 'postcss-pxtorem'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import eslint from 'vite-plugin-eslint'
 import stylelint from 'vite-plugin-stylelint'
-import topLevelAwait from 'vite-plugin-top-level-await'
 
 export default defineConfig(({ command }) => {
   const buildOnlyPlugins =
@@ -20,12 +20,13 @@ export default defineConfig(({ command }) => {
           dts({
             exclude: ['vite.config.ts', 'cli/**/*.ts']
           }),
-          libAssetsPlugin()
+          libAssetsPlugin(),
+          ViteImageOptimizer()
         ]
       : []
 
   return {
-    plugins: [vue(), topLevelAwait(), ...buildOnlyPlugins],
+    plugins: [vue(), ...buildOnlyPlugins],
     resolve: {
       alias: {
         '@': join(process.cwd(), 'src')

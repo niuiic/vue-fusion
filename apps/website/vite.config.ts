@@ -1,42 +1,31 @@
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
+import { viteChunks, viteHtml } from 'dev'
 import { join } from 'path'
-import { removeComment, transformPx } from 'postcss-plugins'
+import removeComments from 'postcss-discard-comments'
+// @ts-expect-error
+import pxtorem from 'postcss-pxtorem'
 import { defineConfig, loadEnv } from 'vite'
-import viteCompression from 'vite-plugin-compression'
+import { compression } from 'vite-plugin-compression2'
 import eslint from 'vite-plugin-eslint'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
-import projectInfoPlugin from 'vite-plugin-project-info'
+import viteProjectInfo from 'vite-plugin-project-info'
 import stylelint from 'vite-plugin-stylelint'
-import topLevelAwait from 'vite-plugin-top-level-await'
-import { viteChunks, viteHtml } from 'vite-plugins'
 
 export default defineConfig(({ command, mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
   const buildOnlyPlugins =
-    command === 'build'
-      ? [
-          eslint(),
-          stylelint(),
-          viteCompression({
-            verbose: false,
-            threshold: 1025,
-            deleteOriginFile: false,
-            algorithm: 'gzip',
-            ext: '.gz'
-          }),
-          projectInfoPlugin(),
-          ViteImageOptimizer()
-        ]
-      : []
+    command === 'build' ? [eslint(), stylelint(), compression(), viteProjectInfo(), ViteImageOptimizer()] : []
 
   return {
+    define: {
+      __MOCK__: mode.includes('mock')
+    },
     plugins: [
       vue(),
-      topLevelAwait(),
       viteHtml({
-        __TITLE__: process.env.VITE_APP_SYSTEMNAME!
+        __TITLE__: process.env.VITE_APP_NAME!
       }),
       ...buildOnlyPlugins
     ],
@@ -52,7 +41,7 @@ export default defineConfig(({ command, mode }) => {
     },
     css: {
       postcss: {
-        plugins: [autoprefixer, transformPx, removeComment]
+        plugins: [autoprefixer(['chrome > 100']), pxtorem({ rootValue: 12 }), removeComments({ removeAll: true })]
       }
     },
     build: {

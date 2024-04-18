@@ -1,4 +1,4 @@
-import type { Route } from 'router'
+import type { Route } from 'builtins'
 
 export const routes: Route[] = [
   {

@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import { routes } from './config/router'
 
 // %%--------------------------- 标题 ---------------------------%%
-const title = import.meta.env.VITE_APP_SYSTEMNAME
+const title = import.meta.env.VITE_APP_NAME
 
 // %%--------------------------- 导航栏入口 ---------------------------%%
 const entries: Entry[] = [
