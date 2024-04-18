@@ -8,15 +8,11 @@ import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import pxtorem from 'postcss-pxtorem'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
-import eslint from 'vite-plugin-eslint'
-import stylelint from 'vite-plugin-stylelint'
 
 export default defineConfig(({ command }) => {
   const buildOnlyPlugins =
     command === 'build'
       ? [
-          eslint(),
-          stylelint(),
           dts({
             exclude: ['vite.config.ts', 'cli/**/*.ts']
           }),

@@ -138,18 +138,12 @@ importers:
       vite-plugin-dts:
         specifier: ^3.8.3
         version: 3.8.3(@types/node@20.12.7)(typescript@5.4.5)(vite@5.2.9)
-      vite-plugin-eslint:
-        specifier: ^1.8.1
-        version: 1.8.1(eslint@8.57.0)(vite@5.2.9)
       vite-plugin-image-optimizer:
         specifier: ^1.1.7
         version: 1.1.7(vite@5.2.9)
       vite-plugin-project-info:
         specifier: ^0.5.0
         version: 0.5.0
-      vite-plugin-stylelint:
-        specifier: ^5.3.1
-        version: 5.3.1(postcss@8.4.38)(stylelint@16.3.1)(vite@5.2.9)
       vue-eslint-parser:
         specifier: ^9.4.2
         version: 9.4.2(eslint@8.57.0)
@@ -1455,14 +1449,6 @@ packages:
       fastq: 1.17.1
     dev: true
 
-  /@rollup/pluginutils@4.2.1:
-    resolution: {integrity: sha512-iKnFXr7NkdZAIHiIWE+BX5ULi/ucVFYWD6TbAV+rZctiRTY2PL6tsIKhoIOaoskiWAkgu+VsbXgUVDNLHf+InQ==}
-    engines: {node: '>= 8.0.0'}
-    dependencies:
-      estree-walker: 2.0.2
-      picomatch: 2.3.1
-    dev: true
-
   /@rollup/pluginutils@5.1.0:
     resolution: {integrity: sha512-XTIWOPPcpvyKI6L1NHo0lFlCyznUEyPmPY1mc3KpPVDYulHSTvyeLNVW00QTLIAFNhR3kYnJTQHeGqU4M3n09g==}
     engines: {node: '>=14.0.0'}
@@ -1677,13 +1663,6 @@ packages:
     resolution: {integrity: sha512-loB369iXNmAZglwWATL+WRe+CRMmmBPtpolYzIebFaX4YA3x+BEfLqhUAV9WanycKI3TG1IMr5bMJDajDKLlUQ==}
     dependencies:
       '@types/node': 20.12.7
-    dev: true
-
-  /@types/eslint@8.56.9:
-    resolution: {integrity: sha512-W4W3KcqzjJ0sHg2vAq9vfml6OhsJ53TcUjUqfzzZf/EChUtwspszj/S0pzMxnfRcO55/iGq47dscXw71Fxc4Zg==}
-    dependencies:
-      '@types/estree': 1.0.5
-      '@types/json-schema': 7.0.15
     dev: true
 
   /@types/estree@1.0.5:
@@ -4642,14 +4621,6 @@ packages:
       glob: 7.2.3
     dev: true
 
-  /rollup@2.79.1:
-    resolution: {integrity: sha512-uKxbd0IhMZOhjAiD5oAFp7BqvkA4Dv47qpOCtaNvng4HBwdbWtdOh8f5nZNuk2rp51PMGk3bzfWu5oayNEuYnw==}
-    engines: {node: '>=10.0.0'}
-    hasBin: true
-    optionalDependencies:
-      fsevents: 2.3.3
-    dev: true
-
   /rollup@4.14.3:
     resolution: {integrity: sha512-ag5tTQKYsj1bhrFC9+OEWqb5O6VYgtQDO9hPDBMmIbePwhfSr+ExlcU741t8Dhw5DkPCQf6noz0jb36D6W9/hw==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
@@ -5336,19 +5307,6 @@ packages:
       - supports-color
     dev: true
 
-  /vite-plugin-eslint@1.8.1(eslint@8.57.0)(vite@5.2.9):
-    resolution: {integrity: sha512-PqdMf3Y2fLO9FsNPmMX+//2BF5SF8nEWspZdgl4kSt7UvHDRHVVfHvxsD7ULYzZrJDGRxR81Nq7TOFgwMnUang==}
-    peerDependencies:
-      eslint: '>=7'
-      vite: '>=2'
-    dependencies:
-      '@rollup/pluginutils': 4.2.1
-      '@types/eslint': 8.56.9
-      eslint: 8.57.0
-      rollup: 2.79.1
-      vite: 5.2.9(@types/node@20.12.7)(sass@1.75.0)
-    dev: true
-
   /vite-plugin-image-optimizer@1.1.7(vite@5.2.9):
     resolution: {integrity: sha512-KPJWndwqVi7Z2hYCudzKeNDw5U7w1DxAc266bqDBKV8taG8W3EtripFuUM4Y05IlFC19yBQndJCFA8+NJymH+w==}
     engines: {node: '>=14'}
@@ -5364,33 +5322,6 @@ packages:
     resolution: {integrity: sha512-LJGzgwL2w+iugLB6wCBJQBBvlLUT5uqEMe7TVwXlf9JfFbaM1O7xldzILpSgTa1qvNZh/I61Xo3GvXJPIJC3QA==}
     dependencies:
       moment: 2.30.1
-    dev: true
-
-  /vite-plugin-stylelint@5.3.1(postcss@8.4.38)(stylelint@16.3.1)(vite@5.2.9):
-    resolution: {integrity: sha512-M/hSdfOwnOVghbJDeuuYIU2xO/MMukYR8QcEyNKFPG8ro1L+DlTdViix2B2d/FvAw14WPX88ckA5A7NvUjJz8w==}
-    engines: {node: '>=14.18'}
-    peerDependencies:
-      '@types/stylelint': ^13.0.0
-      postcss: ^7.0.0 || ^8.0.0
-      rollup: ^2.0.0 || ^3.0.0 || ^4.0.0
-      stylelint: ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-      vite: ^2.0.0 || ^3.0.0 || ^4.0.0 || ^5.0.0
-    peerDependenciesMeta:
-      '@types/stylelint':
-        optional: true
-      postcss:
-        optional: true
-      rollup:
-        optional: true
-    dependencies:
-      '@rollup/pluginutils': 5.1.0
-      chokidar: 3.6.0
-      debug: 4.3.4
-      postcss: 8.4.38
-      stylelint: 16.3.1(typescript@5.4.5)
-      vite: 5.2.9(@types/node@20.12.7)(sass@1.75.0)
-    transitivePeerDependencies:
-      - supports-color
     dev: true
 
   /vite@5.2.9(@types/node@20.12.7)(sass@1.75.0):

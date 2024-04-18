@@ -7,16 +7,13 @@ import removeComments from 'postcss-discard-comments'
 import pxtorem from 'postcss-pxtorem'
 import { defineConfig, loadEnv } from 'vite'
 import { compression } from 'vite-plugin-compression2'
-import eslint from 'vite-plugin-eslint'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import viteProjectInfo from 'vite-plugin-project-info'
-import stylelint from 'vite-plugin-stylelint'
 
 export default defineConfig(({ command, mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
-  const buildOnlyPlugins =
-    command === 'build' ? [eslint(), stylelint(), compression(), viteProjectInfo(), ViteImageOptimizer()] : []
+  const buildOnlyPlugins = command === 'build' ? [compression(), viteProjectInfo(), ViteImageOptimizer()] : []
 
   return {
     define: {
