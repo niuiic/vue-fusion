@@ -1,8 +1,6 @@
 <!-- %%=========================== script ===========================%% -->
 <script setup lang="ts">
-import { ref, onMounted, shallowRef } from 'vue'
-
-const isHome = ref(true)
+import { onMounted, shallowRef } from 'vue'
 
 const pages = import.meta.glob('./pages/**/index.ts')
 const pageNameList = Object.keys(pages)
@@ -11,14 +9,13 @@ const pageNameList = Object.keys(pages)
     return matched ? matched[1] : undefined
   })
   .filter((x): x is string => Boolean(x))
+
 const page = shallowRef()
 const renderPage = () => {
   const pageName = window.location.pathname.slice(1)
   if (!pageName) {
-    isHome.value = true
     return
   }
-  isHome.value = false
   import(`./pages/${pageName}/index.ts`).then((x) => (page.value = x.default))
 }
 onMounted(renderPage)
@@ -26,7 +23,6 @@ window.addEventListener('popstate', renderPage)
 
 const onClickEntry = (pageName: string) => {
   history.pushState(undefined, '', pageName)
-  isHome.value = false
   import(`./pages/${pageName}/index.ts`).then((x) => (page.value = x.default))
 }
 </script>
@@ -34,26 +30,43 @@ const onClickEntry = (pageName: string) => {
 <!-- %%=========================== template ===========================%% -->
 <template>
   <div class="app">
-    <ol v-if="isHome">
-      <li v-for="(x, i) in pageNameList" :key="i" class="page" @click="onClickEntry(x)">{{ `${i + 1}. ${x}` }}</li>
-    </ol>
-    <component :is="page" v-else> </component>
+    <div class="nav">
+      <ol>
+        <li v-for="(x, i) in pageNameList" :key="i" class="entry" @click="onClickEntry(x)">{{ x }}</li>
+      </ol>
+    </div>
+    <div class="page">
+      <component :is="page"> </component>
+    </div>
   </div>
 </template>
 
 <!-- %%=========================== style ===========================%% -->
 <style lang="scss" scoped>
 .app {
+  display: flex;
   height: 100vh;
 }
 
-.page {
+.nav {
+  overflow: auto;
+  padding: 16px;
+  width: 160px;
+  border-right: 1px solid black;
+}
+
+.entry {
   font-size: 16px;
   user-select: none;
   cursor: pointer;
 }
 
-.page + .page {
+.entry + .entry {
   margin-top: 8px;
+}
+
+.page {
+  flex: 1;
+  overflow: auto;
 }
 </style>

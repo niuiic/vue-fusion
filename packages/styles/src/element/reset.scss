@@ -4,5 +4,6 @@
 
 :where(ol, ul) {
   margin: 0;
-  padding: 0;
+  padding-block: 0;
+  padding-inline: 1em 0;
 }
