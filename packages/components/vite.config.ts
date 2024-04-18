@@ -2,6 +2,8 @@ import libAssetsPlugin from '@laynezh/vite-plugin-lib-assets'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import { join } from 'path'
+// @ts-expect-error
+import pxtorem from 'postcss-pxtorem'
 import { defineConfig } from 'vite'
 import dts from 'vite-plugin-dts'
 import eslint from 'vite-plugin-eslint'
@@ -31,7 +33,7 @@ export default defineConfig(({ command }) => {
     },
     css: {
       postcss: {
-        plugins: [autoprefixer]
+        plugins: [autoprefixer(['chrome > 100']), pxtorem({ rootValue: 12 })]
       }
     },
     build: {
@@ -42,7 +44,7 @@ export default defineConfig(({ command }) => {
           chunkFileNames: 'js/[name].js',
           assetFileNames: '[ext]/[name].[ext]'
         },
-        external: ['vue', 'element-plus', 'styles']
+        external: ['vue', 'element-plus', 'styles', 'builtins', 'fx-flow', 'mapbox-gl', 'echarts']
       },
       minify: true,
       lib: {
