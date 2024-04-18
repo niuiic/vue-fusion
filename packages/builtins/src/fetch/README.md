@@ -5,7 +5,7 @@
 使用以下方式发起请求。
 
 ```typescript
-import { Fetch } from 'fetch'
+import { Fetch } from 'builtins'
 
 const fetch = new Fetch({ timeout: 10000 })
 fetch.get()

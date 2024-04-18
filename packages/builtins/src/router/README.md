@@ -2,19 +2,7 @@
 
 ## 用法
 
-1. 引入包。
-
-`package.json`
-
-```json
-{
-  "dependencies": {
-    "router": "workspace:*"
-  }
-}
-```
-
-2. 注册页面。
+1. 注册页面。
 
 在`src/main.ts`中。
 

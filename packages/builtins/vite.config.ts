@@ -6,9 +6,6 @@ import eslint from 'vite-plugin-eslint'
 
 export default defineConfig((): UserConfig => {
   return {
-    define: {
-      __DEV__: process.env.NODE_ENV !== 'production'
-    },
     build: {
       lib: {
         entry: join(process.cwd(), 'src/index.ts'),

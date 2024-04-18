@@ -29,7 +29,7 @@ function useStrategies<T extends string | symbol | number, A, R>(
 
   if (Array.isArray(strategies)) {
     for (const strategy of strategies) {
-      if (strategy[0](args)) {
+      if (typeof strategy[0] === 'function' && strategy[0](args) && typeof strategy[1] === 'function') {
         return strategy[1](args)
       }
     }

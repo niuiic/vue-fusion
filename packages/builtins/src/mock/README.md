@@ -5,8 +5,8 @@
 1. 定义mock函数。
 
 ```typescript
-import { ok } from 'result'
-import { mock } from 'mock'
+import { ok } from 'fx-flow'
+import { mock } from 'builtins'
 
 export const queryXxx = mock<{ input: number }, { output: number }>((args) => ok({ output: args.input }))
 ```
@@ -16,7 +16,7 @@ export const queryXxx = mock<{ input: number }, { output: number }>((args) => ok
 一般在`src/main.ts`中注册。
 
 ```typescript
-import { registerMock } from 'mock'
+import { registerMock } from 'builtins'
 
 registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
 ```

@@ -1,7 +1,8 @@
 import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axios'
 import axios from 'axios'
-import type { AnyObject, Result } from 'fx-flow'
+import type { Result } from 'fx-flow'
 import { err, ok } from 'fx-flow'
+import type { AnyObject } from '../types'
 
 type RequestData = AnyObject
 

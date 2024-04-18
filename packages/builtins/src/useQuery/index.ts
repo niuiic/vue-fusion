@@ -1,26 +1,32 @@
 import type { Result } from 'fx-flow'
 import { err } from 'fx-flow'
-import { onUnmounted, ref } from 'vue'
-import { notify } from './notify'
+import { onUnmounted, ref, shallowRef } from 'vue'
+import { notify } from '../notify'
 
 type Fn = (args: any) => Result<any> | Promise<Result<any>>
 type UnwrapResult<T> = T extends Result<infer U> ? U : T
 
 interface Options<T> {
-  throttling: boolean
-  interval: number
+  throttling: number | false
   polling: number | false
   onSuccess: (data: T) => void
   onError: (err: string) => void
+  updateData: (oldData: T | undefined, newData: T, setData: (data: T) => void) => void
 }
 
 const doNothing = () => {}
 
-export const useBusiness = <T extends Fn>(business: T) => {
+export const useQuery = <T extends Fn>(
+  fn: T,
+  options?: {
+    shallowRefData?: boolean
+  }
+) => {
   type Data = UnwrapResult<Awaited<ReturnType<T>>>
   type Args = Parameters<T>[0]
 
-  const data = ref<Data>()
+  const data = options?.shallowRefData ? shallowRef<Data>() : ref<Data>()
+  const setData = (newData: Data) => (data.value = newData)
   const loading = ref(false)
   let timer: any
 
@@ -28,13 +34,14 @@ export const useBusiness = <T extends Fn>(business: T) => {
   let taskWaiting: { args: Args; options: Options<Data> } | undefined
   let requestCount = 0
 
-  const trigger = (args: Args, options?: Partial<Options<Data>>): void => {
+  const query = (args: Args, options?: Partial<Options<Data>>): void => {
+    const updateData = (_: Data | undefined, newData: Data, setData: (data: Data) => void) => setData(newData)
     const fixedOptions: Options<Data> = {
-      throttling: options?.throttling ?? true,
-      interval: options?.interval ?? 500,
+      throttling: options?.throttling ?? 500,
       polling: options?.polling ?? false,
       onSuccess: options?.onSuccess ?? doNothing,
-      onError: options?.onError ?? notify('error')
+      onError: options?.onError ?? notify('error'),
+      updateData: options?.updateData ?? updateData
     }
 
     const task = async (args: Args, options: Options<Data>) => {
@@ -46,7 +53,7 @@ export const useBusiness = <T extends Fn>(business: T) => {
 
       let res
       try {
-        res = await business(args)
+        res = await fn(args)
       } catch {
         res = err('请求过程中发生错误')
       }
@@ -60,7 +67,7 @@ export const useBusiness = <T extends Fn>(business: T) => {
       }
 
       const resData = res.unwrap()
-      data.value = resData
+      fixedOptions.updateData(data.value, resData, setData)
       options.onSuccess(resData)
 
       if (options.polling !== false) {
@@ -77,14 +84,14 @@ export const useBusiness = <T extends Fn>(business: T) => {
     }
 
     const now = new Date().getTime()
-    if (lastExecTime && now - lastExecTime < fixedOptions.interval) {
+    if (lastExecTime && now - lastExecTime < fixedOptions.throttling) {
       if (!taskWaiting) {
         setTimeout(
           () => {
             task(taskWaiting!.args, taskWaiting!.options)
             taskWaiting = undefined
           },
-          fixedOptions.interval + lastExecTime - now
+          fixedOptions.throttling + lastExecTime - now
         )
       }
       taskWaiting = { args, options: fixedOptions }
@@ -97,9 +104,5 @@ export const useBusiness = <T extends Fn>(business: T) => {
 
   onUnmounted(() => timer && clearInterval(timer))
 
-  return {
-    data,
-    loading,
-    trigger
-  }
+  return [data, loading, query]
 }
