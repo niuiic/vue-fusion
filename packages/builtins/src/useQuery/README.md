@@ -20,14 +20,7 @@ const [data, loading, query] = useQuery(queryFn)
 2. 使用
 
 ```typescript
-query(
-  {
-    num: 1
-  },
-  {
-    throttling: false
-  }
-)
+query({ num: 1 })
 
 // query的第二个参数
 // interface Options<T> {
