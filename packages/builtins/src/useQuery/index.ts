@@ -1,5 +1,6 @@
 import type { Result } from 'fx-flow'
 import { err } from 'fx-flow'
+import type { Ref, ShallowRef } from 'vue'
 import { onUnmounted, ref, shallowRef } from 'vue'
 import { notify } from '../notify'
 
@@ -16,15 +17,16 @@ interface Options<T> {
 
 const doNothing = () => {}
 
-export const useQuery = <T extends Fn>(
+export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>>>, Args = Parameters<T>[0]>(
   fn: T,
   options?: {
     shallowRefData?: boolean
   }
-) => {
-  type Data = UnwrapResult<Awaited<ReturnType<T>>>
-  type Args = Parameters<T>[0]
-
+): [
+  data: ShallowRef<Data | undefined> | Ref<Data | undefined>,
+  loading: Ref<boolean>,
+  query: (args: Args, Options?: Partial<Options<Data>>) => void
+] => {
   const data = options?.shallowRefData ? shallowRef<Data>() : ref<Data>()
   const setData = (newData: Data) => (data.value = newData)
   const loading = ref(false)

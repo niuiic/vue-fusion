@@ -1,8 +1,15 @@
-import type { Component } from 'vue'
+import type { Component, Ref, ShallowRef } from 'vue'
 import { ref, shallowRef } from 'vue'
 import type { ComponentProps } from '../types'
 
-export const useComponent = <T extends Component>(component: () => Promise<{ default: T }>) => {
+export const useComponent = <T extends Component>(
+  component: () => Promise<{ default: T }>
+): [
+  dynComp: ShallowRef<T | undefined>,
+  render: (props: ComponentProps<T>) => void,
+  destory: () => void,
+  compProps: Ref<ComponentProps<T> | undefined>
+] => {
   const dynComp = shallowRef<T>()
   const compProps = ref<ComponentProps<T>>()
 
