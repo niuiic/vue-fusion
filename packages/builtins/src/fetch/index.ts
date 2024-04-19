@@ -13,17 +13,32 @@ export class Fetch {
   }
 
   public async get<D>(url: string, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await this.instance.get(url, options).then(
+    return await this.instance.get(url, fixedOptions(options)).then(
       (response) => okRes(response),
       (err) => errRes(err)
     )
   }
 
   public async post<D>(url: string, data?: RequestData, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await this.instance.post(url, data, options).then(
+    return await this.instance.post(url, data, fixedOptions(options)).then(
       (response) => okRes(response),
       (err) => errRes(err)
     )
+  }
+}
+
+const fixedOptions = (options?: AxiosRequestConfig): AxiosRequestConfig | undefined => {
+  if (!options) {
+    return
+  }
+
+  if (!options.params) {
+    return options
+  }
+
+  return {
+    ...options,
+    params: Object.fromEntries(Object.entries(options.params).filter(([_, v]) => v !== undefined))
   }
 }
 
