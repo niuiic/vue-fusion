@@ -2,11 +2,8 @@ import { readdirSync, unlinkSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { build } from 'vite'
 
-const getComponentNames = () => {
-  const workDir = join(process.cwd(), 'src/components')
-  return readdirSync(workDir)
-}
-const components = getComponentNames()
+const workDir = join(process.cwd(), 'src/components')
+const components = readdirSync(workDir)
 
 const indexTemplate = `import type { App } from 'vue'
 import './assets/icon.js'

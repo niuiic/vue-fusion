@@ -1,17 +1,17 @@
 [x] 修改tsconfig.json
 - 把所有地方改正，包括readme
-- 修改fetch
+[x] 修改fetch
 - dev模式下提示错误
-- useAsset
+[x] useAsset
 [x] useQuery的防抖问题
-- vite语法降级到chrome 100
+[x] vite语法降级到chrome 100
 - 修改chunk策略
 [o] 图片转成webp
-- 时间格式化库
+[x] 时间格式化库
 [x] html lang=zh
 
 [] styles
-- 把adaptation改过来
+[x] 把adaptation改过来
 
 [x] builtins
 [x] dev
