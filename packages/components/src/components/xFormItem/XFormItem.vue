@@ -50,16 +50,21 @@ onBeforeMount(() => {
       await fn()
         .catch((e) => `校验函数执行出错: ${toStr(e)}`)
         .then((x) => {
-          if (x !== undefined) {
-            finish = true
+          if (x === undefined) {
+            return
           }
-          error.value = x
+          finish = true
+          if (error.value !== x) {
+            error.value = x
+          }
         })
 
       if (finish) {
         return
       }
     }
+
+    error.value = undefined
   })
 })
 </script>
