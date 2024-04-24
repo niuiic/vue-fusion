@@ -1,20 +1,17 @@
 <!-- # script -->
 <script setup lang="ts">
-import type { AnyObject } from 'fx-flow'
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue'
 import { nestedGetter } from './nonBusiness'
+import type { CommonConfig } from './nonBusiness'
 
 // ## 组件配置
 defineOptions({
   inheritAttrs: true
 })
 
-interface Props {
+type Props = {
   itemType: string
-  getData: (setter?: [key: string, (value: unknown) => void]) => AnyObject
-  setData: (key: string, value: any) => void
-  dataKey: string
-}
+} & CommonConfig
 const props = defineProps<Props>()
 
 // ## 表单项组件

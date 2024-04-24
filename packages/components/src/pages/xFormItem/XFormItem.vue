@@ -7,7 +7,7 @@ import { ref } from 'vue'
 interface FormData {
   data?: string
 }
-const [getFormData, setFormData, onFormDataChange] = useFormData<FormData>({
+const { getFormData, setFormData, onFormDataChange } = useFormData<FormData>({
   data: 'initialData'
 })
 const formItemConfig: InputConfig = {
@@ -17,8 +17,8 @@ const formItemConfig: InputConfig = {
   dataKey: 'data'
 }
 const info = ref('')
-onFormDataChange((key, value, prevValue) => {
-  info.value = JSON.stringify({ key, value, prevValue })
+onFormDataChange((data) => {
+  info.value = JSON.stringify(data)
 })
 </script>
 

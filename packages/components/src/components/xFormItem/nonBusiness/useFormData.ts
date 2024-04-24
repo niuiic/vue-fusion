@@ -22,25 +22,29 @@ export const nestedGetter = <Data extends AnyObject, Key extends string>(
 
 export const useFormData = <Data extends AnyObject>(
   initialData: Data
-): [
-  get: <Key extends string>(setter?: [key: Key, (value: NestedProperty<Data, Key>) => void]) => Data,
-  set: <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => void,
-  onChange: <Key extends string>(
-    handler: (key: Key, value: NestedProperty<Data, Key>, prevValue: NestedProperty<Data, Key>) => void
+): {
+  getFormData: <Key extends string>(setter?: [key: Key, (value: NestedProperty<Data, Key>) => void]) => Data
+  setFormData: <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => void
+  overrideFormData: (formData: Data) => void
+  onFormDataFieldChange: <Key extends string>(
+    key: Key,
+    handler: (value: NestedProperty<Data, Key>, prevValue: NestedProperty<Data, Key>) => void
   ) => void
-] => {
-  const setters = new Set<[key: string, (value: unknown) => void]>()
-  const handlers = new Set<(key: string, value: unknown, prevValue: unknown) => void>()
-  const formData: Data = initialData
+  onFormDataChange: (handler: (formData: Data) => void) => void
+} => {
+  const setters = new Map<string, (value: any) => void>()
+  const onFieldChangeHandlers = new Map<string, (value: unknown, prevValue: unknown) => void>()
+  const onChangeHandlers = new Set<(formData: Data) => void>()
+  let formData: Data = initialData
 
-  const get = <Key extends string>(setter?: [key: Key, (value: NestedProperty<Data, Key>) => void]) => {
+  const getFormData = <Key extends string>(setter?: [key: Key, (value: NestedProperty<Data, Key>) => void]) => {
     if (setter) {
-      setters.add(setter as any)
+      setters.set(setter[0], setter[1])
     }
     return formData
   }
 
-  const set = <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => {
+  const setFormData = <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => {
     const keys = key.split('.')
     if (keys.length === 0) {
       return
@@ -55,20 +59,56 @@ export const useFormData = <Data extends AnyObject>(
     if (target instanceof Object) {
       const prevValue = target[lastKey]
       target[lastKey] = value
-      setters.forEach(([key, setter]) => {
+
+      const setter = setters.get(key)
+      if (setter) {
         setter(nestedGetter(formData, key))
-      })
-      handlers.forEach((handler) => {
-        handler(key, value, prevValue)
+      }
+
+      const handler = onFieldChangeHandlers.get(key)
+      if (handler) {
+        handler(value, prevValue)
+      }
+
+      onChangeHandlers.forEach((handler) => {
+        handler(formData)
       })
     }
   }
 
-  const onChange = <Key extends string>(
-    handler: (key: Key, value: NestedProperty<Data, Key>, prevValue: NestedProperty<Data, Key>) => void
-  ) => {
-    handlers.add(handler as any)
+  const overrideFormData = (data: Data) => {
+    const prevFormData = formData
+    formData = data
+
+    setters.forEach((setter, key) => {
+      setter(nestedGetter(formData, key))
+    })
+
+    onFieldChangeHandlers.forEach((handler, key) => {
+      handler(nestedGetter(formData, key), nestedGetter(prevFormData, key))
+    })
+
+    onChangeHandlers.forEach((handler) => {
+      handler(formData)
+    })
   }
 
-  return [get, set, onChange]
+  const onFormDataFieldChange = <Key extends string>(
+    key: Key,
+    handler: (value: NestedProperty<Data, Key>, prevValue: NestedProperty<Data, Key>) => void
+  ) => {
+    onFieldChangeHandlers.set(key, handler as any)
+  }
+
+  const onFormDataChange = (handler: (formData: Data) => void) => {
+    onChangeHandlers.add(handler)
+  }
+
+  return {
+    getFormData,
+    setFormData,
+    overrideFormData,
+    onFormDataFieldChange,
+    onFormDataChange
+  }
 }
