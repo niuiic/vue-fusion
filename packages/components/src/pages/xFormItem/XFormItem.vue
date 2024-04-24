@@ -2,30 +2,26 @@
 <script setup lang="ts">
 import type { InputConfig } from '@/components/xFormItem'
 import { XFormItem, useFormData } from '@/components/xFormItem'
-import { ref } from 'vue'
 
 interface FormData {
   data?: string
 }
-const { getFormData, setFormData, onFormDataChange } = useFormData<FormData>({
+const { getFormData, setFormData, onFormDataFieldChange } = useFormData<FormData>({
   data: 'initialData'
 })
 const formItemConfig: InputConfig = {
   itemType: 'input',
   getData: getFormData,
   setData: setFormData,
-  dataKey: 'data'
+  onDataFieldChange: onFormDataFieldChange,
+  dataKey: 'data',
+  rules: [(value: string) => value]
 }
-const info = ref('')
-onFormDataChange((data) => {
-  info.value = JSON.stringify(data)
-})
 </script>
 
 <!-- # template -->
 <template>
   <div class="x-form-item-page">
     <XFormItem v-bind="formItemConfig"></XFormItem>
-    {{ info }}
   </div>
 </template>

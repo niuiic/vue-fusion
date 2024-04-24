@@ -3,6 +3,7 @@
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue'
 import { nestedGetter } from './nonBusiness'
 import type { CommonConfig } from './nonBusiness'
+import { toStr } from 'fx-flow'
 
 // ## 组件配置
 defineOptions({
@@ -35,8 +36,32 @@ const onUpdate = (value: unknown) => {
   props.setData(props.dataKey, value)
 }
 
-// ## 错误信息
+// ## 校验
 const error = ref<string>()
+onBeforeMount(() => {
+  props.onDataFieldChange(props.dataKey, async (value) => {
+    if (!props.rules) {
+      return
+    }
+
+    let finish = false
+    for (const rule of props.rules) {
+      const fn = async () => rule(value, props.getData())
+      await fn()
+        .catch((e) => `校验函数执行出错: ${toStr(e)}`)
+        .then((x) => {
+          if (x !== undefined) {
+            finish = true
+          }
+          error.value = x
+        })
+
+      if (finish) {
+        return
+      }
+    }
+  })
+})
 </script>
 
 <!-- # template -->

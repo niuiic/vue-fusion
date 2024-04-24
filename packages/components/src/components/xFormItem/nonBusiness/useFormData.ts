@@ -23,7 +23,7 @@ export const nestedGetter = <Data extends AnyObject, Key extends string>(
 export const useFormData = <Data extends AnyObject>(
   initialData: Data
 ): {
-  getFormData: <Key extends string>(setter?: [key: Key, (value: NestedProperty<Data, Key>) => void]) => Data
+  getFormData: <Key extends string>(setter?: [Key, (value: NestedProperty<Data, Key>) => void]) => Data
   setFormData: <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => void
   overrideFormData: (formData: Data) => void
   onFormDataFieldChange: <Key extends string>(

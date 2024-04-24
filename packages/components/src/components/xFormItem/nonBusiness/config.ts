@@ -1,13 +1,13 @@
 import type { ComponentProps } from 'builtins'
 import type { ElInput } from 'element-plus'
-import type { AnyObject } from 'fx-flow'
+import type { AnyObject, MaybePromise } from 'fx-flow'
 
 export interface CommonConfig {
   getData: (...args: any[]) => AnyObject
   setData: (...args: any[]) => void
+  onDataFieldChange: (key: string, handler: (value: any, prevValue: any) => void) => void
   dataKey: string
-  rules?: ((data: AnyObject) => boolean | Promise<boolean>)[]
-  validateOn?: 'change' | 'manually'
+  rules?: ((value: any, formData: AnyObject) => MaybePromise<string | undefined>)[]
 }
 
 export type InputConfig = {
