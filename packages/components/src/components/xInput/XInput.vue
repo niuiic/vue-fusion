@@ -7,10 +7,10 @@ defineOptions({
   inheritAttrs: true
 })
 
-const data = defineModel<string | number>()
+const modelValue = defineModel<string | number | undefined>()
 </script>
 
 <!-- # template -->
 <template>
-  <ElInput v-bind="$attrs" v-model="data" class="x-input"></ElInput>
+  <ElInput v-bind="$attrs" v-model="modelValue" class="x-input"></ElInput>
 </template>

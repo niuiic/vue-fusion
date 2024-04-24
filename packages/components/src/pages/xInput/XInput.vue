@@ -9,6 +9,7 @@ const data = ref()
 <!-- # template -->
 <template>
   <div class="x-input-page">
-    <XInput v-model:data="data" type="number"></XInput>
+    <XInput v-model="data" type="number"></XInput>
+    {{ data }}
   </div>
 </template>
