@@ -6,9 +6,8 @@ import { XFormItem, formDataValid, useFormData } from '@/components/xFormItem'
 interface FormData {
   data?: string
 }
-const { getFormData, setFormData, onFormDataFieldChange } = useFormData<FormData>({
-  data: 'initialData'
-})
+const { getFormData, setFormData, overrideFormData, onFormDataFieldChange } = useFormData<FormData>({})
+setTimeout(() => overrideFormData({ data: 'initialData' }), 0)
 const formItemConfig: InputConfig = {
   itemType: 'input',
   getData: getFormData,
