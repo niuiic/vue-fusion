@@ -1,7 +1,7 @@
 import type { AnyObject } from 'fx-flow'
 import type { NestedProperty } from './type'
 
-export const nestedGetter = <Data extends AnyObject, Key extends string>(
+export const nestedGet = <Data extends AnyObject, Key extends string>(
   data: AnyObject,
   key: Key
 ): NestedProperty<Data, Key> => {
@@ -50,7 +50,7 @@ export const useFormData = <Data extends AnyObject>(
       return
     }
 
-    const target = nestedGetter(formData, keys.slice(0, -1).join('.'))
+    const target = nestedGet(formData, keys.slice(0, -1).join('.'))
     if (!target) {
       return
     }
@@ -62,7 +62,7 @@ export const useFormData = <Data extends AnyObject>(
 
       const setter = setters.get(key)
       if (setter) {
-        setter(nestedGetter(formData, key))
+        setter(nestedGet(formData, key))
       }
 
       const handler = onFieldChangeHandlers.get(key)
@@ -81,11 +81,11 @@ export const useFormData = <Data extends AnyObject>(
     formData = data
 
     setters.forEach((setter, key) => {
-      setter(nestedGetter(formData, key))
+      setter(nestedGet(formData, key))
     })
 
     onFieldChangeHandlers.forEach((handler, key) => {
-      handler(nestedGetter(formData, key), nestedGetter(prevFormData, key))
+      handler(nestedGet(formData, key), nestedGet(prevFormData, key))
     })
 
     onChangeHandlers.forEach((handler) => {

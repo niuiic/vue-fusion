@@ -1,7 +1,7 @@
 <!-- # script -->
 <script setup lang="ts">
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue'
-import { nestedGetter } from './nonBusiness'
+import { nestedGet } from './nonBusiness'
 import type { CommonConfig } from './nonBusiness'
 import { toStr } from 'fx-flow'
 
@@ -30,7 +30,7 @@ const comp = defineAsyncComponent(() => {
 const data = ref<any>()
 const assignData = (value: unknown) => (data.value = value)
 onBeforeMount(() => {
-  data.value = nestedGetter(props.getData([props.dataKey, assignData]), props.dataKey)
+  data.value = nestedGet(props.getData([props.dataKey, assignData]), props.dataKey)
 })
 const onUpdate = (value: unknown) => {
   props.setData(props.dataKey, value)

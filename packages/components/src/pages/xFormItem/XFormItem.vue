@@ -1,7 +1,7 @@
 <!-- # script -->
 <script setup lang="ts">
 import type { InputConfig } from '@/components/xFormItem'
-import { XFormItem, useFormData } from '@/components/xFormItem'
+import { XFormItem, formDataValid, useFormData } from '@/components/xFormItem'
 
 interface FormData {
   data?: string
@@ -15,7 +15,12 @@ const formItemConfig: InputConfig = {
   setData: setFormData,
   onDataFieldChange: onFormDataFieldChange,
   dataKey: 'data',
-  rules: [(value: string) => value]
+  rules: [(value: string) => (value.length > 10 ? '最大长度为10' : undefined)]
+}
+const onSubmit = async () => {
+  if (!(await formDataValid(getFormData(), [formItemConfig]))) {
+    alert('表单数据有误')
+  }
 }
 </script>
 
@@ -23,5 +28,6 @@ const formItemConfig: InputConfig = {
 <template>
   <div class="x-form-item-page">
     <XFormItem v-bind="formItemConfig"></XFormItem>
+    <button @click="onSubmit">submit</button>
   </div>
 </template>
