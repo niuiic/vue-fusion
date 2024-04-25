@@ -5,7 +5,6 @@ export interface Route {
   meta: {
     label?: string
     icon?: string
-    navLevel?: number
   }
   page?: string
   children?: Route[]

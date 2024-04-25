@@ -7,7 +7,7 @@
 在`src/main.ts`中。
 
 ```typescript
-import { registerPage } from 'router'
+import { registerPage } from 'builtins'
 
 // components目录下不是页面组件，可以排除
 registerPage(import.meta.glob(['./view/pages/**/*.vue', '!**/components/**/*.vue']), './view/pages/')
@@ -18,8 +18,9 @@ registerPage(import.meta.glob(['./view/pages/**/*.vue', '!**/components/**/*.vue
 3. 创建router。
 
 ```typescript
-import { createRouter } from 'router'
-import type { Route } from 'router'
+import { toRouteRecordRaws } from 'builtins'
+import type { Route } from 'builtins'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes: Route[] = [
   {
@@ -34,12 +35,15 @@ const routes: Route[] = [
         page: 'overview/Overview',
         meta: {
           label: '总体态势',
-          navLevel: 1
+          level: 1
         }
       }
     ]
   }
 ]
 
-const router = createRouter(routes)
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes: toRouteRecordRaws(routes)
+})
 ```
