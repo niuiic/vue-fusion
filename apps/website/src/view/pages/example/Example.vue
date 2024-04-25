@@ -6,6 +6,7 @@ import { notify, useObservable } from 'builtins'
 import { onBeforeMount } from 'vue'
 import { ok, andThen, errThen, flow, toTry } from 'fx-flow'
 import { queryUserBiz, updateUserBiz } from '@/business/impl/user'
+import type { User } from '@/model/user'
 
 // ## 表单数据
 interface FormData {
@@ -13,7 +14,12 @@ interface FormData {
 }
 const { getData, setData, overrideData, onDataFieldChange } = useObservable<Partial<FormData>>({})
 onBeforeMount(() => {
-  flow(ok({ id: '1' }), andThen(queryUserBiz), andThen(toTry((args) => overrideData(args))), errThen(notify('error')))
+  flow(
+    ok({ id: '1' }),
+    andThen(queryUserBiz),
+    andThen(toTry((args: User) => overrideData(args))),
+    errThen(notify('error'))
+  )
 })
 
 // ## 表单配置
