@@ -13,7 +13,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.4",
     "@babel/eslint-parser": "^7.24.1",
-    "@commitlint/cli": "^19.2.2",
+    "@commitlint/cli": "^19.3.0",
     "@commitlint/config-conventional": "^19.2.2",
     "@commitlint/cz-commitlint": "^19.2.0",
     "@laynezh/vite-plugin-lib-assets": "^0.5.22",
@@ -37,7 +37,7 @@
     "prettier-plugin-organize-imports": "^3.2.4",
     "sass": "^1.75.0",
     "sharp": "^0.33.3",
-    "stylelint": "^16.3.1",
+    "stylelint": "^16.4.0",
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-order": "^6.0.4",
     "stylelint-scss": "^6.2.1",
@@ -47,10 +47,11 @@
     "typescript": "^5.4.5",
     "vite": "^5.2.10",
     "vite-plugin-compression2": "^1.1.0",
-    "vite-plugin-dts": "^3.8.3",
+    "vite-plugin-dts": "^3.9.0",
     "vite-plugin-image-optimizer": "^1.1.7",
     "vite-plugin-project-info": "^0.5.0",
     "vue-eslint-parser": "^9.4.2",
+    "vue-router": "^4.3.2",
     "vue-tsc": "^2.0.14"
   },
   "dependencies": {
@@ -59,7 +60,6 @@
     "element-plus": "^2.7.1",
     "fx-flow": "^0.6.3",
     "pinia": "^2.1.7",
-    "vue": "^3.4.24",
-    "vue-router": "^4.3.2"
+    "vue": "^3.4.24"
   }
 }
