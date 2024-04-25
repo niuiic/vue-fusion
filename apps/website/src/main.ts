@@ -10,7 +10,7 @@ import 'styles/dist/style.css'
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
-import { routes } from './config/router'
+import { routes } from './config/routes'
 
 __MOCK__ && registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
 registerMode(__MOCK__ ? 'mock' : 'other')

@@ -19,9 +19,9 @@ onBeforeMount(() => {
 // ## 表单配置
 const formItemConfig: InputConfig = {
   itemType: 'input',
-  getData: getData,
-  setData: setData,
-  onDataFieldChange: onDataFieldChange,
+  getData,
+  setData,
+  onDataFieldChange,
   dataKey: 'name',
   rules: [(value: string) => (value.length < 10 ? '最小长度为10' : undefined)]
 }
