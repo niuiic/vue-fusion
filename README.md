@@ -78,6 +78,7 @@ web端应用与移动端混合应用通用开发框架，主要技术栈为vue�
     - 减少资源体积。压缩、tree shaking、使用新格式等。
     - 优化加载方案。预加载、按需加载、错峰加载等。
     - 提高缓存命中率。
+- 使用过渡效果弱化用户对时间的感知。
 
 ## 项目结构
 
@@ -107,7 +108,7 @@ src/
 
 完整项目分层为model、mock、api、business和view。其中model定义业务模型，mock定义mock函数，api定义接口函数，business定义业务函数，view实现页面逻辑。
 
-该分层方案下，前端将自建一套业务模型，彻底与后端分离。在无接口的情况下也可依靠mock运行完整逻辑。view层与数据的交互全部通过调用business层的接口实现，business层在不同模式下分别调用api层和mock层的接口实现逻辑。business和mock层基于model层定义的业务模型提供接口。
+该分层方案下，前端将自建一套业务模型，彻底与后端分离，在无接口的情况下也可依靠mock运行完整逻辑。view层与数据的交互全部通过调用business层的接口实现，business层在不同模式下分别调用api层和mock层的接口实现逻辑。business和mock层基于model层定义的业务模型提供接口。
 
 ```mermaid
 flowchart TB
