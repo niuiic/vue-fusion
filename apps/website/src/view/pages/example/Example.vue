@@ -36,7 +36,7 @@ const onSubmit = async () => {
   flow(
     ok({
       id: '1',
-      ...getData()
+      ...(getData() as FormData)
     }),
     andThen(updateUserBiz),
     errThen(notify('error')),
