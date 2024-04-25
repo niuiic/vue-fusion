@@ -1,23 +1,24 @@
 <!-- # script -->
 <script setup lang="ts">
 import type { InputConfig } from '@/components/xFormItem'
-import { XFormItem, formDataValid, useFormData } from '@/components/xFormItem'
+import { XFormItem, formDataValid } from '@/components/xFormItem'
+import { useObservable } from 'builtins'
 
 interface FormData {
   data?: string
 }
-const { getFormData, setFormData, overrideFormData, onFormDataFieldChange } = useFormData<FormData>({})
-setTimeout(() => overrideFormData({ data: 'initialData' }), 0)
+const { getData, setData, overrideData, onDataFieldChange } = useObservable<FormData>({})
+setTimeout(() => overrideData({ data: 'initialData' }), 0)
 const formItemConfig: InputConfig = {
   itemType: 'input',
-  getData: getFormData,
-  setData: setFormData,
-  onDataFieldChange: onFormDataFieldChange,
+  getData: getData,
+  setData: setData,
+  onDataFieldChange: onDataFieldChange,
   dataKey: 'data',
   rules: [(value: string) => (value.length > 10 ? '最大长度为10' : undefined)]
 }
 const onSubmit = async () => {
-  if (!(await formDataValid(getFormData(), [formItemConfig]))) {
+  if (!(await formDataValid(getData(), [formItemConfig]))) {
     alert('表单数据有误')
   }
 }

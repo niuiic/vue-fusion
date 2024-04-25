@@ -15,7 +15,5 @@ export const useEntityFactory = <T extends AnyClass>(constructor: T) => {
     return { ...new constructor(String(id)), ...args } as any
   }
 
-  return {
-    factory
-  }
+  return factory
 }

@@ -1,7 +1,7 @@
 <!-- # script -->
 <script setup lang="ts">
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue'
-import { nestedGet } from './nonBusiness'
+import { nestedGet } from 'builtins'
 import type { CommonConfig } from './nonBusiness'
 import { toStr } from 'fx-flow'
 

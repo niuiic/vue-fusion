@@ -1,5 +1,5 @@
+import { nestedGet } from 'builtins'
 import type { AnyObject, MaybePromise } from 'fx-flow'
-import { nestedGet } from './useFormData'
 
 export const formDataValid = async <Data extends AnyObject>(
   formData: Data,

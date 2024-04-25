@@ -1,5 +1,18 @@
 import type { AnyObject } from 'fx-flow'
-import type { NestedProperty } from './type'
+
+export type NestedProperty<T, K extends string> = K extends ''
+  ? T
+  : K extends `${infer First}.${infer Rest}`
+    ? T extends Record<string, any>
+      ? First extends keyof T
+        ? NestedProperty<T[First], Rest>
+        : never
+      : never
+    : T extends Record<string, any>
+      ? K extends keyof T
+        ? T[K]
+        : never
+      : never
 
 export const nestedGet = <Data extends AnyObject, Key extends string>(
   data: AnyObject,
@@ -20,37 +33,37 @@ export const nestedGet = <Data extends AnyObject, Key extends string>(
   return target
 }
 
-export const useFormData = <Data extends AnyObject>(
+export const useObservable = <Data extends AnyObject>(
   initialData: Data
 ): {
-  getFormData: <Key extends string>(setter?: [Key, (value: NestedProperty<Data, Key>) => void]) => Data
-  setFormData: <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => void
-  overrideFormData: (formData: Data) => void
-  onFormDataFieldChange: <Key extends string>(
+  getData: <Key extends string>(setter?: [Key, (value: NestedProperty<Data, Key>) => void]) => Data
+  setData: <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => void
+  overrideData: (data: Data) => void
+  onDataFieldChange: <Key extends string>(
     key: Key,
     handler: (value: NestedProperty<Data, Key>, prevValue: NestedProperty<Data, Key>) => void
   ) => void
-  onFormDataChange: (handler: (formData: Data) => void) => void
+  onDataChange: (handler: (data: Data) => void) => void
 } => {
   const setters = new Map<string, (value: any) => void>()
   const onFieldChangeHandlers = new Map<string, (value: unknown, prevValue: unknown) => void>()
-  const onChangeHandlers = new Set<(formData: Data) => void>()
-  let formData: Data = initialData
+  const onChangeHandlers = new Set<(data: Data) => void>()
+  let observable: Data = initialData
 
-  const getFormData = <Key extends string>(setter?: [key: Key, (value: NestedProperty<Data, Key>) => void]) => {
+  const getData = <Key extends string>(setter?: [key: Key, (value: NestedProperty<Data, Key>) => void]) => {
     if (setter) {
       setters.set(setter[0], setter[1])
     }
-    return formData
+    return observable
   }
 
-  const setFormData = <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => {
+  const setData = <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => {
     const keys = key.split('.')
     if (keys.length === 0) {
       return
     }
 
-    const target = nestedGet(formData, keys.slice(0, -1).join('.'))
+    const target = nestedGet(observable, keys.slice(0, -1).join('.'))
     if (!target) {
       return
     }
@@ -62,7 +75,7 @@ export const useFormData = <Data extends AnyObject>(
 
       const setter = setters.get(key)
       if (setter) {
-        setter(nestedGet(formData, key))
+        setter(nestedGet(observable, key))
       }
 
       const handler = onFieldChangeHandlers.get(key)
@@ -71,44 +84,44 @@ export const useFormData = <Data extends AnyObject>(
       }
 
       onChangeHandlers.forEach((handler) => {
-        handler(formData)
+        handler(observable)
       })
     }
   }
 
-  const overrideFormData = (data: Data) => {
-    const prevFormData = formData
-    formData = data
+  const overrideData = (data: Data) => {
+    const prevObservable = observable
+    observable = data
 
     setters.forEach((setter, key) => {
-      setter(nestedGet(formData, key))
+      setter(nestedGet(observable, key))
     })
 
     onFieldChangeHandlers.forEach((handler, key) => {
-      handler(nestedGet(formData, key), nestedGet(prevFormData, key))
+      handler(nestedGet(observable, key), nestedGet(prevObservable, key))
     })
 
     onChangeHandlers.forEach((handler) => {
-      handler(formData)
+      handler(observable)
     })
   }
 
-  const onFormDataFieldChange = <Key extends string>(
+  const onDataFieldChange = <Key extends string>(
     key: Key,
     handler: (value: NestedProperty<Data, Key>, prevValue: NestedProperty<Data, Key>) => void
   ) => {
     onFieldChangeHandlers.set(key, handler as any)
   }
 
-  const onFormDataChange = (handler: (formData: Data) => void) => {
+  const onDataChange = (handler: (data: Data) => void) => {
     onChangeHandlers.add(handler)
   }
 
   return {
-    getFormData,
-    setFormData,
-    overrideFormData,
-    onFormDataFieldChange,
-    onFormDataChange
+    getData,
+    setData,
+    overrideData,
+    onDataFieldChange,
+    onDataChange
   }
 }
