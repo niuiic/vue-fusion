@@ -4,16 +4,15 @@ export const routes: Route[] = [
   {
     path: '/',
     name: 'root',
-    redirect: '/overview',
+    redirect: '/example',
     meta: {},
     children: [
       {
-        name: 'overview',
-        path: 'overview',
-        page: 'overview/Overview',
+        name: 'example',
+        path: 'example',
+        page: 'example/Example',
         meta: {
-          label: '总体态势',
-          navLevel: 1
+          label: '样例'
         }
       }
     ]
