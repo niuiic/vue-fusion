@@ -11,9 +11,9 @@ const { getData, setData, overrideData, onDataFieldChange } = useObservable<Form
 setTimeout(() => overrideData({ data: 'initialData' }), 0)
 const formItemConfig: InputConfig = {
   itemType: 'input',
-  getData: getData,
-  setData: setData,
-  onDataFieldChange: onDataFieldChange,
+  getData,
+  setData,
+  onDataFieldChange,
   dataKey: 'data',
   rules: [(value: string) => (value.length > 10 ? '最大长度为10' : undefined)]
 }
