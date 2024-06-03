@@ -33,6 +33,7 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
   let pollingTimer: any
   let debounceTimer: any
   let requestCount = 0
+  let unmounted = false
 
   const query = (args: Args, options?: Partial<Options<Data>>): void => {
     const updateData = (_: Data | undefined, newData: Data, setData: (data: Data) => void) => setData(newData)
@@ -55,6 +56,9 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
         res = await fn(args)
       } catch {
         res = err('请求过程中发生错误')
+      }
+      if (unmounted) {
+        return
       }
       if (requestCount !== requestNum) {
         return
@@ -86,6 +90,7 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
   }
 
   onUnmounted(() => {
+    unmounted = true
     pollingTimer && clearInterval(pollingTimer)
     debounceTimer && clearTimeout(debounceTimer)
   })
