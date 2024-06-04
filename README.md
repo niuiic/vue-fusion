@@ -95,10 +95,6 @@ src/
     routes.ts
     ...
   mock/
-    db/
-      entities/
-      relation/
-    business/
   model/
   view/
     components/
@@ -115,19 +111,14 @@ src/
 flowchart TB
     view
     business
-    subgraph mock
-        direction LR
-        db[(entities \n relation)]
-        fn[mock functions]
-        db <--> fn
-    end
+    mock
     api
     business <--> view
     mock <-- in mock mode --> business
     api <-- in normal mode --> business
 ```
 
-以上结构适用于开发复杂应用。实际情况下需根据项目难度、时间等因素合理简化结构。比如在项目难度低且接口准备充分的情况下，可令api直接对接view，加快开发速度。一般情况下也无需使用mock层中模拟的内存数据库。
+以上结构适用于开发复杂应用。实际情况下需根据项目难度、时间等因素合理简化结构。比如在项目难度低且接口准备充分的情况下，可令api直接对接view，加快开发速度。
 
 ## 开发流程
 
@@ -147,20 +138,22 @@ flowchart TB
 
 5. 实现api层函数。
 
+> 实际开发时通过自定义工具由swagger文档生成整个api层。便于同步接口变化，并通过typescript类型约束提示破坏性变更。
+
 6. 使用api层函数实现business层函数逻辑。
 
-测试应贯穿始终。
+**_测试应贯穿始终。_**
 
 ## 其他
 
-### 利用函数式工具库构建数据流
+### 利用函数式工具库构建控制流
 
-以下是利用[fx-flow](https://fx-flow.niuiic.com/)构建数据流的一个案例。`转换参数->调用接口->转换返回值->统一错误信息`。
+以下是利用[fx-flow](https://fx-flow.niuiic.com/)构建控制流的一个案例。`转换参数->调用接口->转换返回值->统一错误信息`。
 
-`flow`函数将自动等待异步操作，自动捕获错误。
+`flow`函数可自动等待异步操作，自动捕获错误。
 
 ```typescript
-;(args) =>
+const queryCompanyStatisticsInfoBiz = business(async (args) =>
   flow(
     ok(args),
     into((data) => ({ companyCode: data.company })),
@@ -178,6 +171,7 @@ flowchart TB
     ),
     mapErr(() => '查询企业统计信息失败')
   )
+)
 ```
 
 ### 注释分割线
@@ -207,3 +201,4 @@ flowchart TB
 
 - 无接口时辅助页面开发。
 - 样式与逻辑测试。
+- 为演示系统提供数据支撑。
