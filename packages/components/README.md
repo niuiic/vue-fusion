@@ -24,41 +24,22 @@
 }
 ```
 
-> 建议不要全局注册组件，因为会影响tree shaking，最好在使用时手动引入。若手动引入，则无需进行以下步骤。
-
-2. 全局注册组件。
-
-```typescript
-import components from 'components'
-import { createApp } from 'vue'
-import App from './App.vue'
-
-const app = createApp(App)
-app.use(components)
-```
-
-3. 导入样式。
+2. 导入样式。
 
 ```typescript
 import 'components/dist/css/style.css'
 ```
 
-4. 引入类型。
-
-在`tsconfig.json`中。
-
-```json
-{
-  "compilerOptions": {
-    "types": ["components/dist/components"]
-  }
-}
-```
-
-5. 使用组件。
+3. 引入组件使用。
 
 ```vue
+<script setup lang="ts">
+import { GIcon } from 'components'
+</script>
+
 <template>
-  <g-icon name="name"></g-icon>
+  <GIcon name="name"></GIcon>
 </template>
 ```
+
+> 不全局注册组件，因为会影响tree shaking。
