@@ -1,6 +1,6 @@
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
-import { viteChunks, viteHtml } from 'dev'
+import { viteChunks, viteHtml } from 'build'
 import { join } from 'path'
 import removeComments from 'postcss-discard-comments'
 // @ts-expect-error

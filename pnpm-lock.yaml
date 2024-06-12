@@ -156,18 +156,20 @@ importers:
 
   apps/website:
     dependencies:
+      build:
+        specifier: workspace:*
+        version: link:../../packages/build
       builtins:
         specifier: workspace:*
         version: link:../../packages/builtins
       components:
         specifier: workspace:*
         version: link:../../packages/components
-      dev:
-        specifier: workspace:*
-        version: link:../../packages/dev
       styles:
         specifier: workspace:*
         version: link:../../packages/styles
+
+  packages/build: {}
 
   packages/builtins: {}
 
@@ -179,8 +181,6 @@ importers:
       styles:
         specifier: workspace:*
         version: link:../styles
-
-  packages/dev: {}
 
   packages/styles: {}
 

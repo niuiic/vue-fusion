@@ -2,20 +2,20 @@
   "$schema": "https://turbo.build/schema.json",
   "ui": "stream",
   "tasks": {
-    "dev#build": {},
+    "build#build": {},
     "builtins#build": {},
     "styles#build": {},
     "components#build": {
-      "dependsOn": ["dev#build", "builtins#build", "styles#build"]
+      "dependsOn": ["build#build", "builtins#build", "styles#build"]
     },
     "components#dev": {
-      "dependsOn": ["dev#build", "builtins#build", "styles#build"]
+      "dependsOn": ["build#build", "builtins#build", "styles#build"]
     },
     "website#build": {
-      "dependsOn": ["dev#build", "builtins#build", "styles#build", "components#build"]
+      "dependsOn": ["build#build", "builtins#build", "styles#build", "components#build"]
     },
     "website#dev": {
-      "dependsOn": ["dev#build", "builtins#build", "styles#build", "components#build"]
+      "dependsOn": ["build#build", "builtins#build", "styles#build", "components#build"]
     }
   }
 }
