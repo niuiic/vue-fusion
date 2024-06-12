@@ -1,0 +1,12 @@
+.el-popover.el-popover {
+  width: fit-content !important;
+  min-width: unset;
+  background: rgba(0, 31, 64, 0.9);
+  border: 1px solid rgba(38, 183, 255, 0.8);
+  border-radius: 4px;
+}
+
+.el-popover .el-popper__arrow.el-popper__arrow::before {
+  background: rgba(0, 31, 64, 0.9);
+  border-color: rgba(38, 183, 255, 0.8);
+}

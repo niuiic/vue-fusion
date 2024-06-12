@@ -25,3 +25,7 @@ body {
   height: max(100vh, px($draft-height * $min-zoom-radio));
   font-size: $normal-font * 1px;
 }
+
+#app {
+  height: 100%;
+}

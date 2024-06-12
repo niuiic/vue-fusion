@@ -1,0 +1,31 @@
+@use 'sass:math';
+
+$draft-width: 1920;
+$draft-height: 980;
+$normal-font: 14;
+$root-font: 100;
+$min-font: 12;
+$scaling-scale: 0.75;
+$min-zoom-radio: math.div($min-font, $normal-font);
+
+@function px($num) {
+  @return $num * math.div(72, 96) * 1pt;
+}
+
+html {
+  font-size: max(px($root-font * $min-zoom-radio), math.div($root-font, $draft-height) * 100vh);
+}
+
+body {
+  width: max(
+    100vw,
+    $scaling-scale * math.div($draft-width, $draft-height) * 100vh,
+    $scaling-scale * math.div($draft-width, $draft-height) * px($draft-height * $min-zoom-radio)
+  );
+  height: max(100vh, px($draft-height * $min-zoom-radio));
+  font-size: $normal-font * 1px;
+}
+
+#app {
+  height: 100%;
+}
