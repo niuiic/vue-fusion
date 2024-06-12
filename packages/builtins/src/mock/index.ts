@@ -34,10 +34,7 @@ export const useMock =
     )
   }
 
-export const mock =
-  <A, R>(fn: (args: A) => Promise<Result<R>>) =>
-  (args: A) =>
-    fn(args)
+export const mock = <A, R>(fn: (args: A) => Promise<Result<R>>) => fn
 
 export const registerMock = (mods: Record<string, () => Promise<object>>, modPrefix?: string) => {
   modules = mods

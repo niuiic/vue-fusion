@@ -14,7 +14,10 @@
     "lib": ["ESNext", "DOM"],
     "skipLibCheck": true,
     "noErrorTruncation": true,
-    "noEmit": true
+    "noEmit": true,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src/**/*.ts", "vite.config.ts"]
 }

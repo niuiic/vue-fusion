@@ -5,6 +5,11 @@ import dts from 'vite-plugin-dts'
 
 export default defineConfig((): UserConfig => {
   return {
+    resolve: {
+      alias: {
+        '@': join(process.cwd(), 'src')
+      }
+    },
     build: {
       lib: {
         entry: join(process.cwd(), 'src/index.ts'),

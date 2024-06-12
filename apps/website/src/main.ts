@@ -1,4 +1,4 @@
-import { registerMock, registerMode, registerPage, toRouteRecordRaws } from 'builtins'
+import { registerMock, registerModes, registerPage, toRouteRecordRaws } from 'builtins'
 import components from 'components'
 import 'components/dist/css/style.css'
 import ElementPlus from 'element-plus'
@@ -13,7 +13,7 @@ import App from './App.vue'
 import { routes } from './config/routes'
 
 __MOCK__ && registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
-registerMode(__MOCK__ ? 'mock' : 'other')
+registerModes([import.meta.env.MODE.includes('dev') ? 'DEV' : undefined, __MOCK__ ? 'MOCK' : undefined])
 registerPage(import.meta.glob(['./view/pages/**/*.vue', '!**/components/**/*.vue']), './view/pages/')
 
 const router = createRouter({
