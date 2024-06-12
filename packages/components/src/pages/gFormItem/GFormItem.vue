@@ -1,7 +1,7 @@
 <!-- # script -->
 <script setup lang="ts">
-import type { InputConfig } from '@/components/xFormItem'
-import { XFormItem, formDataValid } from '@/components/xFormItem'
+import type { InputConfig } from '@/components/gFormItem'
+import { GFormItem, formDataValid } from '@/components/gFormItem'
 import { useObservable } from 'builtins'
 
 interface FormData {
@@ -27,7 +27,7 @@ const onSubmit = async () => {
 <!-- # template -->
 <template>
   <div class="x-form-item-page">
-    <XFormItem v-bind="formItemConfig"></XFormItem>
+    <GFormItem v-bind="formItemConfig"></GFormItem>
     <button @click="onSubmit">submit</button>
   </div>
 </template>

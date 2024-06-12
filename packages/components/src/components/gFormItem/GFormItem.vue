@@ -19,7 +19,7 @@ const props = defineProps<Props>()
 const comp = defineAsyncComponent(() => {
   switch (props.itemType) {
     case 'input': {
-      return import('../xInput/XInput.vue')
+      return import('../gInput/GInput.vue')
     }
     default:
       throw new Error(`nothing matched for the type ${props.itemType}`)

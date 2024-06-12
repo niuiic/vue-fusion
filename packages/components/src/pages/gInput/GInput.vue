@@ -1,6 +1,6 @@
 <!-- # script -->
 <script setup lang="ts">
-import { XInput } from '@/components/xInput'
+import { GInput } from '@/components/gInput'
 import { ref } from 'vue'
 
 const data = ref()
@@ -9,7 +9,7 @@ const data = ref()
 <!-- # template -->
 <template>
   <div class="x-input-page">
-    <XInput v-model="data" type="number"></XInput>
+    <GInput v-model="data" type="number"></GInput>
     {{ data }}
   </div>
 </template>
