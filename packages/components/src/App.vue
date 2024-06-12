@@ -86,6 +86,7 @@ const withCode = computed(() => codeList.value.length > 0)
 /* ## nav */
 .nav {
   overflow: auto;
+  margin-right: 3px;
   box-shadow: 3px 0 3px 0 rgba(0, 0, 0, 0.5);
 }
 
@@ -115,6 +116,7 @@ const withCode = computed(() => codeList.value.length > 0)
 /* ## code */
 .code-list {
   overflow: auto;
+  margin-left: 3px;
   box-shadow: -3px 0 3px 0 rgba(0, 0, 0, 0.5);
 }
 

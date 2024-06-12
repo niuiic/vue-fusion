@@ -94,6 +94,7 @@ const copyCode = async () => {
 .copy {
   display: inline-block;
   margin-right: 8px;
+  opacity: 0.5;
 
   &:hover {
     transform: scale(1.2);
