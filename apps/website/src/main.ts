@@ -1,12 +1,11 @@
 import { registerMock, registerModes, registerPage, toRouteRecordRaws } from 'builtins'
-import components from 'components'
 import 'components/dist/css/style.css'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 // @ts-expect-error
 import zhCn from 'element-plus/dist/locale/zh-cn.mjs'
 import { createPinia } from 'pinia'
-import 'styles/dist/style.css'
+import 'styles/index.scss'
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
@@ -24,7 +23,6 @@ const pinia = createPinia()
 
 const app = createApp(App)
 app
-  .use(components)
   .use(ElementPlus, {
     locale: zhCn
   })

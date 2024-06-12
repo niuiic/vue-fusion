@@ -7,6 +7,7 @@ import { onBeforeMount } from 'vue'
 import { ok, andThen, errThen, flow, toTry } from 'fx-flow'
 import { queryUserBiz, updateUserBiz } from '@/business/impl/user'
 import type { User } from '@/model/user'
+import { GFormItem } from 'components'
 
 // ## 表单数据
 interface FormData {
@@ -55,7 +56,7 @@ const onSubmit = async () => {
 <template>
   <div class="example">
     <h1>这是一个简单的修改用户名称的案例</h1>
-    <x-form-item v-bind="formItemConfig"></x-form-item>
+    <GFormItem v-bind="formItemConfig"></GFormItem>
     <button @click="onSubmit">提交</button>
   </div>
 </template>
