@@ -1,3 +1,3 @@
 import XFormItem from './XFormItem.vue'
 
-export default XFormItem
+export const page = XFormItem

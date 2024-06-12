@@ -1,3 +1,3 @@
 import XInput from './XInput.vue'
 
-export default XInput
+export const page = XInput
