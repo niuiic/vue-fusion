@@ -13,14 +13,7 @@ export default defineConfig((): UserConfig => {
         fileName: 'index'
       },
       rollupOptions: {
-        external: [
-          ...builtinModules,
-          ...builtinModules.map((x) => `node:${x}`),
-          'vite',
-          'vite-plugin-dts',
-          'vite-plugin-eslint',
-          'postcss'
-        ]
+        external: [...builtinModules, ...builtinModules.map((x) => `node:${x}`)]
       },
       sourcemap: true,
       minify: true

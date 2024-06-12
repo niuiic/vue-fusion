@@ -8,6 +8,9 @@
     "components#build": {
       "dependsOn": ["build#build", "builtins#build", "styles#build"]
     },
+    "components#build:doc": {
+      "dependsOn": ["build#build", "builtins#build", "styles#build"]
+    },
     "components#dev": {
       "dependsOn": ["build#build", "builtins#build", "styles#build"]
     },

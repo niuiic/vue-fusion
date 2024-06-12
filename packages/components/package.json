@@ -6,7 +6,8 @@
   "types": "dist/src/index.d.ts",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsx build.ts"
+    "build": "tsx build.ts",
+    "build:doc": "vite build"
   },
   "dependencies": {
     "styles": "workspace:*",

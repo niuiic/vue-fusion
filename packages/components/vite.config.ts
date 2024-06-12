@@ -1,4 +1,4 @@
-import libAssetsPlugin from '@laynezh/vite-plugin-lib-assets'
+import legacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import { join } from 'path'
@@ -6,23 +6,31 @@ import removeComments from 'postcss-discard-comments'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 // @ts-expect-error
 import pxtorem from 'postcss-pxtorem'
-import { defineConfig } from 'vite'
-import dts from 'vite-plugin-dts'
+import { defineConfig, loadEnv } from 'vite'
+import { compression } from 'vite-plugin-compression2'
+import viteProjectInfo from 'vite-plugin-project-info'
+import { VitePWA } from 'vite-plugin-pwa'
 
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command, mode }) => {
+  process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
+
   const buildOnlyPlugins =
     command === 'build'
       ? [
-          dts({
-            exclude: ['vite.config.ts', 'cli/**/*.ts']
+          ViteImageOptimizer(),
+          compression(),
+          viteProjectInfo(),
+          VitePWA({
+            registerType: 'autoUpdate',
+            manifest: { theme_color: '#ffffff' }
           }),
-          libAssetsPlugin(),
-          ViteImageOptimizer()
+          legacy()
         ]
       : []
 
   return {
     plugins: [vue(), ...buildOnlyPlugins],
+    base: process.env.VITE_BASE_URL,
     resolve: {
       alias: {
         '@': join(process.cwd(), 'src')
@@ -32,7 +40,7 @@ export default defineConfig(({ command }) => {
     css: {
       postcss: {
         plugins: [
-          autoprefixer(['chrome > 100']),
+          autoprefixer(),
           pxtorem({
             rootValue: 100,
             propList: ['*']
@@ -48,15 +56,9 @@ export default defineConfig(({ command }) => {
           entryFileNames: 'js/[name].js',
           chunkFileNames: 'js/[name].js',
           assetFileNames: '[ext]/[name].[ext]'
-        },
-        external: ['vue', 'element-plus', 'styles', 'builtins', 'fx-flow', 'mapbox-gl', 'echarts']
+        }
       },
-      minify: true,
-      lib: {
-        entry: join(process.cwd(), 'src/index.ts'),
-        formats: ['es']
-      },
-      sourcemap: true
+      minify: true
     }
   }
 })

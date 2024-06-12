@@ -38,7 +38,9 @@ const autoExport = () => {
 }
 autoExport()
 
-await build()
+await build({
+  configFile: join(process.cwd(), 'vite.lib.config.ts')
+})
 
 const typesTemplate = `#1
 
