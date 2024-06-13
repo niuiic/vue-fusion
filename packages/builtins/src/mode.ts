@@ -1,14 +1,7 @@
 type Mode = 'MOCK' | 'DEV'
 
-const modeList: Mode[] = []
+let modeMap: Record<Mode, boolean> = { DEV: false, MOCK: false }
 
-export const inMode = (mode: Mode) => modeList.includes(mode)
+export const inMode = (mode: Mode) => modeMap[mode]
 
-export const registerMode = (modes: Record<Mode, boolean>) => {
-  modeList.length = 0
-  for (const mode in modes) {
-    if (modes[mode as Mode]) {
-      modeList.push(mode as Mode)
-    }
-  }
-}
+export const registerMode = (modes: Record<Mode, boolean>) => (modeMap = modes)
