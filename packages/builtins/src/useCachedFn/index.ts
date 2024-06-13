@@ -1,14 +1,14 @@
-function useCacheFn<A, R>(fn: (args: A) => Promise<R>): (args: A, force?: boolean) => Promise<R>
-function useCacheFn<R>(fn: () => Promise<R>): (force?: boolean) => Promise<R>
+function useCachedFn<A, R>(fn: (args: A) => Promise<R>): (args: A, force?: boolean) => Promise<R>
+function useCachedFn<R>(fn: () => Promise<R>): (force?: boolean) => Promise<R>
 
-function useCacheFn<A, R>(
+function useCachedFn<A, R>(
   fn: (args?: A) => Promise<R>
 ): ((args: A, force?: boolean) => Promise<R>) | ((force?: boolean) => Promise<R>) {
   let cache: Promise<R> | undefined
 
-  let cacheFn: any
+  let cachedFn: any
   if (fn.length === 0) {
-    cacheFn = (force?: boolean) => {
+    cachedFn = (force?: boolean) => {
       if (force || !cache) {
         try {
           cache = fn()
@@ -20,7 +20,7 @@ function useCacheFn<A, R>(
       return cache
     }
   } else {
-    cacheFn = (args: A, force?: boolean) => {
+    cachedFn = (args: A, force?: boolean) => {
       if (force || !cache) {
         try {
           cache = fn(args)
@@ -33,7 +33,7 @@ function useCacheFn<A, R>(
     }
   }
 
-  return cacheFn
+  return cachedFn
 }
 
-export { useCacheFn }
+export { useCachedFn }

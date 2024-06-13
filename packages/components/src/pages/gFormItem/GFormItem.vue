@@ -26,7 +26,7 @@ const onSubmit = async () => {
 
 <!-- # template -->
 <template>
-  <div class="x-form-item-page">
+  <div class="g-form-item-page">
     <GFormItem v-bind="formItemConfig"></GFormItem>
     <button @click="onSubmit">submit</button>
   </div>

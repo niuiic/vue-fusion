@@ -8,7 +8,7 @@ const data = ref()
 
 <!-- # template -->
 <template>
-  <div class="x-input-page">
+  <div class="g-input-page">
     <GInput v-model="data" type="number"></GInput>
     {{ data }}
   </div>

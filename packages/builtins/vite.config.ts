@@ -24,7 +24,7 @@ export default defineConfig((): UserConfig => {
     },
     plugins: [
       dts({
-        exclude: 'vite.config.ts'
+        exclude: ['vite.config.ts', 'build.ts']
       })
     ]
   }
