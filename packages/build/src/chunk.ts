@@ -1,4 +1,4 @@
-const isCSS = (filePath: string) => new RegExp(/\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\?)/).test(filePath)
+const isCSS = (path: string) => new RegExp(/\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\?)/).test(path)
 
 export const viteChunks = (id: string, { getModuleInfo }: { getModuleInfo: any }) => {
   if (isCSS(id)) {
@@ -6,15 +6,8 @@ export const viteChunks = (id: string, { getModuleInfo }: { getModuleInfo: any }
   }
 
   if (id.includes('node_modules')) {
-    if (id.includes('echarts')) {
-      return 'echarts'
-    }
-    if (id.includes('mapbox-gl')) {
-      return 'mapbox'
-    }
-    if (id.includes('element-plus')) {
-      return 'element'
-    }
+    const packages = ['echarts', 'mapbox-gl', 'three', 'cesium', 'element-plus']
+    return packages.find((x) => id.includes(x)) ?? 'vendor'
   }
 
   if (id.includes('src')) {
