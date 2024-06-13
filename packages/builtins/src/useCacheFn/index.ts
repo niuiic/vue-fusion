@@ -1,41 +1,39 @@
-interface Options<T> {
-  cacheValid: (newArgs: T, oldArgs: T, cacheTime: number) => boolean
-}
+function useCacheFn<A, R>(fn: (args: A) => Promise<R>): (args: A, force?: boolean) => Promise<R>
+function useCacheFn<R>(fn: () => Promise<R>): (force?: boolean) => Promise<R>
 
-export const useCacheFn = <A, R>(
-  fn: (args: A) => Promise<R>,
-  options?: Partial<Options<A>>
-): [cacheFn: (args: A) => Promise<R>, cleanCache: () => void] => {
-  const cacheValid = (_newArgs: A, _oldArgs: A, _cacheTime: number) => {
-    return true
-  }
-  const fixedOptions: Options<A> = {
-    cacheValid: options?.cacheValid ?? cacheValid
-  }
-
-  let oldArgs: A | undefined
-  let cacheTime: number | undefined
+function useCacheFn<A, R>(
+  fn: (args?: A) => Promise<R>
+): ((args: A, force?: boolean) => Promise<R>) | ((force?: boolean) => Promise<R>) {
   let cache: Promise<R> | undefined
 
-  const cacheFn = (args: A) => {
-    if (!cache || !fixedOptions.cacheValid(args, oldArgs!, cacheTime!)) {
-      try {
-        oldArgs = args
-        cacheTime = new Date().getTime()
-        cache = fn(args)
-      } catch (e) {
-        return Promise.reject(e)
+  let cacheFn: any
+  if (fn.length === 0) {
+    cacheFn = (force?: boolean) => {
+      if (force || !cache) {
+        try {
+          cache = fn()
+        } catch (e) {
+          return Promise.reject(e)
+        }
       }
+
+      return cache
     }
+  } else {
+    cacheFn = (args: A, force?: boolean) => {
+      if (force || !cache) {
+        try {
+          cache = fn(args)
+        } catch (e) {
+          return Promise.reject(e)
+        }
+      }
 
-    return cache
+      return cache
+    }
   }
 
-  const cleanCache = () => {
-    oldArgs = undefined
-    cache = undefined
-    cacheTime = undefined
-  }
-
-  return [cacheFn, cleanCache]
+  return cacheFn
 }
+
+export { useCacheFn }
