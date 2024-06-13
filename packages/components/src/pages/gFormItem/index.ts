@@ -1,4 +1,5 @@
 import source from '@/components/gFormItem/GFormItem.vue?raw'
+import doc from '@/components/gFormItem/README.md?raw'
 import type { CodeProps } from '@/utils/code'
 import GFormItem from './GFormItem.vue'
 import example from './GFormItem.vue?raw'
@@ -6,6 +7,11 @@ import example from './GFormItem.vue?raw'
 export const page = GFormItem
 
 export const codeList: CodeProps[] = [
+  {
+    code: doc,
+    language: 'markdown',
+    label: '文档'
+  },
   {
     code: example,
     language: 'vue',
