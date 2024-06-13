@@ -71,7 +71,7 @@ onBeforeMount(() => {
 
 <!-- # template -->
 <template>
-  <div :class="{ 'x-form-item': true, 'x-form-item--error': error !== undefined }">
+  <div :class="{ 'g-form-item': true, 'g-form-item--error': error !== undefined }">
     <component :is="comp" v-bind="$attrs" :model-value="data" @update:model-value="onUpdate"></component>
     <span v-if="error !== undefined" class="error">{{ error }}</span>
   </div>
@@ -79,13 +79,13 @@ onBeforeMount(() => {
 
 <!-- # style -->
 <style lang="scss" scoped>
-.x-form-item {
+.g-form-item {
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.x-form-item:not(.x-form-item--error) {
+.g-form-item:not(.g-form-item--error) {
   margin-bottom: 24px;
 }
 

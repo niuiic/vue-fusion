@@ -12,5 +12,5 @@ const modelValue = defineModel<string | number | undefined>()
 
 <!-- # template -->
 <template>
-  <ElInput v-bind="$attrs" v-model="modelValue" class="x-input"></ElInput>
+  <ElInput v-bind="$attrs" v-model="modelValue" class="g-input"></ElInput>
 </template>
