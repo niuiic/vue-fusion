@@ -50,7 +50,7 @@ export const useObservable = <Data extends AnyObject>(
   ) => void
   onDataChange: (handler: (data: Data) => void) => void
 } => {
-  const onFieldChangeHandlers = new Map<string, (value: unknown, prevValue: unknown) => void>()
+  const onFieldChangeHandlers = new Map<string, Set<(value: any, prevValue: any) => void>>()
   const onChangeHandlers = new Set<(data: Data) => void>()
   let observable: Data = initialData
 
@@ -97,10 +97,7 @@ export const useObservable = <Data extends AnyObject>(
     const prevValue = target[lastKey]
     target[lastKey] = value
 
-    const handler = onFieldChangeHandlers.get(key)
-    if (handler) {
-      handler(value, prevValue)
-    }
+    onFieldChangeHandlers.get(key)?.forEach((handler) => handler(value, prevValue))
 
     onChangeHandlers.forEach((handler) => {
       handler(observable)
@@ -112,7 +109,7 @@ export const useObservable = <Data extends AnyObject>(
     const prevObservable = observable
     observable = data
 
-    onFieldChangeHandlers.forEach((handler, key) => {
+    onFieldChangeHandlers.forEach((set, key) => {
       let value
       try {
         value = nestedGet(observable, key)
@@ -133,7 +130,7 @@ export const useObservable = <Data extends AnyObject>(
           return
         }
       }
-      handler(value, prevValue)
+      set.forEach((handler) => handler(value, prevValue))
     })
 
     onChangeHandlers.forEach((handler) => {
@@ -146,7 +143,10 @@ export const useObservable = <Data extends AnyObject>(
     key: Key,
     handler: (value: NestedProperty<Data, Key>, prevValue: NestedProperty<Data, Key>) => void
   ) => {
-    onFieldChangeHandlers.set(key, handler as any)
+    if (!onFieldChangeHandlers.has(key)) {
+      onFieldChangeHandlers.set(key, new Set())
+    }
+    onFieldChangeHandlers.get(key)?.add(handler)
   }
 
   // ## onDataChange
