@@ -1,15 +1,18 @@
 import { localUniqId } from '@/id'
+import type { Result } from 'fx-flow'
+import { err, ok, toStr } from 'fx-flow'
 
 export const jsonp = <T>(url: string) =>
-  new Promise<T>((resolve, reject) => {
+  new Promise<Result<T>>((resolve) => {
     const callbackName = 'jsonp_callback_' + localUniqId()
+    const reject = (x: any) => resolve(err(toStr(x)))
 
     window[callbackName as any] = function (data: T) {
       delete window[callbackName as any]
       const script = document.getElementById(callbackName)
       script?.removeEventListener('error', reject)
       script?.parentNode?.removeChild(script)
-      resolve(data)
+      resolve(ok(data))
     } as any
 
     const script = document.createElement('script')
