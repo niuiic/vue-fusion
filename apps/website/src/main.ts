@@ -8,8 +8,8 @@ import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
 import { routes } from './config/routes'
 
-__MOCK__ && registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
 registerMode({ DEV: __DEV__, MOCK: __MOCK__ })
+__MOCK__ && registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
 registerPage(import.meta.glob(['./view/pages/**/*.vue', '!**/components/**/*.vue']), './view/pages/')
 
 const router = createRouter({
