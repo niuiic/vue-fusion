@@ -1,5 +1,7 @@
-import type { AnyObject } from 'fx-flow'
+import { toStr, type AnyObject } from 'fx-flow'
+import { inMode } from './mode'
 
+// # nestedGet
 export type NestedProperty<T, K extends string> = K extends ''
   ? T
   : K extends `${infer First}.${infer Rest}`
@@ -14,6 +16,7 @@ export type NestedProperty<T, K extends string> = K extends ''
         : never
       : never
 
+/** 若搜索不到key的上一级则抛出错误 */
 export const nestedGet = <Data extends AnyObject, Key extends string>(
   data: AnyObject,
   key: Key
@@ -23,16 +26,18 @@ export const nestedGet = <Data extends AnyObject, Key extends string>(
   }
 
   let target: any = data
-  key.split('.').forEach((x) => {
-    if (target instanceof Object && x in target) {
-      target = target[x]
-    } else {
-      return
+  const keys = key.split('.')
+  for (const k of keys) {
+    try {
+      target = target[k]
+    } catch (e) {
+      throw new ReferenceError(`nestedGet: ${toStr(e)}`)
     }
-  })
+  }
   return target
 }
 
+// # useObservable
 export const useObservable = <Data extends AnyObject>(
   initialData: Data
 ): {
@@ -45,60 +50,90 @@ export const useObservable = <Data extends AnyObject>(
   ) => void
   onDataChange: (handler: (data: Data) => void) => void
 } => {
-  const setters = new Map<string, (value: any) => void>()
   const onFieldChangeHandlers = new Map<string, (value: unknown, prevValue: unknown) => void>()
   const onChangeHandlers = new Set<(data: Data) => void>()
   let observable: Data = initialData
 
-  const getData = <Key extends string>(setter?: [key: Key, (value: NestedProperty<Data, Key>) => void]) => {
-    if (setter) {
-      setters.set(setter[0], setter[1])
-    }
-    return observable
-  }
+  // ## getData
+  const getData = () => observable
 
+  // ## setData
   const setData = <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => {
     const keys = key.split('.')
     if (keys.length === 0) {
-      return
+      if (inMode('DEV')) {
+        throw new Error('useObservable: key passed to setData should not be an empty string')
+      } else {
+        return
+      }
     }
 
-    const target = nestedGet(observable, keys.slice(0, -1).join('.'))
+    let target
+    try {
+      target = nestedGet(observable, keys.slice(0, -1).join('.'))
+    } catch (e) {
+      if (inMode('DEV')) {
+        throw e
+      } else {
+        return
+      }
+    }
     if (!target) {
-      return
+      if (inMode('DEV')) {
+        throw new Error(`useObservable: unable to find parent key of ${key} when setData`)
+      } else {
+        return
+      }
+    }
+    if (!(target instanceof Object)) {
+      if (inMode('DEV')) {
+        throw new Error(`useObservable: unable to set value for ${key} when setData`)
+      } else {
+        return
+      }
     }
 
     const lastKey = keys[keys.length - 1]
-    if (target instanceof Object) {
-      const prevValue = target[lastKey]
-      target[lastKey] = value
+    const prevValue = target[lastKey]
+    target[lastKey] = value
 
-      const setter = setters.get(key)
-      if (setter) {
-        setter(nestedGet(observable, key))
-      }
-
-      const handler = onFieldChangeHandlers.get(key)
-      if (handler) {
-        handler(value, prevValue)
-      }
-
-      onChangeHandlers.forEach((handler) => {
-        handler(observable)
-      })
+    const handler = onFieldChangeHandlers.get(key)
+    if (handler) {
+      handler(value, prevValue)
     }
+
+    onChangeHandlers.forEach((handler) => {
+      handler(observable)
+    })
   }
 
+  // ## overrideData
   const overrideData = (data: Data) => {
     const prevObservable = observable
     observable = data
 
-    setters.forEach((setter, key) => {
-      setter(nestedGet(observable, key))
-    })
-
     onFieldChangeHandlers.forEach((handler, key) => {
-      handler(nestedGet(observable, key), nestedGet(prevObservable, key))
+      let value
+      try {
+        value = nestedGet(observable, key)
+      } catch (e) {
+        if (inMode('DEV')) {
+          throw e
+        } else {
+          return
+        }
+      }
+      let prevValue
+      try {
+        prevValue = nestedGet(prevObservable, key)
+      } catch (e) {
+        if (inMode('DEV')) {
+          throw e
+        } else {
+          return
+        }
+      }
+      handler(value, prevValue)
     })
 
     onChangeHandlers.forEach((handler) => {
@@ -106,6 +141,7 @@ export const useObservable = <Data extends AnyObject>(
     })
   }
 
+  // ## onDataFieldChange
   const onDataFieldChange = <Key extends string>(
     key: Key,
     handler: (value: NestedProperty<Data, Key>, prevValue: NestedProperty<Data, Key>) => void
@@ -113,6 +149,7 @@ export const useObservable = <Data extends AnyObject>(
     onFieldChangeHandlers.set(key, handler as any)
   }
 
+  // ## onDataChange
   const onDataChange = (handler: (data: Data) => void) => {
     onChangeHandlers.add(handler)
   }

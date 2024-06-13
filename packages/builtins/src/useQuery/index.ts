@@ -56,7 +56,7 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
       try {
         res = await fn(args)
       } catch (e) {
-        inMode('DEV') && console.error(toStr(e))
+        inMode('DEV') && console.error('useQuery:', toStr(e))
         res = err('请求过程中发生错误')
       }
       if (unmounted) {

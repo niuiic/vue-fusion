@@ -1,5 +1,5 @@
-import { nestedGet } from 'builtins'
-import type { AnyObject, MaybePromise } from 'fx-flow'
+import { inMode, nestedGet } from 'builtins'
+import { toStr, type AnyObject, type MaybePromise } from 'fx-flow'
 
 export const formDataValid = async <Data extends AnyObject>(
   formData: Data,
@@ -18,7 +18,10 @@ export const formDataValid = async <Data extends AnyObject>(
     for (const rule of config.rules) {
       const fn = async () => rule(nestedGet(formData, config.dataKey), formData)
       await fn()
-        .catch(() => 'panic')
+        .catch((e) => {
+          inMode('DEV') && console.error('formDataValid:', toStr(e))
+          return '未知错误'
+        })
         .then((x) => (invalid = x !== undefined))
       if (invalid) {
         return false

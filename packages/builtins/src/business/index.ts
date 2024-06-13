@@ -9,7 +9,7 @@ export const business =
   async (args: A): Promise<Result<R>> => {
     const fn = inMode('MOCK') && mock && useMock ? mock : impl
     return fn(args).catch((e) => {
-      inMode('DEV') && console.error(toStr(e))
+      inMode('DEV') && console.error('business:', toStr(e))
       return err('请求过程中发生错误')
     })
   }
