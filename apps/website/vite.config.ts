@@ -1,3 +1,4 @@
+import legacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
 import { viteChunks, viteHtml } from 'build'
@@ -5,18 +6,43 @@ import { join } from 'path'
 import removeComments from 'postcss-discard-comments'
 // @ts-expect-error
 import pxtorem from 'postcss-pxtorem'
+import AutoImport from 'unplugin-auto-import/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import Components from 'unplugin-vue-components/vite'
 import { defineConfig, loadEnv } from 'vite'
 import { compression } from 'vite-plugin-compression2'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import viteProjectInfo from 'vite-plugin-project-info'
+import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(({ command, mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
-  const buildOnlyPlugins = command === 'build' ? [compression(), viteProjectInfo(), ViteImageOptimizer()] : []
+  const buildOnlyPlugins =
+    command === 'build'
+      ? [
+          compression(),
+          viteProjectInfo(),
+          ViteImageOptimizer(),
+          legacy(),
+          VitePWA({
+            registerType: 'autoUpdate',
+            manifest: { theme_color: '#ffffff' }
+          }),
+          AutoImport({
+            resolvers: [ElementPlusResolver()],
+            dts: false
+          }),
+          Components({
+            resolvers: [ElementPlusResolver()],
+            dts: false
+          })
+        ]
+      : []
 
   return {
     define: {
+      __DEV__: mode.includes('dev'),
       __MOCK__: mode.includes('mock')
     },
     plugins: [
@@ -39,7 +65,7 @@ export default defineConfig(({ command, mode }) => {
     css: {
       postcss: {
         plugins: [
-          autoprefixer(['chrome > 100']),
+          autoprefixer(),
           pxtorem({
             rootValue: 100,
             propList: ['*']
