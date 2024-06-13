@@ -3,6 +3,7 @@
 import { computed, onMounted, ref, shallowRef } from 'vue'
 import type { CodeProps } from './utils/code'
 import { Code } from './utils/code'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 // ## page
 const pages = import.meta.glob('./pages/**/index.ts')
@@ -46,28 +47,30 @@ const withCode = computed(() => codeList.value.length > 0)
 
 <!-- # template -->
 <template>
-  <div :class="{ app: true, 'app--with-code': withCode }">
-    <div class="nav">
-      <ol>
-        <li
-          v-for="(x, i) in pageNameList"
-          :key="i"
-          :class="{ entry: true, 'entry--active': x === curPage }"
-          @click="onClickEntry(x)"
-        >
-          {{ x }}
-        </li>
-      </ol>
-    </div>
-    <div class="page">
-      <component :is="page"> </component>
-    </div>
-    <div v-if="withCode" class="code-list">
-      <div class="code-list__inner">
-        <Code v-for="(x, i) in codeList" :key="i" :code="x.code" :language="x.language" :label="x.label"></Code>
+  <el-config-provider :locale="zhCn">
+    <div :class="{ app: true, 'app--with-code': withCode }">
+      <div class="nav">
+        <ol>
+          <li
+            v-for="(x, i) in pageNameList"
+            :key="i"
+            :class="{ entry: true, 'entry--active': x === curPage }"
+            @click="onClickEntry(x)"
+          >
+            {{ x }}
+          </li>
+        </ol>
+      </div>
+      <div class="page">
+        <component :is="page"> </component>
+      </div>
+      <div v-if="withCode" class="code-list">
+        <div class="code-list__inner">
+          <Code v-for="(x, i) in codeList" :key="i" :code="x.code" :language="x.language" :label="x.label"></Code>
+        </div>
       </div>
     </div>
-  </div>
+  </el-config-provider>
 </template>
 
 <!-- # style -->

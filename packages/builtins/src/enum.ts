@@ -1,26 +1,29 @@
-export type Enum<T extends string | symbol | number, R> = {
-  [K in T]: R
-}
+export type Enum<K extends string | symbol | number, V> = Record<K, V>
 
-export function useEnum<A extends string | symbol | number, R>(
-  args: Enum<A, R>,
-  { defaultKey, defaultValue }: { defaultKey?: A; defaultValue?: R }
-) {
-  function map(key: A): R
-  function map(value: R, reverse: true): A
-  function map(search: A | R, reverse?: true): any {
-    if (reverse) {
-      const target = Object.entries(args).find(([_, value]) => value === search)
-      if (target) {
-        return target[0]
-      }
-      return defaultKey
+class EnumClass<K extends string | symbol | number, V> {
+  public constructor(
+    public map: Enum<K, V>,
+    private defaultKey: K,
+    private defaultValue: V
+  ) {}
+
+  public toValue(key: K): V {
+    if (Reflect.has(this.map, key)) {
+      return Reflect.get(this.map, key)
     }
-    if (Reflect.has(args, search as A)) {
-      return Reflect.get(args, search as A)
-    }
-    return defaultValue
+    return this.defaultValue
   }
 
-  return map
+  public toKey(value: V) {
+    for (const key in this.map) {
+      if (this.map[key] === value) {
+        return key
+      }
+    }
+    return this.defaultKey
+  }
+}
+
+export function useEnum<A extends string | symbol | number, R>(map: Enum<A, R>, defaultKey: A, defaultValue: R) {
+  return new EnumClass(map, defaultKey, defaultValue)
 }

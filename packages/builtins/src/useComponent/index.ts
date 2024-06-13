@@ -1,6 +1,6 @@
+import type { ComponentProps } from '@/types'
 import type { Component, Ref, ShallowRef } from 'vue'
 import { ref, shallowRef } from 'vue'
-import type { ComponentProps } from '../types'
 
 export const useComponent = <T extends Component>(
   component: () => Promise<{ default: T }>

@@ -7,14 +7,14 @@
 ```typescript
 import { useComponent } from 'builtins'
 
-const [exampleComp, render, destory, compProps] = useComponent(() => import('./example/Example.vue'))
+const [Example, render, destory, compProps] = useComponent(() => import('./example/Example.vue'))
 ```
 
 2. 使用动态组件
 
 ```vue
 <template>
-  <component :is="exampleComp" v-bind="compProps"></component>
+  <component :is="Example" v-bind="compProps"></component>
 </template>
 
 <script>

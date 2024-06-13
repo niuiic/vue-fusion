@@ -1,8 +1,9 @@
+import { inMode } from '@/mode'
+import { notify } from '@/notify'
 import type { Result } from 'fx-flow'
-import { err } from 'fx-flow'
+import { err, toStr } from 'fx-flow'
 import type { Ref, ShallowRef } from 'vue'
 import { onUnmounted, ref, shallowRef } from 'vue'
-import { notify } from '../notify'
 
 type Fn = (args: any) => Result<any> | Promise<Result<any>>
 type UnwrapResult<T> = T extends Result<infer U> ? U : T
@@ -54,7 +55,8 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
       let res
       try {
         res = await fn(args)
-      } catch {
+      } catch (e) {
+        inMode('DEV') && console.error(toStr(e))
         res = err('请求过程中发生错误')
       }
       if (unmounted) {
