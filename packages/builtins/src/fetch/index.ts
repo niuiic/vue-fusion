@@ -1,7 +1,7 @@
-import type { AxiosInstance, AxiosRequestConfig, CreateAxiosDefaults } from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios'
 import axios from 'axios'
 import type { AnyObject, Result } from 'fx-flow'
-import { err, ok } from 'fx-flow'
+import { err, ok, toStr } from 'fx-flow'
 
 type RequestData = AnyObject
 
@@ -13,16 +13,28 @@ export class Fetch {
   }
 
   public async get<D>(url: string, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await this.instance.get(url, fixedOptions(options)).then(
-      (response) => okRes(response),
-      (err) => errRes(err)
-    )
+    return this.instance.get(url, fixedOptions(options)).then(okRes, errRes)
   }
 
   public async post<D>(url: string, data?: RequestData, options?: AxiosRequestConfig): Promise<Result<D>> {
-    return await this.instance.post(url, data, fixedOptions(options)).then(
-      (response) => okRes(response),
-      (err) => errRes(err)
+    return this.instance.post(url, data, fixedOptions(options)).then(okRes, errRes)
+  }
+
+  public async rawGet<D>(url: string, options?: AxiosRequestConfig): Promise<Result<AxiosResponse<D>>> {
+    return this.instance.get(url, fixedOptions(options)).then(
+      (response) => ok(response),
+      (e) => err(toStr(e))
+    )
+  }
+
+  public async rawPost<D>(
+    url: string,
+    data?: RequestData,
+    options?: AxiosRequestConfig
+  ): Promise<Result<AxiosResponse<D>>> {
+    return this.instance.post(url, data, fixedOptions(options)).then(
+      (response) => ok(response),
+      (e) => err(toStr(e))
     )
   }
 }
