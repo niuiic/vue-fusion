@@ -4,6 +4,7 @@ import { computed, onMounted, ref, shallowRef } from 'vue'
 import type { CodeProps } from './utils/code'
 import { Code } from './utils/code'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import { ElConfigProvider } from 'element-plus'
 
 // ## page
 const pages = import.meta.glob('./pages/**/index.ts')
