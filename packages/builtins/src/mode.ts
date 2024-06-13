@@ -4,7 +4,11 @@ const modeList: Mode[] = []
 
 export const getModes = (): ReadonlyArray<Mode> => modeList
 
-export const registerModes = (modes: (Mode | undefined)[]) => {
+export const registerModes = (modes: Record<Mode, boolean>) => {
   modeList.length = 0
-  new Set(modes).forEach((x) => x && modeList.push(x))
+  for (const mode in modes) {
+    if (modes[mode as Mode]) {
+      modeList.push(mode as Mode)
+    }
+  }
 }

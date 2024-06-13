@@ -7,7 +7,7 @@
 ```typescript
 import { registerModes } from 'builtins'
 
-registerModes([import.meta.env.MODE.includes('mock') ? 'MOCK' : undefined])
+registerModes({ DEV: import.meta.env.MODE.includes('dev'), MOCK: __MOCK__ })
 ```
 
 2. 注册business。

@@ -12,7 +12,7 @@ import App from './App.vue'
 import { routes } from './config/routes'
 
 __MOCK__ && registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
-registerModes([import.meta.env.MODE.includes('dev') ? 'DEV' : undefined, __MOCK__ ? 'MOCK' : undefined])
+registerModes({ DEV: import.meta.env.MODE.includes('dev'), MOCK: __MOCK__ })
 registerPage(import.meta.glob(['./view/pages/**/*.vue', '!**/components/**/*.vue']), './view/pages/')
 
 const router = createRouter({
