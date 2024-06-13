@@ -5,9 +5,9 @@
 1. 注册模式。
 
 ```typescript
-import { registerModes } from 'builtins'
+import { registerMode } from 'builtins'
 
-registerModes({ DEV: import.meta.env.MODE.includes('dev'), MOCK: __MOCK__ })
+registerMode({ DEV: import.meta.env.MODE.includes('dev'), MOCK: __MOCK__ })
 ```
 
 2. 注册business。

@@ -2,9 +2,9 @@ type Mode = 'MOCK' | 'DEV'
 
 const modeList: Mode[] = []
 
-export const getModes = (): ReadonlyArray<Mode> => modeList
+export const inMode = (mode: Mode) => modeList.includes(mode)
 
-export const registerModes = (modes: Record<Mode, boolean>) => {
+export const registerMode = (modes: Record<Mode, boolean>) => {
   modeList.length = 0
   for (const mode in modes) {
     if (modes[mode as Mode]) {
