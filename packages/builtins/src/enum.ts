@@ -1,29 +1,21 @@
 export type Enum<K extends string | symbol | number, V> = Record<K, V>
 
-class EnumClass<K extends string | symbol | number, V> {
-  public constructor(
-    public map: Enum<K, V>,
-    private defaultKey: K,
-    private defaultValue: V
-  ) {}
-
-  public toValue(key: K): V {
-    if (Reflect.has(this.map, key)) {
-      return Reflect.get(this.map, key)
+export function useEnum<K extends string | symbol | number, V>(map: Enum<K, V>, defaultKey: K, defaultValue: V) {
+  const toValue = (key: K): V => {
+    if (Reflect.has(map, key)) {
+      return Reflect.get(map, key)
     }
-    return this.defaultValue
+    return defaultValue
   }
 
-  public toKey(value: V) {
-    for (const key in this.map) {
-      if (this.map[key] === value) {
+  const toKey = (value: V) => {
+    for (const key in map) {
+      if (map[key] === value) {
         return key
       }
     }
-    return this.defaultKey
+    return defaultKey
   }
-}
 
-export function useEnum<A extends string | symbol | number, R>(map: Enum<A, R>, defaultKey: A, defaultValue: R) {
-  return new EnumClass(map, defaultKey, defaultValue)
+  return { toValue, toKey, map }
 }
