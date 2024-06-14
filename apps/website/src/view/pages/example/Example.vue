@@ -16,7 +16,7 @@ interface FormData {
 const { getData, setData, overrideData, onDataFieldChange } = useObservable<Partial<FormData>>({})
 onBeforeMount(() => {
   flow(
-    ok({ id: '1' }),
+    ok({ id: '0' }),
     andThen(queryUserBiz),
     andThen(toTry((args: User) => overrideData(args))),
     errThen(notify('error'))
