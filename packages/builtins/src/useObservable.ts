@@ -1,5 +1,5 @@
-import { toStr, type AnyObject } from 'fx-flow'
-import { inMode } from './mode'
+import { trace } from '@/trace'
+import type { AnyObject } from 'fx-flow'
 
 // # nestedGet
 export type NestedProperty<T, K extends string> = K extends ''
@@ -31,7 +31,9 @@ export const nestedGet = <Data extends AnyObject, Key extends string>(
     try {
       target = target[k]
     } catch (e) {
-      throw new ReferenceError(`nestedGet: ${toStr(e)}`)
+      throw new ReferenceError('nestedGet', {
+        cause: e
+      })
     }
   }
   return target
@@ -61,36 +63,24 @@ export const useObservable = <Data extends AnyObject>(
   const setData = <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => {
     const keys = key.split('.')
     if (keys.length === 0) {
-      if (inMode('DEV')) {
-        throw new Error('useObservable: key passed to setData should not be an empty string')
-      } else {
-        return
-      }
+      trace('useObservable: key passed to setData should not be an empty string')
+      return
     }
 
     let target
     try {
       target = nestedGet(observable, keys.slice(0, -1).join('.'))
     } catch (e) {
-      if (inMode('DEV')) {
-        throw e
-      } else {
-        return
-      }
+      trace('useObservable:', e)
+      return
     }
     if (!target) {
-      if (inMode('DEV')) {
-        throw new Error(`useObservable: unable to find parent key of ${key} when setData`)
-      } else {
-        return
-      }
+      trace(`useObservable: failed to find parent key of ${key} when setData`)
+      return
     }
     if (!(target instanceof Object)) {
-      if (inMode('DEV')) {
-        throw new Error(`useObservable: unable to set value for ${key} when setData`)
-      } else {
-        return
-      }
+      trace(`useObservable: failed to set value for ${key} when setData`)
+      return
     }
 
     const lastKey = keys[keys.length - 1]
@@ -114,21 +104,15 @@ export const useObservable = <Data extends AnyObject>(
       try {
         value = nestedGet(observable, key)
       } catch (e) {
-        if (inMode('DEV')) {
-          throw e
-        } else {
-          return
-        }
+        trace('useObservable:', e)
+        return
       }
       let prevValue
       try {
         prevValue = nestedGet(prevObservable, key)
       } catch (e) {
-        if (inMode('DEV')) {
-          throw e
-        } else {
-          return
-        }
+        trace('useObservable:', e)
+        return
       }
       set.forEach((handler) => handler(value, prevValue))
     })

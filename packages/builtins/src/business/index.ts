@@ -1,6 +1,7 @@
 import { inMode } from '@/mode'
+import { trace } from '@/trace'
 import type { Result } from 'fx-flow'
-import { err, toStr } from 'fx-flow'
+import { err } from 'fx-flow'
 
 type BusinessFn<A, R> = (args: A) => Promise<Result<R>>
 
@@ -9,7 +10,7 @@ export const business =
   async (args: A): Promise<Result<R>> => {
     const fn = inMode('MOCK') && mock && useMock ? mock : impl
     return fn(args).catch((e) => {
-      inMode('DEV') && console.error('business:', toStr(e))
+      trace('business:', e)
       return err('请求过程中发生错误')
     })
   }

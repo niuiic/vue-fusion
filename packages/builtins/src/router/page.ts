@@ -14,7 +14,7 @@ export const usePage = (page: string) => {
   const fixedPage = prefix ? `${prefix}${page}.vue` : `${page}.vue`
 
   if (!Reflect.has(pages, fixedPage)) {
-    throw new Error(`router page ${page} not found`)
+    throw new ReferenceError(`usePage: router page ${page} not found`)
   }
 
   return Reflect.get(pages, fixedPage)

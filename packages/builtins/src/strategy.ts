@@ -40,7 +40,7 @@ function useStrategies<T extends string | symbol | number, A, R>(
     }
   }
 
-  throw new Error('The strategies do not fully cover all cases')
+  throw new ReferenceError('useStrategies: the strategies do not fully cover all cases')
 }
 
 export { strategy, useStrategies }

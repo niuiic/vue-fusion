@@ -1,7 +1,7 @@
 <!-- # script -->
 <script setup lang="ts">
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue'
-import { inMode, nestedGet } from 'builtins'
+import { nestedGet, trace } from 'builtins'
 import type { CommonConfig } from './nonBusiness'
 import { toStr } from 'fx-flow'
 
@@ -22,7 +22,7 @@ const comp = defineAsyncComponent(() => {
       return import('../gInput/GInput.vue')
     }
     default:
-      throw new Error(`nothing matched for the type ${props.itemType}`)
+      throw new Error(`GFormItem: nothing matched for the type ${props.itemType}`)
   }
 })
 
@@ -33,7 +33,7 @@ onBeforeMount(() => {
   props.onDataFieldChange(props.dataKey, assignData)
   Promise.resolve(nestedGet(props.getData(), props.dataKey))
     .then((x) => (data.value = x))
-    .catch((e) => inMode('DEV') && console.error('GFormItem:', e))
+    .catch((e) => trace('GFormItem:', e))
 })
 const onUpdate = (value: unknown) => {
   props.setData(props.dataKey, value)

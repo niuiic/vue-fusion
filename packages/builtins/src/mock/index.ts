@@ -8,10 +8,10 @@ export const useMock =
   (...args: any[]) => {
     const moduleName = prefix ? `${prefix}${module}` : module
 
-    const targetModule = Reflect.get(modules, moduleName + '.ts') ?? Reflect.get(modules, moduleName + '/index.ts')
+    const targetModule = modules[moduleName + '.ts'] ?? modules[moduleName + '/index.ts']
 
     if (!targetModule) {
-      throw new ReferenceError(`cannot found module ${moduleName}`)
+      throw new ReferenceError(`useMock: failed to found module ${moduleName}`)
     }
 
     return targetModule().then(
@@ -19,17 +19,19 @@ export const useMock =
         const targetFn = Reflect.get(x, fn)
 
         if (!targetFn) {
-          throw new ReferenceError(`cannot found function ${fn} in module ${moduleName}`)
+          throw new ReferenceError(`useMock: failed to found function ${fn} in module ${moduleName}`)
         }
 
         if (typeof targetFn !== 'function') {
-          throw new TypeError(`${fn} is not a function`)
+          throw new TypeError(`useMock: ${fn} is not a function`)
         }
 
         return targetFn(...args)
       },
-      () => {
-        throw new ReferenceError(`cannot import module ${moduleName}`)
+      (e) => {
+        throw new ReferenceError(`useMock: failed to import module ${moduleName}`, {
+          cause: e
+        })
       }
     )
   }
