@@ -1,5 +1,5 @@
+import { logErr } from '@/log'
 import { notify } from '@/notify'
-import { trace } from '@/trace'
 import type { Result } from 'fx-flow'
 import { err } from 'fx-flow'
 import type { Ref, ShallowRef } from 'vue'
@@ -56,7 +56,7 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
       try {
         res = await fn(args)
       } catch (e) {
-        trace('useQuery:', e)
+        logErr('useQuery:', e)
         res = err('请求过程中发生错误')
       }
       if (unmounted) {

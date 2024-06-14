@@ -1,5 +1,5 @@
+import { logErr } from '@/log'
 import { inMode } from '@/mode'
-import { trace } from '@/trace'
 import type { Result } from 'fx-flow'
 import { err } from 'fx-flow'
 
@@ -10,7 +10,7 @@ export const business =
   async (args: A): Promise<Result<R>> => {
     const fn = inMode('MOCK') && mock && useMock ? mock : impl
     return fn(args).catch((e) => {
-      trace('business:', e)
+      logErr('business:', e)
       return err('请求过程中发生错误')
     })
   }

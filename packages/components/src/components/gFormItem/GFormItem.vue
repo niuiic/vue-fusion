@@ -1,7 +1,7 @@
 <!-- # script -->
 <script setup lang="ts">
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue'
-import { nestedGet, trace } from 'builtins'
+import { logErr, nestedGet } from 'builtins'
 import type { CommonConfig } from './nonBusiness'
 import { toStr } from 'fx-flow'
 
@@ -33,7 +33,7 @@ onBeforeMount(() => {
   props.onDataFieldChange(props.dataKey, assignData)
   Promise.resolve(nestedGet(props.getData(), props.dataKey))
     .then((x) => (data.value = x))
-    .catch((e) => trace('GFormItem:', e))
+    .catch((e) => logErr('GFormItem:', e))
 })
 const onUpdate = (value: unknown) => {
   props.setData(props.dataKey, value)

@@ -1,4 +1,4 @@
-import { trace } from '@/trace'
+import { logErr } from '@/log'
 import type { AnyObject } from 'fx-flow'
 
 // # nestedGet
@@ -63,7 +63,7 @@ export const useObservable = <Data extends AnyObject>(
   const setData = <Key extends string>(key: Key, value: NestedProperty<Data, Key>) => {
     const keys = key.split('.')
     if (keys.length === 0) {
-      trace('useObservable: key passed to setData should not be an empty string')
+      logErr('useObservable: key passed to setData should not be an empty string')
       return
     }
 
@@ -71,15 +71,15 @@ export const useObservable = <Data extends AnyObject>(
     try {
       target = nestedGet(observable, keys.slice(0, -1).join('.'))
     } catch (e) {
-      trace('useObservable:', e)
+      logErr('useObservable:', e)
       return
     }
     if (!target) {
-      trace(`useObservable: failed to find parent key of ${key} when setData`)
+      logErr(`useObservable: failed to find parent key of ${key} when setData`)
       return
     }
     if (!(target instanceof Object)) {
-      trace(`useObservable: failed to set value for ${key} when setData`)
+      logErr(`useObservable: failed to set value for ${key} when setData`)
       return
     }
 
@@ -104,14 +104,14 @@ export const useObservable = <Data extends AnyObject>(
       try {
         value = nestedGet(observable, key)
       } catch (e) {
-        trace('useObservable:', e)
+        logErr('useObservable:', e)
         return
       }
       let prevValue
       try {
         prevValue = nestedGet(prevObservable, key)
       } catch (e) {
-        trace('useObservable:', e)
+        logErr('useObservable:', e)
         return
       }
       set.forEach((handler) => handler(value, prevValue))
