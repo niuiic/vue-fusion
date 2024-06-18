@@ -26,8 +26,8 @@ query({ num: 1 })
 // interface Options<T> {
 //   debounce: number | false
 //   polling: number | false
-//   onSuccess: (data: T) => void
-//   onError: (err: string) => void
+//   onOk: (data: T) => void
+//   onErr: (err: string) => void
 //   updateData: (oldData: T | undefined, newData: T, setData: (data: T) => void) => void
 // }
 
@@ -36,8 +36,8 @@ query({ num: 1 })
 //     const fixedOptions: Options<Data> = {
 //       debounce: options?.debounce ?? false,
 //       polling: options?.polling ?? false,
-//       onSuccess: options?.onSuccess ?? doNothing,
-//       onError: options?.onError ?? notify('error'),
+//       onOk: options?.onOk ?? doNothing,
+//       onErr: options?.onErr ?? notify('error'),
 //       updateData: options?.updateData ?? updateData
 //     }
 ```

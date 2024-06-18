@@ -11,8 +11,8 @@ type UnwrapResult<T> = T extends Result<infer U> ? U : T
 interface Options<T> {
   debounce: number | false
   polling: number | false
-  onSuccess: (data: T) => void
-  onError: (err: string) => void
+  onOk: (data: T) => void
+  onErr: (err: string) => void
   updateData: (oldData: T | undefined, newData: T, setData: (data: T) => void) => void
 }
 
@@ -41,8 +41,8 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
     const fixedOptions: Options<Data> = {
       debounce: options?.debounce ?? false,
       polling: options?.polling ?? false,
-      onSuccess: options?.onSuccess ?? doNothing,
-      onError: options?.onError ?? notify('error'),
+      onOk: options?.onOk ?? doNothing,
+      onErr: options?.onErr ?? notify('error'),
       updateData: options?.updateData ?? updateData
     }
 
@@ -67,13 +67,13 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
       }
       loading.value = false
       if (res.isErr()) {
-        options.onError(res.error()!)
+        options.onErr(res.error()!)
         return
       }
 
       const resData = res.unwrap()
       fixedOptions.updateData(data.value, resData, setData)
-      options.onSuccess(resData)
+      options.onOk(resData)
     }
 
     if (fixedOptions.polling !== false) {
