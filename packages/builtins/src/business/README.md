@@ -18,10 +18,10 @@ import { ok } from 'fx-flow'
 
 const queryXxxBiz = business<{ input: string }, { output: string }>(
   async (args) => ok({ output: args.input }),
-  useMock('xxx', 'queryXxxMock')
+  () => import('xxx').then((x) => x.queryXxxMock)
 )
 ```
 
-`queryXxxBiz`的类型为`(args: { input: string }) => Promise<{ output: string }>`。在mock模式下会调用第二个参数，非mock模式下调用第一个参数。
+`queryXxxBiz`的类型为`() => Promise<(args: { input: string }) => Promise<{ output: string }>>`。在mock模式下会调用第二个参数，非mock模式下调用第一个参数。
 
 可设置`business`的第三个参数为false以暂时停止使用mock。

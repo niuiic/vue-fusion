@@ -1,4 +1,4 @@
-import { registerMock, registerMode, registerPage, toRouteRecordRaws } from 'builtins'
+import { registerMode, registerPage, toRouteRecordRaws } from 'builtins'
 import 'components/dist/css/style.css'
 import 'element-plus/dist/index.css'
 import { createPinia } from 'pinia'
@@ -9,7 +9,6 @@ import App from './App.vue'
 import { routes } from './config/routes'
 
 registerMode({ DEV: __DEV__, MOCK: __MOCK__ })
-__MOCK__ && registerMock(import.meta.glob('./mock/**/*.ts'), './mock/')
 registerPage(import.meta.glob(['./view/pages/**/*.vue', '!**/components/**/*.vue']), './view/pages/')
 
 const router = createRouter({
