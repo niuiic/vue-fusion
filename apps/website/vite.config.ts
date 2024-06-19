@@ -54,7 +54,7 @@ export default defineConfig(({ command, mode }) => {
     ],
     base: process.env.VITE_BASE_URL,
     server: {
-      port: 8080
+      port: 9000
     },
     resolve: {
       alias: {

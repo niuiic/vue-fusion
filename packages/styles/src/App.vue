@@ -1,6 +1,6 @@
 <!-- # script -->
 <script setup lang="ts">
-import { computed, defineAsyncComponent, onMounted, ref, shallowRef } from 'vue'
+import { computed, onMounted, ref, shallowRef } from 'vue'
 import type { CodeProps } from './utils/code'
 import { Code } from './utils/code'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
@@ -16,16 +16,15 @@ const pageNameList = Object.keys(pages)
 
 const page = shallowRef()
 const renderPage = () => {
-  import('./pages/dashboard/Dashboard.vue').then((x) => (page.value = x))
-  // const pageName = window.location.pathname.slice(import.meta.env.VITE_BASE_URL.length)
-  // if (!pageName) {
-  //   return
-  // }
-  // import(`./pages/${pageName}/index.ts`).then((x) => {
-  //   page.value = x.page
-  //   codeList.value = x.codeList ?? []
-  //   curPage.value = pageName
-  // })
+  const pageName = window.location.pathname.slice(import.meta.env.VITE_BASE_URL.length)
+  if (!pageName) {
+    return
+  }
+  import(`./pages/${pageName}/index.ts`).then((x) => {
+    page.value = x.page
+    codeList.value = x.codeList ?? []
+    curPage.value = pageName
+  })
 }
 onMounted(renderPage)
 window.addEventListener('popstate', renderPage)
@@ -63,8 +62,7 @@ const withCode = computed(() => codeList.value.length > 0)
         </ol>
       </div>
       <div class="page">
-        <!-- <component :is="defineAsyncComponent(async () => page)" v-if="page"> </component> -->
-        <component :is="defineAsyncComponent(() => import('./pages/dashboard/Dashboard.vue'))"></component>
+        <component :is="page"></component>
       </div>
       <div v-if="withCode" class="code-list">
         <div class="code-list__inner">
