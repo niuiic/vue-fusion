@@ -174,3 +174,26 @@ flowchart TB
 - 无接口时辅助页面开发。
 - 样式与逻辑测试。
 - 为演示系统提供数据支撑。
+
+### 简化项目结构
+
+```
+src/
+  assets/
+  business/
+    example/
+      api.ts
+      mock.ts
+      index.ts
+  config/
+    enum/
+    routes.ts
+    ...
+  view/
+    components/
+    pages/
+  App.vue
+  main.ts
+```
+
+简单项目中可将mock、api、business和model四层在结构上合一。
