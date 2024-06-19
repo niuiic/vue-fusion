@@ -73,9 +73,9 @@ onBeforeMount(() => {
 
 <!-- # template -->
 <template>
-  <div :class="{ 'g-form-item': true, 'g-form-item--error': error !== undefined }">
+  <div :class="{ 'g-form-item': true, 'g-form-item--no-error': props.showErr !== false && error === undefined }">
     <component :is="comp" v-bind="$attrs" :model-value="data" @update:model-value="onUpdate"></component>
-    <span v-if="error !== undefined" class="error">{{ error }}</span>
+    <span v-if="props.showErr !== false && error !== undefined" class="error">{{ error }}</span>
   </div>
 </template>
 
@@ -87,7 +87,7 @@ onBeforeMount(() => {
   gap: 4px;
 }
 
-.g-form-item:not(.g-form-item--error) {
+.g-form-item--no-error {
   margin-bottom: 24px;
 }
 
