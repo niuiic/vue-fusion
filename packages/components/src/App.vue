@@ -7,7 +7,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { ElConfigProvider } from 'element-plus'
 
 // ## page
-const pages = import.meta.glob('./pages/**/index.ts')
+const pages = import.meta.glob(['./pages/**/index.ts', '!./pages/**/components/**/index.ts'])
 const pageNameList = Object.keys(pages)
   .map((x) => {
     const matched = x.match(/\.\/pages\/(.+)\/index\.ts/)

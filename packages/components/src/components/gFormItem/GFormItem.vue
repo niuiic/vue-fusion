@@ -12,7 +12,9 @@ defineOptions({
 type Props = {
   itemType: string
 } & CommonConfig
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  showErr: true
+})
 
 // ## 表单项组件
 const comp = defineAsyncComponent(() => {

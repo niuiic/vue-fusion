@@ -8,7 +8,7 @@ export interface CommonConfig {
   dataKey: string
   rules?: ((value: any, formData: AnyObject) => MaybePromise<string | undefined>)[]
   /** 默认为true */
-  showErr?: false
+  showErr?: boolean
 }
 
 export type InputConfig = {
