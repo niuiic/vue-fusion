@@ -1,9 +1,8 @@
 <!-- # script -->
 <script setup lang="ts">
 import { defineAsyncComponent, onBeforeMount, ref } from 'vue'
-import { logErr, nestedGet } from 'builtins'
+import { logErr, nestedGet, toStr } from 'builtins'
 import type { CommonConfig } from './nonBusiness'
-import { toStr } from 'fx-flow'
 
 // ## 组件配置
 defineOptions({

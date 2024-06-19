@@ -17,7 +17,7 @@ export default defineConfig((): UserConfig => {
         fileName: 'index'
       },
       rollupOptions: {
-        external: ['fx-flow', 'date-fns']
+        external: ['date-fns']
       },
       sourcemap: true,
       minify: true

@@ -5,7 +5,7 @@
 1. 定义query。
 
 ```typescript
-import { ok } from 'fx-flow'
+import { ok } from 'builtins'
 
 const queryFn = (args: { num: number }) => Promise.resolve(ok(num))
 

@@ -1,5 +1,5 @@
 import { logErr } from '@/log'
-import type { AnyObject } from 'fx-flow'
+import type { AnyObject } from '@/types'
 
 // # nestedGet
 export type NestedProperty<T, K extends string> = K extends ''

@@ -1,6 +1,7 @@
 import { localUniqId } from '@/id'
-import type { Result } from 'fx-flow'
-import { err, ok, toStr } from 'fx-flow'
+import type { Result } from '@/result'
+import { err, ok } from '@/result'
+import { toStr } from '@/toStr'
 
 export const jsonp = <T>(url: string) =>
   new Promise<Result<T>>((resolve) => {

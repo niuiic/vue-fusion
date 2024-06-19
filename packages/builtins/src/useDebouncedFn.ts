@@ -1,4 +1,4 @@
-import type { AnyFunction } from 'fx-flow'
+import type { AnyFunction } from '@/types'
 
 export const useDebouncedFn = <T extends AnyFunction>(fn: T, delay: number): ((...args: Parameters<T>) => void) => {
   let timer: any

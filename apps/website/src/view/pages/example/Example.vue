@@ -4,9 +4,7 @@ import type { InputConfig } from 'components'
 import { formDataValid } from 'components'
 import { notify, useObservable } from 'builtins'
 import { onBeforeMount } from 'vue'
-import { ok, andThen, errThen, flow, toTry } from 'fx-flow'
 import { queryUserBiz, updateUserBiz } from '@/business/impl/user'
-import type { User } from '@/model/user'
 import { GFormItem } from 'components'
 
 // ## 表单数据
@@ -14,13 +12,13 @@ interface FormData {
   name: string
 }
 const { getData, setData, overrideData, onDataFieldChange } = useObservable<Partial<FormData>>({})
-onBeforeMount(() => {
-  flow(
-    ok({ id: '0' }),
-    andThen(queryUserBiz),
-    andThen(toTry((args: User) => overrideData(args))),
-    errThen(notify('error'))
-  )
+onBeforeMount(async () => {
+  const res = await queryUserBiz({ id: '0' })
+  if (res.ok) {
+    overrideData(res.data)
+  } else {
+    notify('error', res.err)
+  }
 })
 
 // ## 表单配置
@@ -40,15 +38,15 @@ const onSubmit = async () => {
     return
   }
 
-  flow(
-    ok({
-      id: '1',
-      ...(getData() as FormData)
-    }),
-    andThen(updateUserBiz),
-    errThen(notify('error')),
-    andThen(toTry(() => notify('success', '用户信息更新成功')))
-  )
+  const res = await updateUserBiz({
+    id: '1',
+    ...(getData() as FormData)
+  })
+  if (res.ok) {
+    notify('success', '用户信息更新成功')
+  } else {
+    notify('error', res.err)
+  }
 }
 </script>
 

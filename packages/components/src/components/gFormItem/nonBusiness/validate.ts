@@ -1,5 +1,5 @@
+import type { AnyObject, MaybePromise } from 'builtins'
 import { logErr, nestedGet } from 'builtins'
-import type { AnyObject, MaybePromise } from 'fx-flow'
 
 export const formDataValid = async <Data extends AnyObject>(
   formData: Data,

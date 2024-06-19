@@ -1,7 +1,6 @@
 import type { QueryUserReq, QueryUserRes, UpdateUserReq, UpdateUserRes } from '@/business/def/user'
 import { newUser } from '@/model/user'
-import { mock } from 'builtins'
-import { err, ok } from 'fx-flow'
+import { err, mock, ok } from 'builtins'
 
 const users = [newUser({ name: '用户1' }), newUser({ name: '用户2' })]
 

@@ -13,8 +13,7 @@ registerMode({ DEV: import.meta.env.MODE.includes('dev'), MOCK: __MOCK__ })
 2. 注册business。
 
 ```typescript
-import { business } from 'builtins'
-import { ok } from 'fx-flow'
+import { business, ok } from 'builtins'
 
 const queryXxxBiz = business<{ input: string }, { output: string }>(
   async (args) => ok({ output: args.input }),

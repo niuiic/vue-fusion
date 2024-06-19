@@ -1,7 +1,7 @@
 import { logErr } from '@/log'
 import { inMode } from '@/mode'
-import type { Result } from 'fx-flow'
-import { err } from 'fx-flow'
+import type { Result } from '@/result'
+import { err } from '@/result'
 
 type BusinessFn<A, R> = (args: A) => Promise<Result<R>>
 

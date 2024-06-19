@@ -36,7 +36,7 @@ export default defineConfig(({ _ }) => ({
         chunkFileNames: 'js/[name].js',
         assetFileNames: '[ext]/[name].[ext]'
       },
-      external: ['vue', 'element-plus', 'styles', 'builtins', 'fx-flow', 'mapbox-gl', 'echarts', 'cesium', 'three']
+      external: ['vue', 'element-plus', 'styles', 'builtins', 'mapbox-gl', 'echarts', 'cesium', 'three']
     },
     minify: true,
     lib: {

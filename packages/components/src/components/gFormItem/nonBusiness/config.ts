@@ -1,6 +1,5 @@
-import type { ComponentProps } from 'builtins'
+import type { AnyObject, ComponentProps, MaybePromise } from 'builtins'
 import type { ElInput } from 'element-plus'
-import type { AnyObject, MaybePromise } from 'fx-flow'
 
 export interface CommonConfig {
   getData: () => AnyObject

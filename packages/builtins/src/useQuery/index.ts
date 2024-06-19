@@ -1,7 +1,7 @@
 import { logErr } from '@/log'
 import { notify } from '@/notify'
-import type { Result } from 'fx-flow'
-import { err } from 'fx-flow'
+import type { Result } from '@/result'
+import { err } from '@/result'
 import type { Ref, ShallowRef } from 'vue'
 import { onUnmounted, ref, shallowRef } from 'vue'
 
@@ -66,14 +66,13 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
         return
       }
       loading.value = false
-      if (res.isErr()) {
-        options.onErr(res.error()!)
+      if (!res.ok) {
+        options.onErr(res.err)
         return
       }
 
-      const resData = res.unwrap()
-      fixedOptions.updateData(data.value, resData, setData)
-      options.onOk(resData)
+      fixedOptions.updateData(data.value, res.data, setData)
+      options.onOk(res.data)
     }
 
     if (fixedOptions.polling !== false) {

@@ -1,4 +1,4 @@
-import type { AnyObject } from 'fx-flow'
+import type { AnyObject } from '@/types'
 
 type AnyClass = new (id: string, ...rest: any[]) => AnyObject
 

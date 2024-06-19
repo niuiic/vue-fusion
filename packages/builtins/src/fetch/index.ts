@@ -1,7 +1,9 @@
+import type { Result } from '@/result'
+import { err, ok } from '@/result'
+import { toStr } from '@/toStr'
+import type { AnyObject } from '@/types'
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios'
 import axios from 'axios'
-import type { AnyObject, Result } from 'fx-flow'
-import { err, ok, toStr } from 'fx-flow'
 
 type RequestData = AnyObject
 

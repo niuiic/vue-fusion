@@ -146,34 +146,6 @@ flowchart TB
 
 ## 其他
 
-### 利用函数式工具库构建控制流
-
-以下是利用[fx-flow](https://fx-flow.niuiic.com/)构建控制流的一个案例。`转换参数->调用接口->转换返回值->统一错误信息`。
-
-`flow`函数可自动等待异步操作，自动捕获错误。
-
-```typescript
-const queryCompanyStatisticsInfoBiz = business(async (args) =>
-  flow(
-    ok(args),
-    into((data) => ({ companyCode: data.company })),
-    andThen(queryCompanyStatisticsInfoApi),
-    andThen((data) =>
-      ok(
-        format([
-          ['场站', data.stationCount, '个'],
-          ['气瓶', data.cylinderCount, '支'],
-          ['车辆', data.carCount, '辆'],
-          ['从业人员', data.employeeCount, '人'],
-          ['用户', data.customerCount, '户']
-        ])
-      )
-    ),
-    mapErr(() => '查询企业统计信息失败')
-  )
-)
-```
-
 ### 注释分割线
 
 <img src="https://github.com/niuiic/assets/blob/main/vue-fusion/divider.png" />
