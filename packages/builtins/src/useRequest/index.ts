@@ -11,14 +11,19 @@ type UnwrapResult<T> = T extends Result<infer U> ? U : T
 interface Options<T> {
   debounce: number | false
   polling: number | false
+  /**
+   * 在updateData后执行
+   * data等同于updateData选项的newData
+   */
   onOk: (data: T) => void
   onErr: (err: string) => void
   updateData: (oldData: T | undefined, newData: T, setData: (data: T) => void) => void
 }
 
 const doNothing = () => {}
+const updateData = (_: any, newData: any, setData: (data: any) => void) => setData(newData)
 
-export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>>>, Args = Parameters<T>[0]>(
+export const useRequest = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>>>, Args = Parameters<T>[0]>(
   fn: T,
   options?: {
     shallowRefData?: boolean
@@ -26,7 +31,7 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
 ): [
   data: ShallowRef<Data | undefined> | Ref<Data | undefined>,
   loading: Ref<boolean>,
-  query: (args: Args, Options?: Partial<Options<Data>>) => void
+  request: (args: Args, Options?: Partial<Options<Data>>) => void
 ] => {
   const data = options?.shallowRefData ? shallowRef<Data>() : ref<Data>()
   const setData = (newData: Data) => (data.value = newData)
@@ -34,10 +39,8 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
   let pollingTimer: any
   let debounceTimer: any
   let requestCount = 0
-  let unmounted = false
 
-  const query = (args: Args, options?: Partial<Options<Data>>): void => {
-    const updateData = (_: Data | undefined, newData: Data, setData: (data: Data) => void) => setData(newData)
+  const request = (args: Args, options?: Partial<Options<Data>>): void => {
     const fixedOptions: Options<Data> = {
       debounce: options?.debounce ?? false,
       polling: options?.polling ?? false,
@@ -56,11 +59,8 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
       try {
         res = await fn(args)
       } catch (e) {
-        logErr('useQuery:', e)
+        logErr('useRequest:', e)
         res = err('请求过程中发生错误')
-      }
-      if (unmounted) {
-        return
       }
       if (requestCount !== requestNum) {
         return
@@ -91,10 +91,9 @@ export const useQuery = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>
   }
 
   onUnmounted(() => {
-    unmounted = true
     pollingTimer && clearInterval(pollingTimer)
     debounceTimer && clearTimeout(debounceTimer)
   })
 
-  return [data, loading, query]
+  return [data, loading, request]
 }
