@@ -1,24 +1,15 @@
-# useComponent
+# useAsyncTask
 
 ## 用法
 
-1. 定义动态组件
+延迟执行异步任务。
 
 ```typescript
-import { useComponent } from 'builtins'
+const fn = () => import('xxx')
+const [task, start] = useAsyncTask(fn)
 
-const [Example, render, destory, compProps] = useComponent(() => import('./example/Example.vue'))
-```
-
-2. 使用动态组件
-
-```vue
-<template>
-  <component :is="Example" v-bind="compProps"></component>
-</template>
-
-<script>
-// 调用render引入，挂载组件
-// 调用destory销毁组件，释放内存
-</script>
+// 等同于fn.then
+task.then(console.log)
+// fn不会执行，直到调用start
+start()
 ```
