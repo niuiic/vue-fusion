@@ -4,7 +4,15 @@
   "tasks": {
     "build#build": {},
     "builtins#build": {},
-    "styles#build": {},
+    "styles#build": {
+      "dependsOn": ["build#build", "builtins#build"]
+    },
+    "styles#build:doc": {
+      "dependsOn": ["build#build", "builtins#build"]
+    },
+    "styles#dev": {
+      "dependsOn": ["build#build", "builtins#build"]
+    },
     "components#build": {
       "dependsOn": ["build#build", "builtins#build", "styles#build"]
     },
