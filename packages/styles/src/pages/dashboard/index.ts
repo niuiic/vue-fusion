@@ -1,3 +1,1 @@
-import Dashboard from './Dashboard.vue'
-
-export const page = Dashboard
+export const page = () => import('./Dashboard.vue')
