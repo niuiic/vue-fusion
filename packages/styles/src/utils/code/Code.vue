@@ -115,4 +115,3 @@ const copyCode = async () => {
   max-height: 0 !important;
 }
 </style>
-tnotify, ype
