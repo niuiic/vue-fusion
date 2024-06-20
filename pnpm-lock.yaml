@@ -206,11 +206,7 @@ importers:
         specifier: workspace:*
         version: link:../styles
 
-  packages/styles:
-    dependencies:
-      builtins:
-        specifier: workspace:*
-        version: link:../builtins
+  packages/styles: {}
 
 packages:
 

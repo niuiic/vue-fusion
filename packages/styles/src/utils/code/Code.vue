@@ -3,7 +3,7 @@
 import hljs from 'highlight.js'
 import { onMounted, ref, watch } from 'vue'
 import type { CodeProps } from './nonBusiness'
-import { notify } from 'builtins'
+import { notify } from './nonBusiness'
 
 // ## 组件配置
 const props = defineProps<CodeProps>()
@@ -115,3 +115,4 @@ const copyCode = async () => {
   max-height: 0 !important;
 }
 </style>
+tnotify, ype

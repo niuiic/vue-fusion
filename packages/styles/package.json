@@ -9,8 +9,5 @@
     "dev": "vite dev",
     "build": "tsx build.ts",
     "build:doc": "vite build"
-  },
-  "dependencies": {
-    "builtins": "workspace:*"
   }
 }
