@@ -1,49 +1,40 @@
 <!-- # script -->
 <script setup lang="ts">
-import { computed, onMounted, ref, shallowRef } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { CodeProps } from './utils/code'
 import { Code } from './utils/code'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { ElConfigProvider } from 'element-plus'
+import { pages, entries } from './utils/router'
+import { useRoute, useRouter } from 'vue-router'
 
-// ## page
-const pages = import.meta.glob(['./pages/**/index.ts', '!./pages/**/components/**/index.ts'])
-const pageNameList = Object.keys(pages)
-  .map((x) => {
-    const matched = x.match(/\.\/pages\/(.+)\/index\.ts/)
-    return matched ? matched[1] : undefined
-  })
-  .filter((x): x is string => Boolean(x))
-
-const page = shallowRef()
-const renderPage = () => {
-  const pageName = window.location.pathname.slice(import.meta.env.VITE_BASE_URL.length)
-  if (!pageName) {
-    return
-  }
-  import(`./pages/${pageName}/index.ts`).then((x) => {
-    page.value = x.page
-    codeList.value = x.codeList ?? []
-    curPage.value = pageName
-  })
-}
-onMounted(renderPage)
-window.addEventListener('popstate', renderPage)
+const router = useRouter()
+const route = useRoute()
 
 // ## entry
-const curPage = ref()
-const onClickEntry = (pageName: string) => {
-  history.pushState(undefined, '', import.meta.env.VITE_BASE_URL + pageName)
-  import(`./pages/${pageName}/index.ts`).then((x) => {
-    page.value = x.page
-    codeList.value = x.codeList ?? []
-    curPage.value = pageName
+const onClickEntry = (name: string) => {
+  router.push({
+    name: name
   })
 }
 
 // ## code
 const codeList = ref<CodeProps[]>([])
 const withCode = computed(() => codeList.value.length > 0)
+watch(
+  () => route.name,
+  (name) => {
+    const entry = entries.find((x) => x.name === name)?.entry
+    if (!entry) {
+      return
+    }
+    pages[entry]().then((x: any) => {
+      if (x.codeList) {
+        codeList.value = x.codeList
+      }
+    })
+  }
+)
 </script>
 
 <!-- # template -->
@@ -53,17 +44,17 @@ const withCode = computed(() => codeList.value.length > 0)
       <div class="nav">
         <ol>
           <li
-            v-for="(x, i) in pageNameList"
+            v-for="({ name }, i) in entries"
             :key="i"
-            :class="{ entry: true, 'entry--active': x === curPage }"
-            @click="onClickEntry(x)"
+            :class="{ entry: true, 'entry--active': name === route.name }"
+            @click="onClickEntry(name)"
           >
-            {{ x }}
+            {{ name }}
           </li>
         </ol>
       </div>
       <div class="page">
-        <component :is="page"> </component>
+        <router-view></router-view>
       </div>
       <div v-if="withCode" class="code-list">
         <div class="code-list__inner">

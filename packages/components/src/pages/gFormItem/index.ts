@@ -1,10 +1,9 @@
 import source from '@/components/gFormItem/GFormItem.vue?raw'
 import doc from '@/components/gFormItem/README.md?raw'
 import type { CodeProps } from '@/utils/code'
-import GFormItem from './GFormItem.vue'
 import example from './GFormItem.vue?raw'
 
-export const page = GFormItem
+export const page = () => import('./GFormItem.vue')
 
 export const codeList: CodeProps[] = [
   {

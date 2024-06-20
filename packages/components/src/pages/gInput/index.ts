@@ -1,9 +1,8 @@
 import source from '@/components/gInput/GInput.vue?raw'
 import type { CodeProps } from '@/utils/code'
-import GInput from './GInput.vue'
 import example from './GInput.vue?raw'
 
-export const page = GInput
+export const page = () => import('./GInput.vue')
 
 export const codeList: CodeProps[] = [
   {

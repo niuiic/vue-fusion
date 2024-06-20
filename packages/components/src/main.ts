@@ -3,6 +3,6 @@ import 'highlight.js/styles/tokyo-night-dark.min.css'
 import 'styles/index.scss'
 import { createApp } from 'vue'
 import App from './App.vue'
+import { router } from './utils/router'
 
-const app = createApp(App)
-app.mount('#app')
+createApp(App).use(router).mount('#app')
