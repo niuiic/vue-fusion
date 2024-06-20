@@ -17,7 +17,7 @@ export default defineConfig((): UserConfig => {
         fileName: 'index'
       },
       rollupOptions: {
-        external: ['date-fns']
+        external: ['date-fns', 'element-plus']
       },
       sourcemap: true,
       minify: true
