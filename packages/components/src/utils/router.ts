@@ -23,7 +23,7 @@ export const router = createRouter({
     {
       name: 'root',
       path: '/',
-      redirect: '/' + entries[0],
+      redirect: entries.length > 0 ? entries[0].name : undefined,
       children: routes
     }
   ]
