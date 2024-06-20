@@ -66,6 +66,7 @@
     "date-fns": "^3.6.0",
     "element-plus": "^2.7.5",
     "highlight.js": "^11.9.0",
+    "highlightjs-vue": "^1.0.0",
     "pinia": "^2.1.7",
     "three": "^0.165.0",
     "vue": "^3.4.29"
