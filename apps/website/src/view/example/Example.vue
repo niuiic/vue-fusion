@@ -4,7 +4,7 @@ import type { InputConfig } from 'components'
 import { formDataValid } from 'components'
 import { notify, useObservable } from 'builtins'
 import { onBeforeMount } from 'vue'
-import { queryUserBiz, updateUserBiz } from '@/business/impl/user'
+import { queryUserBiz, updateUserBiz } from '@/business/user'
 import { GFormItem } from 'components'
 
 // ## 表单数据

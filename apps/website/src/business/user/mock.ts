@@ -1,9 +1,11 @@
-import type { QueryUserReq, QueryUserRes, UpdateUserReq, UpdateUserRes } from '@/business/def/user'
-import { newUser } from '@/model/user'
 import { err, mock, ok } from 'builtins'
+import type { QueryUserReq, QueryUserRes, UpdateUserReq, UpdateUserRes } from './index'
+import { newUser } from './model'
 
+// # data
 const users = [newUser({ name: '用户1' }), newUser({ name: '用户2' })]
 
+// # query
 export const queryUserMock = mock<QueryUserReq, QueryUserRes>(async (args) => {
   const user = users.find((x) => x.id === args.id)
   if (!user) {
@@ -13,6 +15,7 @@ export const queryUserMock = mock<QueryUserReq, QueryUserRes>(async (args) => {
   return ok(user)
 })
 
+// # update
 export const updateUserMock = mock<UpdateUserReq, UpdateUserRes>(async (args) => {
   const user = users.find((x) => x.id === args.id)
   if (!user) {

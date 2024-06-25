@@ -85,25 +85,34 @@ web端应用与移动端混合应用通用开发框架，主要技术栈为vue�
 
 ```
 src/
-  api/
-  assets/
   business/
-    def/
-    impl/
-  config/
-    enum/
+    example/
+      api.ts -- api层
+      index.ts -- business层
+      mock.ts -- mock层
+      model.ts -- model层
+  share/
     routes.ts
     ...
-  mock/
-  model/
-  view/
-    components/
-    pages/
+  view/ -- view层
+    example/ -- 子页面不嵌套
+      Example.vue
+      business.ts -- 业务逻辑
+      nonBusiness.ts -- 非业务逻辑
+      example.png -- 静态资源
+      components/
+        child/
+          Child.vue
+          GrandChild.vue -- 子组件不嵌套
+          ...
+      ...
   App.vue
   main.ts
 ```
 
 完整项目分层为model、mock、api、business和view。其中model定义业务模型，mock定义mock函数，api定义接口函数，business定义业务函数，view实现页面逻辑。
+
+目录结构按领域进行组织，同一业务模块的代码合并到一处，便于管理，留下简化的空间。
 
 该分层方案下，前端将自建一套业务模型，彻底与后端分离，在无接口的情况下也可依靠mock运行完整逻辑。view层与数据的交互全部通过调用business层的接口实现，business层在不同模式下分别调用api层和mock层的接口实现逻辑。business和mock层基于model层定义的业务模型提供接口。
 
@@ -118,7 +127,7 @@ flowchart TB
     api <-- in normal mode --> business
 ```
 
-以上结构适用于开发复杂应用。实际情况下需根据项目难度、时间等因素合理简化结构。比如在项目难度低且接口准备充分的情况下，可令api直接对接view，加快开发速度。
+以上结构适用于开发复杂应用。实际情况下需根据项目难度、时间等因素合理简化结构。比如统计业务一般较简单，无需定义model。
 
 ## 开发流程
 
@@ -174,26 +183,3 @@ flowchart TB
 - 无接口时辅助页面开发。
 - 样式与逻辑测试。
 - 为演示系统提供数据支撑。
-
-### 简化项目结构
-
-```
-src/
-  assets/
-  business/
-    example/
-      api.ts
-      mock.ts
-      index.ts
-  config/
-    enum/
-    routes.ts
-    ...
-  view/
-    components/
-    pages/
-  App.vue
-  main.ts
-```
-
-简单项目中可将mock、api、business和model四层在结构上合一。

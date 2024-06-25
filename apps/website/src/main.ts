@@ -6,10 +6,10 @@ import 'styles/index.scss'
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
-import { routes } from './config/routes'
+import { routes } from './share/routes'
 
 registerMode({ DEV: __DEV__, MOCK: __MOCK__ })
-registerPage(import.meta.glob(['./view/pages/**/*.vue', '!**/components/**/*.vue']), './view/pages/')
+registerPage(import.meta.glob(['./view/**/*.vue', '!**/components/**/*.vue']), './view/')
 
 const router = createRouter({
   history: createWebHashHistory(),

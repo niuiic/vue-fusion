@@ -7,7 +7,7 @@
 ```typescript
 import { registerMode } from 'builtins'
 
-registerMode({ DEV: import.meta.env.MODE.includes('dev'), MOCK: __MOCK__ })
+registerMode({ DEV: __DEV__, MOCK: __MOCK__ })
 ```
 
 2. 注册business。
@@ -21,6 +21,8 @@ const queryXxxBiz = business<{ input: string }, { output: string }>(
 )
 ```
 
-`queryXxxBiz`的类型为`() => Promise<(args: { input: string }) => Promise<{ output: string }>>`。在mock模式下会调用第二个参数，非mock模式下调用第一个参数。
+`queryXxxBiz`的类型为`(args: { input: string }) => Promise<{ output: string }>`。符合以下三个条件则调用第二个参数，否则调用第一个参数。
 
-可设置`business`的第三个参数为false以暂时停止使用mock。
+- registerMode注册MOCK为true
+- business存在第二个参数
+- business的第三个参数不为false
