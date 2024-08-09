@@ -17,10 +17,10 @@ export function useEnum<K extends string | symbol | number, V>(map: Enum<K, V>, 
     return defaultKey
   }
 
-  const match = (value: K, keys?: K[]): boolean => {
+  const hasKey = (value: K, keys?: K[]): boolean => {
     const fixedKeys = keys ?? (Object.keys(map) as K[])
     return fixedKeys.includes(value)
   }
 
-  return { toValue, toKey, map, match }
+  return { toValue, toKey, map, hasKey }
 }
