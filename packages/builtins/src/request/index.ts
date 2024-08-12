@@ -7,7 +7,7 @@ import axios from 'axios'
 
 type RequestData = AnyObject
 
-export class Fetch {
+export class Request {
   private instance: AxiosInstance
 
   public constructor(args: CreateAxiosDefaults) {
