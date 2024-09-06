@@ -1,4 +1,4 @@
-import type { AnyObject } from '@/types'
+import type { AnyObject } from '@/components/types'
 
 type AnyClass = new (id: string, ...rest: any[]) => AnyObject
 

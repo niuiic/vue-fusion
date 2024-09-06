@@ -7,7 +7,7 @@
 在`src/main.ts`中。
 
 ```typescript
-import { registerPage } from 'builtins'
+import { registerPage } from 'components'
 
 // components目录下不是页面组件，可以排除
 registerPage(import.meta.glob(['./view/**/*.vue', '!**/components/**/*.vue']), './view/')
@@ -18,8 +18,8 @@ registerPage(import.meta.glob(['./view/**/*.vue', '!**/components/**/*.vue']), '
 3. 创建router。
 
 ```typescript
-import { toRouteRecordRaws } from 'builtins'
-import type { Route } from 'builtins'
+import { toRouteRecordRaws } from 'components'
+import type { Route } from 'components'
 import { createRouter, createWebHashHistory } from 'vue-router'
 
 const routes: Route[] = [

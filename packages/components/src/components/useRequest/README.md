@@ -5,9 +5,7 @@
 1. 定义query。
 
 ```typescript
-import { ok } from 'builtins'
-
-const queryFn = (args: { num: number }) => Promise.resolve(ok(num))
+const queryFn = (args: { num: number }) => Promise.resolve(num)
 
 const [data, loading, query] = useRequest(queryFn)
 
@@ -31,7 +29,7 @@ interface Options<T> {
    * data等同于updateData选项的newData
    */
   onOk: (data: T) => void
-  onErr: (err: string) => void
+  onErr: (err: unknown) => void
   updateData: (oldData: T | undefined, newData: T, setData: (data: T) => void) => void
 }
 
@@ -42,7 +40,7 @@ const fixedOptions: Options<Data> = {
   debounce: options?.debounce ?? false,
   polling: options?.polling ?? false,
   onOk: options?.onOk ?? doNothing,
-  onErr: options?.onErr ?? notify('error'),
+  onErr: options?.onErr ?? doNothing,
   updateData: options?.updateData ?? updateData
 }
 

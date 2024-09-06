@@ -1,12 +1,7 @@
-import { logErr } from '@/log'
-import { notify } from '@/notify'
-import type { Result } from '@/result'
-import { err } from '@/result'
 import type { Ref, ShallowRef } from 'vue'
 import { onUnmounted, ref, shallowRef } from 'vue'
 
-type Fn = (args: any) => Result<any> | Promise<Result<any>>
-type UnwrapResult<T> = T extends Result<infer U> ? U : T
+type Fn = (args: any) => any
 
 interface Options<T> {
   debounce: number | false
@@ -16,14 +11,14 @@ interface Options<T> {
    * data等同于updateData选项的newData
    */
   onOk: (data: T) => void
-  onErr: (err: string) => void
+  onErr: (err: unknown) => void
   updateData: (oldData: T | undefined, newData: T, setData: (data: T) => void) => void
 }
 
 const doNothing = () => {}
 const updateData = (_: any, newData: any, setData: (data: any) => void) => setData(newData)
 
-export const useRequest = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<T>>>, Args = Parameters<T>[0]>(
+export const useRequest = <T extends Fn, Data = Awaited<ReturnType<T>>, Args = Parameters<T>[0]>(
   fn: T,
   options?: {
     shallowRefData?: boolean
@@ -45,49 +40,54 @@ export const useRequest = <T extends Fn, Data = UnwrapResult<Awaited<ReturnType<
       debounce: options?.debounce ?? false,
       polling: options?.polling ?? false,
       onOk: options?.onOk ?? doNothing,
-      onErr: options?.onErr ?? notify('error'),
+      onErr: options?.onErr ?? doNothing,
       updateData: options?.updateData ?? updateData
     }
 
-    const task = async (args: Args, options: Options<Data>) => {
-      requestCount = requestCount + 1
+    const task = async (args: Args) => {
+      requestCount += 1
       const requestNum = requestCount
 
       loading.value = true
 
-      let res
-      try {
-        res = await fn(args)
-      } catch (e) {
-        logErr('useRequest:', e)
-        res = err('请求过程中发生错误')
-      }
-      if (requestCount !== requestNum) {
-        return
-      }
-      loading.value = false
-      if (!res.ok) {
-        options.onErr(res.err)
-        return
-      }
+      const result = Promise.resolve(args).then(fn)
+      result.then((x) => {
+        if (requestCount !== requestNum) {
+          return
+        }
 
-      fixedOptions.updateData(data.value, res.data, setData)
-      options.onOk(res.data)
+        fixedOptions.updateData(data.value, x, setData)
+        fixedOptions.onOk(x)
+      })
+      result.catch((e) => {
+        if (requestCount !== requestNum) {
+          return
+        }
+
+        fixedOptions.onErr(e)
+      })
+      result.finally(() => {
+        if (requestCount !== requestNum) {
+          return
+        }
+
+        loading.value = false
+      })
     }
 
     if (fixedOptions.polling !== false) {
       pollingTimer && clearInterval(pollingTimer)
-      pollingTimer = setInterval(() => task(args, fixedOptions), fixedOptions.polling)
+      pollingTimer = setInterval(() => task(args), fixedOptions.polling)
       return
     }
 
-    if (fixedOptions.debounce === false) {
-      task(args, fixedOptions)
+    if (fixedOptions.debounce !== false) {
+      debounceTimer && clearTimeout(debounceTimer)
+      debounceTimer = setTimeout(() => task(args), fixedOptions.debounce)
       return
     }
 
-    debounceTimer && clearTimeout(debounceTimer)
-    debounceTimer = setTimeout(() => task(args, fixedOptions), fixedOptions.debounce)
+    task(args)
   }
 
   onUnmounted(() => {

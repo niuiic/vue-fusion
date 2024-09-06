@@ -5,7 +5,7 @@
 1. 注册模式。
 
 ```typescript
-import { registerMode } from 'builtins'
+import { registerMode } from 'components'
 
 registerMode({ DEV: __DEV__, MOCK: __MOCK__ })
 ```
@@ -13,11 +13,11 @@ registerMode({ DEV: __DEV__, MOCK: __MOCK__ })
 2. 注册business。
 
 ```typescript
-import { business, ok } from 'builtins'
+import { business, useAsyncFn } from 'components'
 
 const queryXxxBiz = business<{ input: string }, { output: string }>(
-  async (args) => ok({ output: args.input }),
-  () => import('xxx').then((x) => x.queryXxxMock)
+  async (args) => ({ output: args.input }),
+  useAsyncFn(() => import('xxx').then((x) => x.queryXxxMock))
 )
 ```
 

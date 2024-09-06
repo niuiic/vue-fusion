@@ -1,11 +1,11 @@
 <!-- # script -->
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import type { CodeProps } from './utils/code'
-import { Code } from './utils/code'
+import type { CodeProps } from './share/code'
+import { Code } from './share/code'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { ElConfigProvider } from 'element-plus'
-import { pages, entries } from './utils/router'
+import { pages, entries } from './share/router'
 import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()

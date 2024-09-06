@@ -5,7 +5,7 @@
 使用以下方式发起请求。
 
 ```typescript
-import { Request } from 'builtins'
+import { Request } from '@/components'
 
 const request = new Request({ timeout: 10000 })
 request.get()

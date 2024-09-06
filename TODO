@@ -1,0 +1,2 @@
+☐ 去掉result，全面采用promise
+☐ 调整目录结构，将builtins、components、styles合一

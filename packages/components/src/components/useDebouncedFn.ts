@@ -1,4 +1,4 @@
-import type { AnyFunction } from '@/types'
+import type { AnyFunction } from '@/components/types'
 
 /** 用户输入延迟时间 */
 export const INPUT_DELAY = 500
@@ -14,9 +14,7 @@ export const useDebouncedFn = <T extends AnyFunction>(fn: T, delay: number): ((.
     if (timer) {
       clearTimeout(timer)
     }
-    timer = setTimeout(() => {
-      fn(...args)
-    }, delay)
+    timer = setTimeout(() => fn(...args), delay)
   }
 
   return debouncedFn
