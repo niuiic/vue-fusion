@@ -134,15 +134,6 @@
     "vue/define-macros-order": "off",
     "@typescript-eslint/class-literal-property-style": "off",
     "@typescript-eslint/unified-signatures": "off",
-    "@typescript-eslint/ban-types": [
-      "error",
-      {
-        "types": {
-          "null": "use \"undefined\" instead of \"null\"",
-          "{}": false
-        }
-      }
-    ],
     "no-return-assign": "off",
     "@typescript-eslint/prefer-optional-chain": "off"
   }
