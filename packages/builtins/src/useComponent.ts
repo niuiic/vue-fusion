@@ -6,7 +6,7 @@ type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? Instan
 
 let globalAppContext: AppContext | null = null
 
-export const dynamicRenderer = (app: App) => {
+export const asyncRenderer = (app: App) => {
   globalAppContext = app._context
 }
 
