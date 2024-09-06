@@ -1,6 +1,6 @@
 <!-- ~ script -->
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
+import { ref, watch } from 'vue'
 import type { CodeProps } from '@/components/code'
 import { Code } from '@/components/code'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
@@ -32,7 +32,6 @@ const onClickMenu = (route: RouteRecordRaw) => router.push({ name: route.name })
 
 // ~~ code
 const codeList = ref<CodeProps[]>([])
-const withCode = computed(() => codeList.value.length > 0)
 watch(
   () => route.name,
   () => {
@@ -44,13 +43,13 @@ watch(
 <!-- ~ template -->
 <template>
   <el-config-provider :locale="zhCn">
-    <div :class="{ app: true, 'app--with-code': withCode }">
+    <div class="app">
       <MenuTree class="nav" :routes="routes" @click-menu="onClickMenu" @enter-menu="showInfo" @leave-menu="hideInfo">
       </MenuTree>
       <div class="page">
         <router-view></router-view>
       </div>
-      <div v-if="withCode" class="code-list">
+      <div v-if="codeList.length > 0" class="code-list">
         <div class="code-list__inner">
           <Code v-for="(x, i) in codeList" :key="i" :code="x.code" :language="x.language" :label="x.label"></Code>
         </div>
@@ -66,15 +65,14 @@ watch(
   display: grid;
   grid-template-columns: 160px 1fr;
   height: 100%;
-  background-color: #131417;
+}
+
+.app:has(.code-list) {
+  grid-template-columns: 160px 2fr 1fr;
 }
 
 .app:has(#empty) {
   grid-template-columns: 160px 1fr;
-}
-
-.app--with-code {
-  grid-template-columns: 160px 2fr 1fr;
 }
 
 /* ~~ nav */
@@ -106,6 +104,10 @@ watch(
 /* ~~ page */
 .page {
   overflow: auto;
+}
+
+.page:has(#empty) {
+  display: none;
 }
 
 /* ~~ code */
