@@ -1,20 +1,29 @@
+import type { Component } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import { createRouter, createWebHashHistory } from 'vue-router'
+import type { CodeProps } from './components/code'
 
-export const pages = import.meta.glob(['../pages/**/index.ts', '!../pages/**/components/**/index.ts'])
+export interface Page {
+  component?: () => Promise<{ default: Component }>
+  docs?: CodeProps[]
+  desc?: string
+  name: string
+  category?: string
+}
 
-export const entries = Object.keys(pages).map((x) => {
-  const matched = x.match(/\.\.\/pages\/(.+)\/index\.ts/)
-  if (!matched) {
-    throw new Error(`entry ${x} is invalid`)
-  }
-  return { name: matched[1], entry: x }
-})
+const modules = import.meta.glob(['./pages/*/index.ts', '!./pages/*/components/**/index.ts'])
 
-const routes: RouteRecordRaw[] = entries.map(({ name, entry }) => ({
-  name,
-  path: '/' + name,
-  component: () => pages[entry]().then((y: any) => y.page())
+const entries = (await Promise.all(Object.entries(modules).map(([k, v]) => v().then((x: any) => [k, x.default])))) as [
+  path: string,
+  page: Page
+][]
+
+const resolvePath = (path: string) => path.replace(/\//g, '_')
+export const routes: RouteRecordRaw[] = entries.map(([path, page]) => ({
+  name: resolvePath(path),
+  path: '/' + resolvePath(path),
+  component: page.component as any,
+  meta: { page }
 }))
 
 export const router = createRouter({
@@ -23,7 +32,7 @@ export const router = createRouter({
     {
       name: 'root',
       path: '/',
-      redirect: entries.length > 0 ? entries[0].name : undefined,
+      redirect: routes.length > 0 ? routes[0].path : undefined,
       children: routes
     }
   ]

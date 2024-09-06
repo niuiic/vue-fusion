@@ -38,7 +38,7 @@ export default defineConfig(({ command, mode }) => {
       extensions: ['.ts', '.js', '.scss', '.css', '.json']
     },
     server: {
-      port: 9001
+      port: 9000
     },
     css: {
       postcss: {

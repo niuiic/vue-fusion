@@ -1,38 +1,42 @@
 <!-- ~ script -->
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import type { CodeProps } from './components/code'
-import { Code } from './components/code'
+import type { CodeProps } from '@/components/code'
+import { Code } from '@/components/code'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { ElConfigProvider } from 'element-plus'
-import { pages, entries } from './router'
+import type { Page } from '@/router'
+import { routes } from '@/router'
+import type { RouteRecordRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
+import MenuTree from './MenuTree.vue'
+import { useComponent } from '@/components/useComponent'
 
+// ~~ router
 const router = useRouter()
 const route = useRoute()
 
 // ~~ entry
-const onClickEntry = (name: string) => {
-  router.push({
-    name: name
-  })
+const [mountInfo, unmountInfo] = useComponent(() => import('./CompInfo.vue'))
+const showInfo = (el: HTMLElement, route: RouteRecordRaw) => {
+  const pos = el.getBoundingClientRect()
+  route.meta &&
+    mountInfo({
+      info: route.meta.page as Page,
+      top: pos.top,
+      left: pos.left
+    })
 }
+const hideInfo = unmountInfo
+const onClickMenu = (route: RouteRecordRaw) => router.push({ name: route.name })
 
 // ~~ code
 const codeList = ref<CodeProps[]>([])
 const withCode = computed(() => codeList.value.length > 0)
 watch(
   () => route.name,
-  (name) => {
-    const entry = entries.find((x: any) => x.name === name)?.entry
-    if (!entry) {
-      return
-    }
-    pages[entry]().then((x: any) => {
-      if (x.codeList) {
-        codeList.value = x.codeList
-      }
-    })
+  () => {
+    codeList.value = (route.meta?.page as Page).docs ?? []
   }
 )
 </script>
@@ -41,18 +45,8 @@ watch(
 <template>
   <el-config-provider :locale="zhCn">
     <div :class="{ app: true, 'app--with-code': withCode }">
-      <div class="nav">
-        <ol>
-          <li
-            v-for="({ name }, i) in entries"
-            :key="i"
-            :class="{ entry: true, 'entry--active': name === route.name }"
-            @click="onClickEntry(name)"
-          >
-            {{ name }}
-          </li>
-        </ol>
-      </div>
+      <MenuTree class="nav" :routes="routes" @click-menu="onClickMenu" @enter-menu="showInfo" @leave-menu="hideInfo">
+      </MenuTree>
       <div class="page">
         <router-view></router-view>
       </div>
@@ -82,6 +76,7 @@ watch(
 .nav {
   overflow: auto;
   margin-right: 3px;
+  padding: 4px;
   box-shadow: 3px 0 3px 0 rgba(0, 0, 0, 0.5);
 }
 
