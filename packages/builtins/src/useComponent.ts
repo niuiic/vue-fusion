@@ -1,51 +1,39 @@
-import type { Component } from 'vue'
-import { getCurrentInstance, h, render } from 'vue'
+import type { App, AppContext, Component } from 'vue'
+import { h, render } from 'vue'
 import type { AnyObject } from './types'
 
 type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
 
+let globalAppContext: AppContext | null = null
+
+export const dynamicRenderer = (app: App) => {
+  globalAppContext = app._context
+}
+
 export const useComponent = <T extends Component>(
-  component: () => Promise<{ default: T }>,
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  container: () => HTMLElement | undefined | null = () => document.body
-): [(props: ComponentProps<T>) => Promise<boolean>, () => boolean] => {
-  let mounted = false
-  const globalAppContext = getCurrentInstance()?.appContext ?? null
+  loadComponent: () => Promise<{ default: T }>,
+  getContainer: () => HTMLElement | undefined | null = () => document.body
+): [(props: ComponentProps<T>) => Promise<unknown>, () => Promise<unknown>] => {
+  const mount = (props: ComponentProps<T>) =>
+    loadComponent().then((mod) => {
+      const vNode = h(mod.default, props)
+      vNode.appContext = globalAppContext
 
-  const mount = (props: ComponentProps<T>): Promise<boolean> =>
-    component()
-      .then((mod) => {
-        if (mounted) {
-          return false
-        }
+      const container = getContainer()
+      if (!container) {
+        throw new Error('container does not exist')
+      }
 
-        const vNode = h(mod.default, props)
-        vNode.appContext = globalAppContext
+      render(vNode, container)
+    })
 
-        const el = container()
-        if (!el) {
-          return false
-        }
-
-        render(vNode, el)
-        mounted = true
-        return true
-      })
-      .catch(() => false)
-
-  const unmount = () => {
-    if (!mounted) {
-      return false
+  const unmount = async () => {
+    const container = getContainer()
+    if (!container) {
+      throw new Error('container does not exist')
     }
 
-    const el = container()
-    if (!el) {
-      return false
-    }
-
-    render(null, el)
-    mounted = false
-    return true
+    render(null, container)
   }
 
   return [mount, unmount]
