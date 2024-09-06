@@ -3,15 +3,16 @@ import { join } from 'path'
 import { build } from 'vite'
 
 const workDir = join(process.cwd(), 'src/components')
-const exportFile = join(process.cwd(), 'src/index.ts')
-const components = readdirSync(workDir)
+const entryFile = join(process.cwd(), 'src/index.ts')
 
-const autoExport = () => {
-  const exportContent = components.map((x) => `export * from './components/${x}'`).join('\n')
-  writeFileSync(exportFile, exportContent)
+const exportComponents = () => {
+  const components = readdirSync(workDir)
+  const exportContent = components.map((x) => `export * from './components/${x.split('.')[0]}'`).join('\n')
+  writeFileSync(entryFile, exportContent)
 }
-autoExport()
+
+exportComponents()
 
 build({
   configFile: join(process.cwd(), 'vite.lib.config.ts')
-}).finally(() => rmSync(exportFile))
+}).finally(() => rmSync(entryFile))

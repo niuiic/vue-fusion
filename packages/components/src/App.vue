@@ -1,11 +1,11 @@
 <!-- # script -->
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
-import type { CodeProps } from './share/code'
-import { Code } from './share/code'
+import type { CodeProps } from './components/code'
+import { Code } from './components/code'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { ElConfigProvider } from 'element-plus'
-import { pages, entries } from './share/router'
+import { pages, entries } from './router'
 import { useRoute, useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -24,7 +24,7 @@ const withCode = computed(() => codeList.value.length > 0)
 watch(
   () => route.name,
   (name) => {
-    const entry = entries.find((x) => x.name === name)?.entry
+    const entry = entries.find((x: any) => x.name === name)?.entry
     if (!entry) {
       return
     }

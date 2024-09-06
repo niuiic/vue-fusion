@@ -3,30 +3,20 @@
   "ui": "stream",
   "tasks": {
     "build#build": {},
-    "builtins#build": {},
-    "styles#build": {
-      "dependsOn": ["build#build", "builtins#build"]
-    },
-    "styles#build:doc": {
-      "dependsOn": ["build#build", "builtins#build"]
-    },
-    "styles#dev": {
-      "dependsOn": ["build#build", "builtins#build"]
-    },
     "components#build": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build"]
+      "dependsOn": ["build#build"]
     },
     "components#build:doc": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build"]
+      "dependsOn": ["build#build"]
     },
     "components#dev": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build"]
+      "dependsOn": ["build#build"]
     },
     "website#build": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build", "components#build"]
+      "dependsOn": ["build#build", "components#build"]
     },
     "website#dev": {
-      "dependsOn": ["build#build", "builtins#build", "styles#build", "components#build"]
+      "dependsOn": ["build#build", "components#build"]
     }
   }
 }

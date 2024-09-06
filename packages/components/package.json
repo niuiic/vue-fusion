@@ -2,15 +2,11 @@
   "name": "components",
   "version": "0.1.0",
   "type": "module",
-  "module": "dist/js/index.js",
+  "module": "dist/js/index.mjs",
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite --host",
     "build": "tsx build.ts",
     "build:doc": "vite build"
-  },
-  "dependencies": {
-    "styles": "workspace:*",
-    "builtins": "workspace:*"
   }
 }

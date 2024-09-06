@@ -1,2 +1,4 @@
-☐ 去掉result，全面采用promise
+✔ 去掉result，全面采用promise @done(24-09-06 10:58)
 ☐ 调整目录结构，将builtins、components、styles合一
+☐ code组件支持渲染markdown
+☐ 修复website

@@ -1,14 +1,15 @@
-<!-- # script -->
+<!-- ~ script -->
 <script setup lang="ts">
 import hljs from 'highlight.js'
-import { onMounted, ref, watch } from 'vue'
+import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
+import { copyToClipboard } from '../clipboard'
+import { notify } from '../notify'
 import type { CodeProps } from './nonBusiness'
-import { notify } from 'builtins'
 
-// ## 组件配置
+// ~~ 组件配置
 const props = defineProps<CodeProps>()
 
-// ## code
+// ~~ code
 const bodyRef = ref<HTMLPreElement>()
 const bodyWrapperRef = ref<HTMLPreElement>()
 const setCode = () => {
@@ -20,39 +21,39 @@ const setCode = () => {
   } catch {
     bodyRef.value.innerText = props.code
   }
-  setTimeout(() => {
-    if (!bodyWrapperRef.value || !bodyRef.value) {
-      return
-    }
-    bodyWrapperRef.value.setAttribute('style', `max-height: ${bodyRef.value.getBoundingClientRect().height}px;`)
-  }, 100)
   collapsed.value = false
+  nextTick().then(setMaxHeight)
+}
+const setMaxHeight = () => {
+  if (!bodyWrapperRef.value || !bodyRef.value) {
+    return
+  }
+  bodyWrapperRef.value.setAttribute('style', `max-height: ${bodyRef.value.getBoundingClientRect().height}px;`)
 }
 
 onMounted(() => {
   setCode()
   watch(props, setCode)
+  window.addEventListener('resize', setMaxHeight)
 })
 
-// ## collapsed
+onUnmounted(() => window.removeEventListener('resize', setMaxHeight))
+
+// ~~ collapsed
 const collapsed = ref(false)
 
-// ## copy
-const copyCode = async () => {
-  try {
-    await navigator.clipboard.writeText(props.code)
-    notify('success', '复制成功')
-  } catch {
-    notify('error', '复制失败')
-  }
-}
+// ~~ copy
+const copyCode = () =>
+  copyToClipboard(props.code)
+    .then(() => notify('success', '复制成功'))
+    .catch(() => notify('error', '复制失败'))
 </script>
 
-<!-- # template -->
+<!-- ~ template -->
 <template>
   <div :class="{ code: true, 'code--collapsed': collapsed }">
     <div class="header" @click="collapsed = !collapsed">
-      <span class="copy" @click.stop="copyCode">复制</span>
+      <span class="copy" @click.stop="copyCode"></span>
       <span>
         {{ props.label }}
       </span>
@@ -63,45 +64,42 @@ const copyCode = async () => {
   </div>
 </template>
 
-<!-- # style -->
+<!-- ~ style -->
 <style lang="scss" scoped>
-/* ## code */
+/* ~~ code */
 .code {
   min-width: max-content;
-  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  background-color: #1e1f26;
 }
 
-/* ## header */
+/* ~~ header */
 .header {
-  height: 24px;
-  font-size: 16px;
-  border-bottom: 1px solid black;
+  display: flex;
+  align-items: center;
+  height: 20px;
+  font-size: 12px;
   cursor: pointer;
+  background-color: #2c303b;
   user-select: none;
-  line-height: 24px;
-
-  &::before {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    background: black;
-    border-radius: 50%;
-    content: '';
-    margin-inline: 8px;
-  }
+  line-height: 20px;
+  box-shadow: 0 0 2px 0 #ffffff;
 }
 
 .copy {
   display: inline-block;
-  margin-right: 8px;
-  opacity: 0.5;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px 0 #74829a inset;
+  margin-inline: 8px;
 
   &:hover {
     transform: scale(1.2);
   }
 }
 
-/* ## body */
+/* ~~ body */
 .body {
   margin: 0;
 }
