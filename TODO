@@ -1,5 +1,5 @@
 ✔ 去掉result，全面采用promise @done(24-09-06 10:58)
 ✔ 调整目录结构，将builtins、components、styles合一 @done(24-09-06 15:24)
 ☐ code组件支持渲染markdown
-☐ 修复website
+✔ 修复website @done(24-09-06 17:01)
 ✔ components pages支持目录等 @done(24-09-06 15:07)

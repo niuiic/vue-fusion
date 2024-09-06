@@ -32,7 +32,7 @@ const categorizeRoutes = (routes: RouteRecordRaw[]): Map<string, RouteRecordRaw[
   const categorizedRoutes = new Map<string, RouteRecordRaw[]>()
 
   routes.forEach((route) => {
-    const category = (route.meta?.page as Page).category ?? '未分类'
+    const category = (route.meta?.page as Page)?.category ?? '未分类'
 
     if (!categorizedRoutes.has(category)) {
       categorizedRoutes.set(category, [])

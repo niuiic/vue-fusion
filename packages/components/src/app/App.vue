@@ -36,7 +36,7 @@ const withCode = computed(() => codeList.value.length > 0)
 watch(
   () => route.name,
   () => {
-    codeList.value = (route.meta?.page as Page).docs ?? []
+    codeList.value = (route.meta?.page as Page)?.docs ?? []
   }
 )
 </script>
@@ -66,6 +66,11 @@ watch(
   display: grid;
   grid-template-columns: 160px 1fr;
   height: 100%;
+  background-color: #131417;
+}
+
+.app:has(#empty) {
+  grid-template-columns: 160px 1fr;
 }
 
 .app--with-code {

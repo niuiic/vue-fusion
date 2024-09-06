@@ -5,6 +5,7 @@ import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { copyToClipboard } from '../clipboard'
 import { notify } from '../notify'
 import type { CodeProps } from './nonBusiness'
+import { parse } from 'marked'
 
 // ~~ 组件配置
 const props = defineProps<CodeProps>()
@@ -12,12 +13,16 @@ const props = defineProps<CodeProps>()
 // ~~ code
 const bodyRef = ref<HTMLPreElement>()
 const bodyWrapperRef = ref<HTMLPreElement>()
-const setCode = () => {
+const setCode = async () => {
   if (!bodyRef.value) {
     return
   }
   try {
-    bodyRef.value.innerHTML = hljs.highlight(props.code, { language: props.language }).value
+    if (props.language === 'markdown') {
+      bodyRef.value.innerHTML = await parse(props.code)
+    } else {
+      bodyRef.value.innerHTML = hljs.highlight(props.code, { language: props.language }).value
+    }
   } catch {
     bodyRef.value.innerText = props.code
   }
@@ -59,7 +64,8 @@ const copyCode = () =>
       </span>
     </div>
     <div ref="bodyWrapperRef" class="body__wrapper">
-      <pre ref="bodyRef" class="body"></pre>
+      <div v-if="language === 'markdown'" ref="bodyRef" class="body"></div>
+      <pre v-else ref="bodyRef" class="body"></pre>
     </div>
   </div>
 </template>
@@ -101,6 +107,7 @@ const copyCode = () =>
 
 /* ~~ body */
 .body {
+  display: flow-root;
   margin: 0;
 }
 

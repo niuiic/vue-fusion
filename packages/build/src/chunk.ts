@@ -7,7 +7,7 @@ export const viteChunks = (id: string, { getModuleInfo }: { getModuleInfo: any }
 
   if (id.includes('node_modules')) {
     const packages = ['echarts', 'mapbox-gl', 'three', 'cesium', 'element-plus']
-    return packages.find((x) => id.includes(x)) ?? 'vendor'
+    return packages.some((x) => id.includes(x)) ?? 'vendor'
   }
 
   if (id.includes('src')) {

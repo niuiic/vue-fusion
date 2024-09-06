@@ -18,11 +18,12 @@ const entries = (await Promise.all(Object.entries(modules).map(([k, v]) => v().t
   page: Page
 ][]
 
+const Empty = () => import('./app/Empty.vue')
 const resolvePath = (path: string) => path.replace(/\//g, '_')
 export const routes: RouteRecordRaw[] = entries.map(([path, page]) => ({
   name: resolvePath(path),
   path: '/' + resolvePath(path),
-  component: page.component as any,
+  component: (page.component as any) ?? Empty,
   meta: { page }
 }))
 
