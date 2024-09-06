@@ -55,10 +55,9 @@ export default defineConfig(({ command, mode }) => {
     build: {
       rollupOptions: {
         output: {
-          inlineDynamicImports: false,
-          entryFileNames: 'js/[name].js',
-          chunkFileNames: 'js/[name].js',
-          assetFileNames: '[ext]/[name].[ext]'
+          entryFileNames: 'js/[name].[hash].mjs',
+          chunkFileNames: 'js/[name].[hash].mjs',
+          assetFileNames: '[ext]/[name].[hash].[ext]'
         }
       },
       minify: true

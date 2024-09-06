@@ -1,4 +1,3 @@
-import { err, mock, ok } from 'builtins'
 import type { QueryUserReq, QueryUserRes, UpdateUserReq, UpdateUserRes } from './index'
 import { newUser } from './model'
 
@@ -6,22 +5,22 @@ import { newUser } from './model'
 const users = [newUser({ name: '用户1' }), newUser({ name: '用户2' })]
 
 // ~ query
-export const queryUserMock = mock<QueryUserReq, QueryUserRes>(async (args) => {
+export const queryUserMock = async (args: QueryUserReq): Promise<QueryUserRes> => {
   const user = users.find((x) => x.id === args.id)
   if (!user) {
-    return err('没有该用户')
+    throw new Error('没有该用户')
   }
 
-  return ok(user)
-})
+  return user
+}
 
 // ~ update
-export const updateUserMock = mock<UpdateUserReq, UpdateUserRes>(async (args) => {
+export const updateUserMock = async (args: UpdateUserReq): Promise<UpdateUserRes> => {
   const user = users.find((x) => x.id === args.id)
   if (!user) {
-    return err('没有该用户')
+    throw new Error('没有该用户')
   }
 
   user.name = args.name
-  return ok()
-})
+  return
+}

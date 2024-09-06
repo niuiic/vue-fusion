@@ -34,9 +34,9 @@ export default defineConfig(
       rollupOptions: {
         output: {
           inlineDynamicImports: false,
-          entryFileNames: 'js/[name].js',
-          chunkFileNames: 'js/[name].[hash].js',
-          assetFileNames: '[ext]/[name].[hash].[ext]'
+          entryFileNames: 'js/[name].mjs',
+          chunkFileNames: 'js/[name].mjs',
+          assetFileNames: '[ext]/[name].[ext]'
         },
         external: ['vue', 'element-plus', 'mapbox-gl', 'echarts', 'cesium', 'three', 'date-fns']
       },

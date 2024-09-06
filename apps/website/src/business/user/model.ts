@@ -1,4 +1,4 @@
-import { useEntityFactory } from 'builtins'
+import { useEntityFactory } from 'components'
 
 export class User {
   public constructor(
