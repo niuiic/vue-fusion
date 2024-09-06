@@ -1,4 +1,4 @@
-<!-- # script -->
+<!-- ~ script -->
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import type { CodeProps } from './components/code'
@@ -11,14 +11,14 @@ import { useRoute, useRouter } from 'vue-router'
 const router = useRouter()
 const route = useRoute()
 
-// ## entry
+// ~~ entry
 const onClickEntry = (name: string) => {
   router.push({
     name: name
   })
 }
 
-// ## code
+// ~~ code
 const codeList = ref<CodeProps[]>([])
 const withCode = computed(() => codeList.value.length > 0)
 watch(
@@ -37,7 +37,7 @@ watch(
 )
 </script>
 
-<!-- # template -->
+<!-- ~ template -->
 <template>
   <el-config-provider :locale="zhCn">
     <div :class="{ app: true, 'app--with-code': withCode }">
@@ -65,9 +65,9 @@ watch(
   </el-config-provider>
 </template>
 
-<!-- # style -->
+<!-- ~ style -->
 <style lang="scss" scoped>
-/* ## app */
+/* ~~ app */
 .app {
   display: grid;
   grid-template-columns: 160px 1fr;
@@ -78,7 +78,7 @@ watch(
   grid-template-columns: 160px 2fr 1fr;
 }
 
-/* ## nav */
+/* ~~ nav */
 .nav {
   overflow: auto;
   margin-right: 3px;
@@ -103,12 +103,12 @@ watch(
   scale: 1.1;
 }
 
-/* ## page */
+/* ~~ page */
 .page {
   overflow: auto;
 }
 
-/* ## code */
+/* ~~ code */
 .code-list {
   overflow: auto;
   margin-left: 3px;

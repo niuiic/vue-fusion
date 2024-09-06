@@ -1,4 +1,4 @@
-<!-- # script -->
+<!-- ~ script -->
 <script setup lang="ts">
 import type { InputConfig } from 'components'
 import { formDataValid } from 'components'
@@ -7,7 +7,7 @@ import { onBeforeMount } from 'vue'
 import { queryUserBiz, updateUserBiz } from '@/business/user'
 import { GFormItem } from 'components'
 
-// ## 表单数据
+// ~~ 表单数据
 interface FormData {
   name: string
 }
@@ -21,7 +21,7 @@ onBeforeMount(async () => {
   }
 })
 
-// ## 表单配置
+// ~~ 表单配置
 const formItemConfig: InputConfig = {
   itemType: 'input',
   getData,
@@ -31,7 +31,7 @@ const formItemConfig: InputConfig = {
   rules: [(value: string) => (value.length < 10 ? '最小长度为10' : undefined)]
 }
 
-// ## 提交表单
+// ~~ 提交表单
 const onSubmit = async () => {
   if (!(await formDataValid(getData(), [formItemConfig]))) {
     notify('error', '表单数据有误')
@@ -50,7 +50,7 @@ const onSubmit = async () => {
 }
 </script>
 
-<!-- # template -->
+<!-- ~ template -->
 <template>
   <div class="example">
     <h1>这是一个简单的修改用户名称的案例</h1>

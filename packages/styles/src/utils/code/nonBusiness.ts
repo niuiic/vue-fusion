@@ -6,7 +6,7 @@ export interface CodeProps {
   label: string
 }
 
-// ## notify
+// ~~ notify
 function notify(type: 'success' | 'warning' | 'error' | 'info', message: string): void
 function notify(type: 'success' | 'warning' | 'error' | 'info'): (message: string) => void
 function notify(

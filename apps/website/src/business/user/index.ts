@@ -1,7 +1,7 @@
 import { business, err } from 'builtins'
 import type { User } from './model'
 
-// # query
+// ~ query
 export type QueryUserReq = Pick<User, 'id'>
 export type QueryUserRes = User
 export const queryUserBiz = business<QueryUserReq, QueryUserRes>(
@@ -9,7 +9,7 @@ export const queryUserBiz = business<QueryUserReq, QueryUserRes>(
   () => import('./mock').then((x) => x.queryUserMock)
 )
 
-// # update
+// ~ update
 export type UpdateUserReq = User
 export type UpdateUserRes = undefined
 export const updateUserBiz = business<UpdateUserReq, UpdateUserRes>(

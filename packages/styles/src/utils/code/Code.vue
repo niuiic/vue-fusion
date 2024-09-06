@@ -1,14 +1,14 @@
-<!-- # script -->
+<!-- ~ script -->
 <script setup lang="ts">
 import hljs from 'highlight.js'
 import { onMounted, ref, watch } from 'vue'
 import type { CodeProps } from './nonBusiness'
 import { notify } from './nonBusiness'
 
-// ## 组件配置
+// ~~ 组件配置
 const props = defineProps<CodeProps>()
 
-// ## code
+// ~~ code
 const bodyRef = ref<HTMLPreElement>()
 const bodyWrapperRef = ref<HTMLPreElement>()
 const setCode = () => {
@@ -34,10 +34,10 @@ onMounted(() => {
   watch(props, setCode)
 })
 
-// ## collapsed
+// ~~ collapsed
 const collapsed = ref(false)
 
-// ## copy
+// ~~ copy
 const copyCode = async () => {
   try {
     await navigator.clipboard.writeText(props.code)
@@ -48,7 +48,7 @@ const copyCode = async () => {
 }
 </script>
 
-<!-- # template -->
+<!-- ~ template -->
 <template>
   <div :class="{ code: true, 'code--collapsed': collapsed }">
     <div class="header" @click="collapsed = !collapsed">
@@ -63,15 +63,15 @@ const copyCode = async () => {
   </div>
 </template>
 
-<!-- # style -->
+<!-- ~ style -->
 <style lang="scss" scoped>
-/* ## code */
+/* ~~ code */
 .code {
   min-width: max-content;
   box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.5);
 }
 
-/* ## header */
+/* ~~ header */
 .header {
   height: 24px;
   font-size: 16px;
@@ -101,7 +101,7 @@ const copyCode = async () => {
   }
 }
 
-/* ## body */
+/* ~~ body */
 .body {
   margin: 0;
 }
