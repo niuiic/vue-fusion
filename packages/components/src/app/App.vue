@@ -65,6 +65,7 @@ watch(
   display: grid;
   grid-template-columns: 160px 1fr;
   height: 100%;
+  background-color: #131417;
 }
 
 .app:has(.code-list) {
@@ -78,27 +79,8 @@ watch(
 /* ~~ nav */
 .nav {
   overflow: auto;
-  margin-right: 3px;
   padding: 4px;
-  box-shadow: 3px 0 3px 0 rgba(0, 0, 0, 0.5);
-}
-
-.entry {
-  font-size: 16px;
-  user-select: none;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.6;
-  }
-}
-
-.entry + .entry {
-  margin-top: 8px;
-}
-
-.entry--active {
-  scale: 1.1;
+  background-color: #1e1f26;
 }
 
 /* ~~ page */
@@ -113,8 +95,7 @@ watch(
 /* ~~ code */
 .code-list {
   overflow: auto;
-  margin-left: 3px;
-  box-shadow: -3px 0 3px 0 rgba(0, 0, 0, 0.5);
+  background-color: #1e1f26;
 }
 
 .code-list__inner {
@@ -124,5 +105,24 @@ watch(
 
 .code + .code {
   margin-top: 3px;
+}
+
+// ~~ scrollbar
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #2c303b;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #74829a;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #c7c9d3;
 }
 </style>
