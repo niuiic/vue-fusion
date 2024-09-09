@@ -10,14 +10,14 @@ import { routes } from '@/router'
 import type { RouteRecordRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import MenuTree from './MenuTree.vue'
-import { useComponent } from '@/components/useComponent'
+import { useAsyncComp } from '@/components/useAsyncComp'
 
 // ~~ router
 const router = useRouter()
 const route = useRoute()
 
 // ~~ entry
-const [mountInfo, unmountInfo] = useComponent(() => import('./CompInfo.vue'))
+const [mountInfo, unmountInfo] = useAsyncComp(() => import('./CompInfo.vue'))
 const showInfo = (el: HTMLElement, route: RouteRecordRaw) => {
   const pos = el.getBoundingClientRect()
   route.meta &&

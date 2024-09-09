@@ -6,11 +6,11 @@ type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? Instan
 
 let globalAppContext: AppContext | null = null
 
-export const asyncRenderer = (app: App) => {
+export const asyncCompRenderer = (app: App) => {
   globalAppContext = app._context
 }
 
-export const useComponent = <T extends Component>(
+export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => document.body
 ): [(props: ComponentProps<T>) => Promise<unknown>, () => Promise<unknown>] => {
