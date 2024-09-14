@@ -1,4 +1,4 @@
-import type { App, AppContext, Component } from 'vue'
+import type { App, AppContext, Component, VNode, VNodeArrayChildren } from 'vue'
 import { h, render } from 'vue'
 import type { AnyObject } from './types'
 
@@ -10,13 +10,15 @@ export const asyncCompRenderer = (app: App) => {
   globalAppContext = app._context
 }
 
+type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() => any)
+
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => document.body
 ): [(props: ComponentProps<T>) => Promise<unknown>, () => Promise<unknown>] => {
-  const mount = (props: ComponentProps<T>) =>
+  const mount = (props: ComponentProps<T>, children?: RawChildren) =>
     loadComponent().then((mod) => {
-      const vNode = h(mod.default, props)
+      const vNode = h(mod.default, props, children)
       vNode.appContext = globalAppContext
 
       const container = getContainer()
