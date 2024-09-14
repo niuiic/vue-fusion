@@ -1,4 +1,4 @@
-import { registerMode, registerPage, toRouteRecordRaws } from 'components'
+import { asyncCompRenderer, registerMode, registerPage, toRouteRecordRaws } from 'components'
 import 'components/dist/css/style.css'
 import 'element-plus/dist/index.css'
 import { createPinia } from 'pinia'
@@ -17,7 +17,7 @@ const router = createRouter({
 const pinia = createPinia()
 
 const app = createApp(App)
-app.use(router).use(pinia)
+app.use(router).use(pinia).use(asyncCompRenderer)
 if (__DEV__) {
   import('element-plus').then((elementPlus) => {
     app.use(elementPlus.default).mount('#app')
