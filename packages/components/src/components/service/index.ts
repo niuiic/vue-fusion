@@ -2,7 +2,7 @@ import { inMode } from '@/components/mode'
 
 type BusinessFn<A, R> = (args: A) => Promise<R>
 
-export const business =
+export const service =
   <A, R>(impl?: BusinessFn<A, R>, mock?: BusinessFn<A, R>, useMock = true) =>
   async (args: A): Promise<R> => {
     if (inMode('MOCK') && mock && useMock) {

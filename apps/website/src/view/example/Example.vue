@@ -2,13 +2,13 @@
 <script setup lang="ts">
 import { notify } from 'components'
 import { onMounted, ref } from 'vue'
-import { queryUserBiz, updateUserBiz } from '@/business/user'
+import { queryUserSvc, updateUserSvc } from '@/service/user'
 
 // ~~ 表单数据
 const userId = '1'
 const userName = ref<string>()
 onMounted(() =>
-  queryUserBiz({ id: userId })
+  queryUserSvc({ id: userId })
     .then((x) => (userName.value = x.name))
     .catch(() => notify('error', '查询用户信息失败'))
 )
@@ -20,7 +20,7 @@ const onSubmit = () => {
     return
   }
 
-  updateUserBiz({
+  updateUserSvc({
     id: userId,
     name: userName.value
   })

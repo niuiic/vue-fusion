@@ -89,10 +89,10 @@ web端应用与移动端混合应用通用开发框架，主要技术栈为vue�
 
 ```
 src/
-  business/
+  service/
     example/
       api.ts -- api层
-      index.ts -- business层
+      index.ts -- service层
       mock.ts -- mock层
       model.ts -- model层
   share/
@@ -101,7 +101,7 @@ src/
   view/ -- view层
     example/ -- 子页面不嵌套
       Example.vue
-      business.ts -- 业务逻辑
+      service.ts -- 业务逻辑
       nonBusiness.ts -- 非业务逻辑
       example.png -- 静态资源
       components/
@@ -114,21 +114,21 @@ src/
   main.ts
 ```
 
-完整项目分层为model、mock、api、business和view。其中model定义业务模型，mock定义mock函数，api定义接口函数，business定义业务函数，view实现页面逻辑。
+完整项目分层为model、mock、api、service和view。其中model定义业务模型，mock定义mock函数，api定义接口函数，service定义业务函数，view实现页面逻辑。
 
 目录结构按领域进行组织，同一业务模块的代码合并到一处，便于管理，留下简化的空间。
 
-该分层方案下，前端将自建一套业务模型，彻底与后端分离，在无接口的情况下也可依靠mock运行完整逻辑。view层与数据的交互全部通过调用business层的接口实现，business层在不同模式下分别调用api层和mock层的接口实现逻辑。business和mock层基于model层定义的业务模型提供接口。
+该分层方案下，前端将自建一套业务模型，彻底与后端分离，在无接口的情况下也可依靠mock运行完整逻辑。view层与数据的交互全部通过调用service层的接口实现，service层在不同模式下分别调用api层和mock层的接口实现逻辑。service和mock层基于model层定义的业务模型提供接口。
 
 ```mermaid
 flowchart TB
     view
-    business
+    service
     mock
     api
-    business <--> view
-    mock <-- in mock mode --> business
-    api <-- in normal mode --> business
+    service <--> view
+    mock <-- in mock mode --> service
+    api <-- in normal mode --> service
 ```
 
 以上结构适用于开发复杂应用。实际情况下需根据项目难度、时间等因素合理简化结构。比如统计业务一般较简单，无需定义model。
@@ -139,21 +139,21 @@ flowchart TB
 
 > 引导开发人员在实现功能之前充分理解当前模块的整体业务逻辑。
 
-2. 定义business层业务函数输入输出类型。
+2. 定义service层业务函数输入输出类型。
 
 > 实现功能之前先明确有什么，要得到什么。
 
-3. 根据业务函数类型定义实现对应的mock函数，并在business层调用。
+3. 根据业务函数类型定义实现对应的mock函数，并在service层调用。
 
 > 一方面辅助开发，一方面作为测试用例。
 
-4. 使用business层业务函数实现页面逻辑。
+4. 使用service层业务函数实现页面逻辑。
 
 5. 实现api层函数。
 
 > 实际开发时通过自定义工具由swagger文档生成整个api层。便于同步接口变化，并通过typescript类型约束提示破坏性变更。
 
-6. 使用api层函数实现business层函数逻辑。
+6. 使用api层函数实现service层函数逻辑。
 
 **_测试应贯穿始终。_**
 
@@ -173,9 +173,9 @@ flowchart TB
 
 ### 顶级功能扩展机制
 
-- `import`动态加载模块。
+- `import`动态加载es模块。
 - `useAsyncFn`为调用本地函数和远程函数提供统一接口。
-- `useAsyncComp`为挂载本地组件和远程组件提供统一接口。
+- `useAsyncComp`为调用本地组件和远程组件提供统一接口。
 
 ### 目录结构的优化
 
@@ -191,7 +191,7 @@ flowchart TB
 - 应对前端进度超越后端的情况。
 - 应对后端接口频繁变动的情况。
 - 应对后端接口不契合前端逻辑的情况。
-- 将绝大部分数据处理抽离到business层，简化view层逻辑。
+- 将绝大部分数据处理抽离到service层，简化view层逻辑。
 - 便于mock在本地模拟数据库，实现完整的交互逻辑。
 
 > 可选，满足开发和测试需求，就不需要实现额外的交互逻辑。
