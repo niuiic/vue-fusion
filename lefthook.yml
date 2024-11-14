@@ -3,10 +3,10 @@ pre-commit:
   commands:
     eslint:
       glob: '*.{cjs,mjs,js,ts,vue}'
-      run: 'pnpx eslint --rule no-console:error --rule no-debugger:error {staged_files} && git add {staged_files}'
+      run: 'npx eslint --rule no-console:error --rule no-debugger:error {staged_files} && git add {staged_files}'
     stylelint:
       glob: '*.{css,scss,vue}'
-      run: 'pnpx stylelint {staged_files} && git add {staged_files}'
+      run: 'npx stylelint {staged_files} && git add {staged_files}'
 commit-msg:
   commands:
     commitlint:
