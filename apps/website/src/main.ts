@@ -1,4 +1,9 @@
-import { asyncCompRenderer, registerMode, registerPage, toRouteRecordRaws } from 'components'
+import {
+  asyncCompRenderer,
+  registerMode,
+  registerPage,
+  toRouteRecordRaws
+} from 'components'
 import 'components/dist/css/style.css'
 import 'element-plus/dist/index.css'
 import { createPinia } from 'pinia'
@@ -8,7 +13,10 @@ import App from './App.vue'
 import { routes } from './share/routes'
 
 registerMode({ DEV: __DEV__, MOCK: __MOCK__ })
-registerPage(import.meta.glob(['./view/**/*.vue', '!**/components/**/*.vue']), './view/')
+registerPage(
+  import.meta.glob(['./view/**/*.vue', '!**/components/**/*.vue']),
+  './view/'
+)
 
 const router = createRouter({
   history: createWebHashHistory(),

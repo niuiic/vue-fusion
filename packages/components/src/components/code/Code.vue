@@ -21,7 +21,9 @@ const setCode = async () => {
     if (props.language === 'markdown') {
       bodyRef.value.innerHTML = await parse(props.code)
     } else {
-      bodyRef.value.innerHTML = hljs.highlight(props.code, { language: props.language }).value
+      bodyRef.value.innerHTML = hljs.highlight(props.code, {
+        language: props.language
+      }).value
     }
   } catch {
     bodyRef.value.innerText = props.code
@@ -33,7 +35,10 @@ const setMaxHeight = () => {
   if (!bodyWrapperRef.value || !bodyRef.value) {
     return
   }
-  bodyWrapperRef.value.setAttribute('style', `max-height: ${bodyRef.value.getBoundingClientRect().height}px;`)
+  bodyWrapperRef.value.setAttribute(
+    'style',
+    `max-height: ${bodyRef.value.getBoundingClientRect().height}px;`
+  )
 }
 
 onMounted(() => {

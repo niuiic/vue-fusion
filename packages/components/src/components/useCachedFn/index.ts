@@ -1,9 +1,13 @@
-function useCachedFn<A, R>(fn: (args: A) => Promise<R>): (args: A, force?: boolean) => Promise<R>
+function useCachedFn<A, R>(
+  fn: (args: A) => Promise<R>
+): (args: A, force?: boolean) => Promise<R>
 function useCachedFn<R>(fn: () => Promise<R>): (force?: boolean) => Promise<R>
 
 function useCachedFn<A, R>(
   fn: (args?: A) => Promise<R>
-): ((args: A, force?: boolean) => Promise<R>) | ((force?: boolean) => Promise<R>) {
+):
+  | ((args: A, force?: boolean) => Promise<R>)
+  | ((force?: boolean) => Promise<R>) {
   let cache: Promise<R> | undefined
 
   let cachedFn: any

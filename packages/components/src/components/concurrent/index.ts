@@ -1,6 +1,9 @@
 type Fn<T> = () => T | Promise<T>
 
-export const concurrent = async <T>(fns: Fn<T>[], limit: number): Promise<T[]> => {
+export const concurrent = async <T>(
+  fns: Fn<T>[],
+  limit: number
+): Promise<T[]> => {
   const result: T[] = []
 
   const execFn = async (fn: Fn<T>, i: number) => {

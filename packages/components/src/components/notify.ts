@@ -1,7 +1,12 @@
 import { ElMessage } from 'element-plus'
 
-function notify(type: 'success' | 'warning' | 'error' | 'info', message: string): void
-function notify(type: 'success' | 'warning' | 'error' | 'info'): (message: string) => void
+function notify(
+  type: 'success' | 'warning' | 'error' | 'info',
+  message: string
+): void
+function notify(
+  type: 'success' | 'warning' | 'error' | 'info'
+): (message: string) => void
 function notify(
   type: 'success' | 'warning' | 'error' | 'info',
   message?: string

@@ -1,6 +1,10 @@
-const isCSS = (path: string) => new RegExp(/\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\?)/).test(path)
+const isCSS = (path: string) =>
+  new RegExp(/\.(css|less|sass|scss|styl|stylus|pcss|postcss)($|\?)/).test(path)
 
-export const viteChunks = (id: string, { getModuleInfo }: { getModuleInfo: any }) => {
+export const viteChunks = (
+  id: string,
+  { getModuleInfo }: { getModuleInfo: any }
+) => {
   if (isCSS(id)) {
     return 'style'
   }
