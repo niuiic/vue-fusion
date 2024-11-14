@@ -26,11 +26,13 @@ defineProps<Props>()
 <style lang="scss" scoped>
 .comp-info {
   position: fixed;
-  padding: 16px;
+  transform: translateX(160px);
+
   min-width: 300px;
   min-height: 300px;
+  padding: 16px;
+
   border-radius: 8px;
-  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.5);
-  transform: translateX(160px);
+  box-shadow: 0 0 3px 0 rgb(0 0 0 / 50%);
 }
 </style>

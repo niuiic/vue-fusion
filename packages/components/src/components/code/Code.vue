@@ -59,32 +59,15 @@ const copyCode = () =>
 <!-- ~ template -->
 <template>
   <div :class="{ code: true, 'code--collapsed': collapsed }">
-    <div
-      class="header"
-      @click="collapsed = !collapsed"
-    >
-      <span
-        class="copy"
-        @click.stop="copyCode"
-      />
+    <div class="header" @click="collapsed = !collapsed">
+      <span class="copy" @click.stop="copyCode" />
       <span>
         {{ props.label }}
       </span>
     </div>
-    <div
-      ref="bodyWrapperRef"
-      class="body__wrapper"
-    >
-      <div
-        v-if="language === 'markdown'"
-        ref="bodyRef"
-        class="body"
-      />
-      <pre
-        v-else
-        ref="bodyRef"
-        class="body"
-      />
+    <div ref="bodyWrapperRef" class="body__wrapper">
+      <div v-if="language === 'markdown'" ref="bodyRef" class="body" />
+      <pre v-else ref="bodyRef" class="body" />
     </div>
   </div>
 </template>
@@ -94,30 +77,36 @@ const copyCode = () =>
 /* ~~ code */
 .code {
   min-width: max-content;
-  color: #ffffff;
+  color: #fff;
   background-color: #1e1f26;
 }
 
 /* ~~ header */
 .header {
+  cursor: pointer;
+  user-select: none;
+
   display: flex;
   align-items: center;
+
   height: 20px;
+
   font-size: 12px;
-  cursor: pointer;
-  background-color: #2c303b;
-  user-select: none;
   line-height: 20px;
-  box-shadow: 0 0 2px 0 #ffffff;
+
+  background-color: #2c303b;
+  box-shadow: 0 0 2px 0 #fff;
 }
 
 .copy {
   display: inline-block;
+
   width: 16px;
   height: 16px;
+  margin-inline: 8px;
+
   border-radius: 50%;
   box-shadow: 0 0 8px 0 #74829a inset;
-  margin-inline: 8px;
 
   &:hover {
     transform: scale(1.2);

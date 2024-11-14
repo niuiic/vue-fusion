@@ -53,10 +53,10 @@ const treeProps = {
 <!-- ~ style -->
 <style lang="scss" scoped>
 .menu-tree {
-  overflow: auto;
-  color: #ffffff;
-
   --el-tree-node-hover-bg-color: #74829a;
+
+  overflow: auto;
+  color: #fff;
 }
 
 .menu-node {
