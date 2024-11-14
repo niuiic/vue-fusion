@@ -9,24 +9,11 @@ import pxtorem from 'postcss-pxtorem'
 import { defineConfig, loadEnv } from 'vite'
 import { compression } from 'vite-plugin-compression2'
 import viteProjectInfo from 'vite-plugin-project-info'
-import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(({ command, mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
 
-  const buildOnlyPlugins =
-    command === 'build'
-      ? [
-          ViteImageOptimizer(),
-          compression(),
-          viteProjectInfo(),
-          VitePWA({
-            registerType: 'autoUpdate',
-            manifest: { theme_color: '#ffffff' }
-          }),
-          legacy()
-        ]
-      : []
+  const buildOnlyPlugins = command === 'build' ? [ViteImageOptimizer(), compression(), viteProjectInfo(), legacy()] : []
 
   return {
     plugins: [vue(), ...buildOnlyPlugins],

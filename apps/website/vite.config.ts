@@ -13,7 +13,6 @@ import { defineConfig, loadEnv, UserConfig } from 'vite'
 import { compression } from 'vite-plugin-compression2'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 import viteProjectInfo from 'vite-plugin-project-info'
-import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig(({ command, mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) }
@@ -25,10 +24,6 @@ export default defineConfig(({ command, mode }) => {
           viteProjectInfo(),
           ViteImageOptimizer(),
           legacy(),
-          VitePWA({
-            registerType: 'autoUpdate',
-            manifest: { theme_color: '#ffffff' }
-          }),
           AutoImport({
             resolvers: [ElementPlusResolver()],
             dts: false
