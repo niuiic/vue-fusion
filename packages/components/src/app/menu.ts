@@ -28,9 +28,7 @@ export const generateMenusFromRoutes = (routes: RouteRecordRaw[]): Menu[] => {
   return menus
 }
 
-const categorizeRoutes = (
-  routes: RouteRecordRaw[]
-): Map<string, RouteRecordRaw[]> => {
+const categorizeRoutes = (routes: RouteRecordRaw[]): Map<string, RouteRecordRaw[]> => {
   const categorizedRoutes = new Map<string, RouteRecordRaw[]>()
 
   routes.forEach((route) => {

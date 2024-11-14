@@ -11,14 +11,12 @@ export interface Page {
   category?: string
 }
 
-const modules = import.meta.glob([
-  './pages/*/index.ts',
-  '!./pages/*/components/**/index.ts'
-])
+const modules = import.meta.glob(['./pages/*/index.ts', '!./pages/*/components/**/index.ts'])
 
-const entries = (await Promise.all(
-  Object.entries(modules).map(([k, v]) => v().then((x: any) => [k, x.default]))
-)) as [path: string, page: Page][]
+const entries = (await Promise.all(Object.entries(modules).map(([k, v]) => v().then((x: any) => [k, x.default])))) as [
+  path: string,
+  page: Page
+][]
 
 const Empty = () => import('./app/Empty.vue')
 const resolvePath = (path: string) => path.replace(/\//g, '_')

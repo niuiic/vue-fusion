@@ -1,10 +1,6 @@
 export type Enum<K extends string | symbol | number, V> = Record<K, V>
 
-export function useEnum<K extends string | symbol | number, V>(
-  map: Enum<K, V>,
-  defaultKey: K,
-  defaultValue: V
-) {
+export function useEnum<K extends string | symbol | number, V>(map: Enum<K, V>, defaultKey: K, defaultValue: V) {
   const toValue = (key: K): V => {
     if (Reflect.has(map, key)) {
       return map[key]
@@ -33,10 +29,7 @@ export function useEnum<K extends string | symbol | number, V>(
       return map
     }
 
-    return Object.fromEntries(keys.map((key) => [key, toValue(key)])) as Enum<
-      Keys[number],
-      V
-    >
+    return Object.fromEntries(keys.map((key) => [key, toValue(key)])) as Enum<Keys[number], V>
   }
 
   return { toValue, toKey, mapObj, hasKey }

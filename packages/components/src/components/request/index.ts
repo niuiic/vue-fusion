@@ -1,10 +1,5 @@
 import type { AnyObject } from '@/components/types'
-import type {
-  AxiosInstance,
-  AxiosRequestConfig,
-  AxiosResponse,
-  CreateAxiosDefaults
-} from 'axios'
+import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CreateAxiosDefaults } from 'axios'
 import axios from 'axios'
 
 export class Request {
@@ -18,35 +13,20 @@ export class Request {
     return this.instance.get(url, fixedOptions(options)).then(resolveResult)
   }
 
-  public async post<R>(
-    url: string,
-    data?: AnyObject,
-    options?: AxiosRequestConfig
-  ): Promise<R> {
-    return this.instance
-      .post(url, data, fixedOptions(options))
-      .then(resolveResult)
+  public async post<R>(url: string, data?: AnyObject, options?: AxiosRequestConfig): Promise<R> {
+    return this.instance.post(url, data, fixedOptions(options)).then(resolveResult)
   }
 
-  public async rawGet<R>(
-    url: string,
-    options?: AxiosRequestConfig
-  ): Promise<AxiosResponse<R>> {
+  public async rawGet<R>(url: string, options?: AxiosRequestConfig): Promise<AxiosResponse<R>> {
     return this.instance.get(url, fixedOptions(options))
   }
 
-  public async rawPost<R>(
-    url: string,
-    data?: AnyObject,
-    options?: AxiosRequestConfig
-  ): Promise<AxiosResponse<R>> {
+  public async rawPost<R>(url: string, data?: AnyObject, options?: AxiosRequestConfig): Promise<AxiosResponse<R>> {
     return this.instance.post(url, data, fixedOptions(options))
   }
 }
 
-const fixedOptions = (
-  options?: AxiosRequestConfig
-): AxiosRequestConfig | undefined => {
+const fixedOptions = (options?: AxiosRequestConfig): AxiosRequestConfig | undefined => {
   if (!options) {
     return
   }
@@ -57,9 +37,7 @@ const fixedOptions = (
 
   return {
     ...options,
-    params: Object.fromEntries(
-      Object.entries(options.params).filter(([_, v]) => v !== undefined)
-    )
+    params: Object.fromEntries(Object.entries(options.params).filter(([_, v]) => v !== undefined))
   }
 }
 

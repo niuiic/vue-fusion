@@ -2,11 +2,7 @@ import type { App, AppContext, Component, VNode, VNodeArrayChildren } from 'vue'
 import { h, render } from 'vue'
 import type { AnyObject } from './types'
 
-type ComponentProps<T> = T extends abstract new (
-  ...args: any[]
-) => any
-  ? InstanceType<T>['$props']
-  : AnyObject
+type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
 
 let globalAppContext: AppContext | null = null
 
@@ -14,13 +10,7 @@ export const asyncCompRenderer = (app: App) => {
   globalAppContext = app._context
 }
 
-type RawChildren =
-  | string
-  | number
-  | boolean
-  | VNode
-  | VNodeArrayChildren
-  | (() => any)
+type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() => any)
 
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,

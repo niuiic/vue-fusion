@@ -12,22 +12,13 @@ interface Options<T> {
    */
   onOk: (data: T) => void
   onErr: (err: unknown) => void
-  updateData: (
-    oldData: T | undefined,
-    newData: T,
-    setData: (data: T) => void
-  ) => void
+  updateData: (oldData: T | undefined, newData: T, setData: (data: T) => void) => void
 }
 
 const doNothing = () => {}
-const updateData = (_: any, newData: any, setData: (data: any) => void) =>
-  setData(newData)
+const updateData = (_: any, newData: any, setData: (data: any) => void) => setData(newData)
 
-export const useRequest = <
-  T extends Fn,
-  Data = Awaited<ReturnType<T>>,
-  Args = Parameters<T>[0]
->(
+export const useRequest = <T extends Fn, Data = Awaited<ReturnType<T>>, Args = Parameters<T>[0]>(
   fn: T,
   options?: {
     shallowRefData?: boolean

@@ -38,15 +38,7 @@ export default defineConfig(
           chunkFileNames: 'js/[name].mjs',
           assetFileNames: '[ext]/[name].[ext]'
         },
-        external: [
-          'vue',
-          'element-plus',
-          'mapbox-gl',
-          'echarts',
-          'cesium',
-          'three',
-          'date-fns'
-        ]
+        external: ['vue', 'element-plus', 'mapbox-gl', 'echarts', 'cesium', 'three', 'date-fns']
       },
       minify: true,
       sourcemap: true,

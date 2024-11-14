@@ -35,10 +35,7 @@ const setMaxHeight = () => {
   if (!bodyWrapperRef.value || !bodyRef.value) {
     return
   }
-  bodyWrapperRef.value.setAttribute(
-    'style',
-    `max-height: ${bodyRef.value.getBoundingClientRect().height}px;`
-  )
+  bodyWrapperRef.value.setAttribute('style', `max-height: ${bodyRef.value.getBoundingClientRect().height}px;`)
 }
 
 onMounted(() => {

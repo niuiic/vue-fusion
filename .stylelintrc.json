@@ -73,10 +73,7 @@
         "message": "Expected keyframe name to be kebab-case"
       }
     ],
-    "at-rule-empty-line-before": [
-      "always",
-      { "ignore": ["inside-block", "blockless-after-same-name-blockless"] }
-    ],
+    "at-rule-empty-line-before": ["always", { "ignore": ["inside-block", "blockless-after-same-name-blockless"] }],
     "media-feature-range-notation": "off",
     "order/properties-order": [
       "position",
