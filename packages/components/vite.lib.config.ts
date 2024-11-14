@@ -26,6 +26,11 @@ export default defineConfig(
       compression()
     ],
     css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern'
+        }
+      },
       postcss: {
         plugins: [removeComments({ removeAll: true })]
       }

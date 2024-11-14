@@ -63,6 +63,11 @@ export default defineConfig(({ command, mode }) => {
       extensions: ['.ts', '.js', '.scss', '.css', '.json']
     },
     css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern'
+        }
+      },
       postcss: {
         plugins: [
           autoprefixer(),

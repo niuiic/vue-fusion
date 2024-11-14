@@ -41,6 +41,11 @@ export default defineConfig(({ command, mode }) => {
       port: 9000
     },
     css: {
+      preprocessorOptions: {
+        scss: {
+          api: 'modern'
+        }
+      },
       postcss: {
         plugins: [
           autoprefixer(),
