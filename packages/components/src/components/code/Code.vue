@@ -1,4 +1,4 @@
-<!-- ~ script -->
+<!-- % script % -->
 <script setup lang="ts">
 import hljs from 'highlight.js'
 import { parse } from 'marked'
@@ -7,10 +7,10 @@ import { copyToClipboard } from '../clipboard'
 import { notify } from '../notify'
 import type { CodeProps } from './nonBusiness'
 
-// ~~ 组件配置
+// %% 组件配置 %%
 const props = defineProps<CodeProps>()
 
-// ~~ code
+// %% code %%
 const bodyRef = ref<HTMLPreElement>()
 const bodyWrapperRef = ref<HTMLPreElement>()
 const setCode = async () => {
@@ -46,17 +46,17 @@ onMounted(() => {
 
 onUnmounted(() => window.removeEventListener('resize', setMaxHeight))
 
-// ~~ collapsed
+// %% collapsed %%
 const collapsed = ref(false)
 
-// ~~ copy
+// %% copy %%
 const copyCode = () =>
   copyToClipboard(props.code)
     .then(() => notify('success', '复制成功'))
     .catch(() => notify('error', '复制失败'))
 </script>
 
-<!-- ~ template -->
+<!-- % template % -->
 <template>
   <div :class="{ code: true, 'code--collapsed': collapsed }">
     <div class="header" @click="collapsed = !collapsed">
@@ -72,16 +72,16 @@ const copyCode = () =>
   </div>
 </template>
 
-<!-- ~ style -->
+<!-- % style % -->
 <style lang="scss" scoped>
-/* ~~ code */
+/* %% code %% */
 .code {
   min-width: max-content;
   color: #fff;
   background-color: #1e1f26;
 }
 
-/* ~~ header */
+/* %% header %% */
 .header {
   cursor: pointer;
   user-select: none;
@@ -113,7 +113,7 @@ const copyCode = () =>
   }
 }
 
-/* ~~ body */
+/* %% body %% */
 .body {
   display: flow-root;
   margin: 0;

@@ -1,8 +1,8 @@
-<!-- ~ script -->
+<!-- % script % -->
 <script setup lang="ts">
 import type { Page } from '@/router'
 
-// ~~ 组件配置
+// %% 组件配置 %%
 interface Props {
   info: Page
   top: number
@@ -11,18 +11,14 @@ interface Props {
 defineProps<Props>()
 </script>
 
-<!-- ~ template -->
+<!-- % template % -->
 <template>
-  <div
-    v-if="info.desc"
-    class="comp-info"
-    :style="`top: ${top}px; left: ${left}px;`"
-  >
+  <div v-if="info.desc" class="comp-info" :style="`top: ${top}px; left: ${left}px;`">
     {{ info.desc }}
   </div>
 </template>
 
-<!-- ~ style -->
+<!-- % style % -->
 <style lang="scss" scoped>
 .comp-info {
   position: fixed;

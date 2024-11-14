@@ -1,11 +1,11 @@
-<!-- ~ script -->
+<!-- % script % -->
 <script setup lang="ts">
 import { ElTree } from 'element-plus'
 import { computed } from 'vue'
 import { useRoute, type RouteRecordRaw } from 'vue-router'
 import { generateMenusFromRoutes } from './menu'
 
-// ~~ 组件配置
+// %% 组件配置 %%
 interface Props {
   routes: RouteRecordRaw[]
 }
@@ -18,25 +18,20 @@ interface Emits {
 }
 const emit = defineEmits<Emits>()
 
-// ~~ 菜单项
+// %% 菜单项 %%
 const route = useRoute()
 const menus = computed(() => generateMenusFromRoutes(props.routes))
 
-// ~~ 树
+// %% 树 %%
 const treeProps = {
   children: 'children',
   label: 'label'
 }
 </script>
 
-<!-- ~ template -->
+<!-- % template % -->
 <template>
-  <el-tree
-    class="menu-tree"
-    :props="treeProps"
-    :data="menus"
-    default-expand-all
-  >
+  <el-tree class="menu-tree" :props="treeProps" :data="menus" default-expand-all>
     <template #default="{ data }">
       <div
         :class="{ 'menu-node': true, 'menu-node--selected': route.name === data.data?.name }"
@@ -50,7 +45,7 @@ const treeProps = {
   </el-tree>
 </template>
 
-<!-- ~ style -->
+<!-- % style % -->
 <style lang="scss" scoped>
 .menu-tree {
   --el-tree-node-hover-bg-color: #74829a;

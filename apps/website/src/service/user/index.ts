@@ -1,7 +1,7 @@
 import { service, useAsyncFn } from 'components'
 import type { User } from './model'
 
-// ~ query
+// % query %
 export type QueryUserReq = Pick<User, 'id'>
 export type QueryUserRes = User
 export const queryUserSvc = service<QueryUserReq, QueryUserRes>(
@@ -9,7 +9,7 @@ export const queryUserSvc = service<QueryUserReq, QueryUserRes>(
   useAsyncFn(() => import('./mock').then((x) => x.queryUserMock))
 )
 
-// ~ update
+// % update %
 export type UpdateUserReq = User
 export type UpdateUserRes = unknown
 export const updateUserSvc = service<UpdateUserReq, UpdateUserRes>(

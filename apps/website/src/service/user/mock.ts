@@ -1,10 +1,10 @@
 import type { QueryUserReq, QueryUserRes, UpdateUserReq, UpdateUserRes } from './index'
 import { newUser } from './model'
 
-// ~ data
+// % data %
 const users = [newUser({ name: '用户1' }), newUser({ name: '用户2' })]
 
-// ~ query
+// % query %
 export const queryUserMock = async (args: QueryUserReq): Promise<QueryUserRes> => {
   const user = users.find((x) => x.id === args.id)
   if (!user) {
@@ -14,7 +14,7 @@ export const queryUserMock = async (args: QueryUserReq): Promise<QueryUserRes> =
   return user
 }
 
-// ~ update
+// % update %
 export const updateUserMock = async (args: UpdateUserReq): Promise<UpdateUserRes> => {
   const user = users.find((x) => x.id === args.id)
   if (!user) {

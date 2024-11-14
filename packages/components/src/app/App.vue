@@ -1,4 +1,4 @@
-<!-- ~ script -->
+<!-- % script % -->
 <script setup lang="ts">
 import type { CodeProps } from '@/components/code'
 import { Code } from '@/components/code'
@@ -12,11 +12,11 @@ import type { RouteRecordRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import MenuTree from './MenuTree.vue'
 
-// ~~ router
+// %% router %%
 const router = useRouter()
 const route = useRoute()
 
-// ~~ entry
+// %% entry %%
 const [mountInfo, unmountInfo] = useAsyncComp(() => import('./CompInfo.vue'))
 const showInfo = (el: HTMLElement, route: RouteRecordRaw) => {
   const pos = el.getBoundingClientRect()
@@ -31,7 +31,7 @@ const showInfo = (el: HTMLElement, route: RouteRecordRaw) => {
 const hideInfo = unmountInfo
 const onClickMenu = (route: RouteRecordRaw) => router.push({ name: route.name })
 
-// ~~ code
+// %% code %%
 const codeList = ref<CodeProps[]>([])
 watch(
   () => route.name,
@@ -41,7 +41,7 @@ watch(
 )
 </script>
 
-<!-- ~ template -->
+<!-- % template % -->
 <template>
   <el-config-provider :locale="zhCn">
     <div class="app">
@@ -58,9 +58,9 @@ watch(
   </el-config-provider>
 </template>
 
-<!-- ~ style -->
+<!-- % style % -->
 <style lang="scss" scoped>
-/* ~~ app */
+/* %% app %% */
 .app {
   display: grid;
   grid-template-columns: 160px 1fr;
@@ -76,14 +76,14 @@ watch(
   grid-template-columns: 160px 1fr;
 }
 
-/* ~~ nav */
+/* %% nav %% */
 .nav {
   overflow: auto;
   padding: 4px;
   background-color: #1e1f26;
 }
 
-/* ~~ page */
+/* %% page %% */
 .page {
   overflow: auto;
 }
@@ -92,7 +92,7 @@ watch(
   display: none;
 }
 
-/* ~~ code */
+/* %% code %% */
 .code-list {
   overflow: auto;
   background-color: #1e1f26;
@@ -107,7 +107,7 @@ watch(
   margin-top: 3px;
 }
 
-// ~~ scrollbar
+// %% scrollbar %%
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
