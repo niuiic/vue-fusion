@@ -4,7 +4,7 @@ import autoprefixer from 'autoprefixer'
 import { join } from 'path'
 import removeComments from 'postcss-discard-comments'
 import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
-// @ts-expect-error
+// @ts-expect-error no declaration
 import pxtorem from 'postcss-pxtorem'
 import { defineConfig, loadEnv } from 'vite'
 import { compression } from 'vite-plugin-compression2'

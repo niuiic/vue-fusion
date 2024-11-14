@@ -13,7 +13,11 @@ defineProps<Props>()
 
 <!-- ~ template -->
 <template>
-  <div v-if="info.desc" class="comp-info" :style="`top: ${top}px; left: ${left}px;`">
+  <div
+    v-if="info.desc"
+    class="comp-info"
+    :style="`top: ${top}px; left: ${left}px;`"
+  >
     {{ info.desc }}
   </div>
 </template>

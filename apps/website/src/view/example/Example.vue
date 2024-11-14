@@ -1,8 +1,8 @@
 <!-- ~ script -->
 <script setup lang="ts">
+import { queryUserSvc, updateUserSvc } from '@/service/user'
 import { notify } from 'components'
 import { onMounted, ref } from 'vue'
-import { queryUserSvc, updateUserSvc } from '@/service/user'
 
 // ~~ 表单数据
 const userId = '1'
@@ -33,7 +33,9 @@ const onSubmit = () => {
 <template>
   <div class="example">
     <h1>这是一个简单的修改用户名称的案例</h1>
-    <el-input v-model="userName"></el-input>
-    <el-button @click="onSubmit">提交</el-button>
+    <el-input v-model="userName" />
+    <el-button @click="onSubmit">
+      提交
+    </el-button>
   </div>
 </template>

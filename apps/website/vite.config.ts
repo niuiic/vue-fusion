@@ -4,7 +4,7 @@ import autoprefixer from 'autoprefixer'
 import { viteChunks, viteHtml } from 'build'
 import { join } from 'path'
 import removeComments from 'postcss-discard-comments'
-// @ts-expect-error
+// @ts-expect-error no declaration
 import pxtorem from 'postcss-pxtorem'
 import AutoImport from 'unplugin-auto-import/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'

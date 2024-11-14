@@ -1,16 +1,16 @@
 <!-- ~ script -->
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import type { CodeProps } from '@/components/code'
 import { Code } from '@/components/code'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import { ElConfigProvider } from 'element-plus'
+import { useAsyncComp } from '@/components/useAsyncComp'
 import type { Page } from '@/router'
 import { routes } from '@/router'
+import { ElConfigProvider } from 'element-plus'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
+import { ref, watch } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import MenuTree from './MenuTree.vue'
-import { useAsyncComp } from '@/components/useAsyncComp'
 
 // ~~ router
 const router = useRouter()
@@ -20,12 +20,13 @@ const route = useRoute()
 const [mountInfo, unmountInfo] = useAsyncComp(() => import('./CompInfo.vue'))
 const showInfo = (el: HTMLElement, route: RouteRecordRaw) => {
   const pos = el.getBoundingClientRect()
-  route.meta &&
+  if (route.meta) {
     mountInfo({
       info: route.meta.page as Page,
       top: pos.top,
       left: pos.left
     })
+  }
 }
 const hideInfo = unmountInfo
 const onClickMenu = (route: RouteRecordRaw) => router.push({ name: route.name })
@@ -44,14 +45,13 @@ watch(
 <template>
   <el-config-provider :locale="zhCn">
     <div class="app">
-      <MenuTree class="nav" :routes="routes" @click-menu="onClickMenu" @enter-menu="showInfo" @leave-menu="hideInfo">
-      </MenuTree>
+      <MenuTree class="nav" :routes="routes" @click-menu="onClickMenu" @enter-menu="showInfo" @leave-menu="hideInfo" />
       <div class="page">
-        <router-view></router-view>
+        <router-view />
       </div>
       <div v-if="codeList.length > 0" class="code-list">
         <div class="code-list__inner">
-          <Code v-for="(x, i) in codeList" :key="i" :code="x.code" :language="x.language" :label="x.label"></Code>
+          <Code v-for="(x, i) in codeList" :key="i" :code="x.code" :language="x.language" :label="x.label" />
         </div>
       </div>
     </div>

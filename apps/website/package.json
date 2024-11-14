@@ -9,8 +9,8 @@
     "build:mock": "vite build --mode buildmock",
     "preview": "vite preview",
     "lint:ts": "vue-tsc --noEmit",
-    "lint:eslint": "eslint -f unix --ext .ts,vue .",
-    "lint:stylelint": "stylelint -f unix \"**/*.{css,scss,vue}\"",
+    "lint:eslint": "eslint \"**/*.{js,ts,vue}\"",
+    "lint:stylelint": "stylelint \"**/*.{css,scss,vue}\"",
     "debug:cmd": "vite build"
   },
   "dependencies": {

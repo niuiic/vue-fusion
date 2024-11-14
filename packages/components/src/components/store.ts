@@ -2,7 +2,6 @@ import type {
   _ExtractActionsFromSetupStore,
   _ExtractGettersFromSetupStore,
   _ExtractStateFromSetupStore,
-  _GettersTree,
   _Method,
   DefineSetupStoreOptions,
   Store,

@@ -1,8 +1,8 @@
 <!-- ~ script -->
 <script setup lang="ts">
-import { useRoute, type RouteRecordRaw } from 'vue-router'
 import { ElTree } from 'element-plus'
 import { computed } from 'vue'
+import { useRoute, type RouteRecordRaw } from 'vue-router'
 import { generateMenusFromRoutes } from './menu'
 
 // ~~ 组件配置
@@ -31,7 +31,12 @@ const treeProps = {
 
 <!-- ~ template -->
 <template>
-  <el-tree class="menu-tree" :props="treeProps" :data="menus" default-expand-all>
+  <el-tree
+    class="menu-tree"
+    :props="treeProps"
+    :data="menus"
+    default-expand-all
+  >
     <template #default="{ data }">
       <div
         :class="{ 'menu-node': true, 'menu-node--selected': route.name === data.data?.name }"

@@ -1,11 +1,11 @@
 <!-- ~ script -->
 <script setup lang="ts">
 import hljs from 'highlight.js'
+import { parse } from 'marked'
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { copyToClipboard } from '../clipboard'
 import { notify } from '../notify'
 import type { CodeProps } from './nonBusiness'
-import { parse } from 'marked'
 
 // ~~ 组件配置
 const props = defineProps<CodeProps>()
@@ -59,15 +59,32 @@ const copyCode = () =>
 <!-- ~ template -->
 <template>
   <div :class="{ code: true, 'code--collapsed': collapsed }">
-    <div class="header" @click="collapsed = !collapsed">
-      <span class="copy" @click.stop="copyCode"></span>
+    <div
+      class="header"
+      @click="collapsed = !collapsed"
+    >
+      <span
+        class="copy"
+        @click.stop="copyCode"
+      />
       <span>
         {{ props.label }}
       </span>
     </div>
-    <div ref="bodyWrapperRef" class="body__wrapper">
-      <div v-if="language === 'markdown'" ref="bodyRef" class="body"></div>
-      <pre v-else ref="bodyRef" class="body"></pre>
+    <div
+      ref="bodyWrapperRef"
+      class="body__wrapper"
+    >
+      <div
+        v-if="language === 'markdown'"
+        ref="bodyRef"
+        class="body"
+      />
+      <pre
+        v-else
+        ref="bodyRef"
+        class="body"
+      />
     </div>
   </div>
 </template>
