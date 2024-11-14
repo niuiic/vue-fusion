@@ -24,28 +24,36 @@ type RawChildren =
 
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
-  getContainer: () => HTMLElement | undefined | null = () => document.body
+  getContainer: () => HTMLElement | undefined | null = () => undefined
 ): [(props: ComponentProps<T>) => Promise<unknown>, () => Promise<unknown>] => {
+  let container: HTMLElement | undefined | null
+  let useTempContainer = false
+
   const mount = (props: ComponentProps<T>, children?: RawChildren) =>
     loadComponent().then((mod) => {
       const vNode = h(mod.default, props, children)
       vNode.appContext = globalAppContext
 
-      const container = getContainer()
+      container = getContainer()
       if (!container) {
-        throw new Error('container does not exist')
+        container = document.createElement('div')
+        document.body.appendChild(container)
+        useTempContainer = true
       }
 
       render(vNode, container)
     })
 
   const unmount = async () => {
-    const container = getContainer()
     if (!container) {
       throw new Error('container does not exist')
     }
 
     render(null, container)
+
+    if (useTempContainer) {
+      document.body.removeChild(container)
+    }
   }
 
   return [mount, unmount]
