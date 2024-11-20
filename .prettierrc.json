@@ -18,6 +18,5 @@
   "htmlWhitespaceSensitivity": "css",
   "vueIndentScriptAndStyle": false,
   "endOfLine": "lf",
-  "embeddedLanguageFormatting": "auto",
-  "plugins": ["prettier-plugin-organize-imports"]
+  "embeddedLanguageFormatting": "auto"
 }
