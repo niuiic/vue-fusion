@@ -1,6 +1,5 @@
 import type { App, AppContext, Component, VNode, VNodeArrayChildren } from 'vue'
 import { h, render } from 'vue'
-import type { ComponentInternalInstance } from 'vue'
 import type { AnyObject } from './types'
 
 type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
@@ -16,29 +15,26 @@ type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() 
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => undefined
-): [
-  (props: ComponentProps<T>) => Promise<unknown>,
-  () => Promise<unknown>,
-  () => ComponentInternalInstance | undefined | null
-] => {
+): [(props: ComponentProps<T>) => Promise<unknown>, () => Promise<unknown>, () => VNode | undefined] => {
   let container: HTMLElement | undefined | null
   let useTempContainer = false
-  let instance: ComponentInternalInstance | null
+  let vnode: VNode
 
   const mount = (props: ComponentProps<T>, children?: RawChildren) =>
     loadComponent().then((mod) => {
-      const vNode = h(mod.default, props, children)
-      vNode.appContext = globalAppContext
-      instance = vNode.component
+      vnode = h(mod.default, props, children)
+      vnode.appContext = globalAppContext
 
-      container = getContainer()
+      if (!container) {
+        container = getContainer()
+      }
       if (!container) {
         container = document.createElement('div')
         document.body.appendChild(container)
         useTempContainer = true
       }
 
-      render(vNode, container)
+      render(vnode, container)
     })
 
   const unmount = async () => {
@@ -50,10 +46,11 @@ export const useAsyncComp = <T extends Component>(
 
     if (useTempContainer) {
       document.body.removeChild(container)
+      useTempContainer = false
     }
   }
 
-  const getInstance = (): ComponentInternalInstance | undefined | null => instance
+  const getVNode = (): VNode | undefined => vnode
 
-  return [mount, unmount, getInstance]
+  return [mount, unmount, getVNode]
 }
