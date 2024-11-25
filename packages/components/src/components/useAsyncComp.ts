@@ -1,5 +1,6 @@
 import type { App, AppContext, Component, VNode, VNodeArrayChildren } from 'vue'
 import { h, render } from 'vue'
+import type { ComponentInternalInstance } from 'vue'
 import type { AnyObject } from './types'
 
 type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
@@ -15,14 +16,20 @@ type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() 
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => undefined
-): [(props: ComponentProps<T>) => Promise<unknown>, () => Promise<unknown>] => {
+): [
+  (props: ComponentProps<T>) => Promise<unknown>,
+  () => Promise<unknown>,
+  () => ComponentInternalInstance | undefined | null
+] => {
   let container: HTMLElement | undefined | null
   let useTempContainer = false
+  let instance: ComponentInternalInstance | null
 
   const mount = (props: ComponentProps<T>, children?: RawChildren) =>
     loadComponent().then((mod) => {
       const vNode = h(mod.default, props, children)
       vNode.appContext = globalAppContext
+      instance = vNode.component
 
       container = getContainer()
       if (!container) {
@@ -46,5 +53,7 @@ export const useAsyncComp = <T extends Component>(
     }
   }
 
-  return [mount, unmount]
+  const getInstance = (): ComponentInternalInstance | undefined | null => instance
+
+  return [mount, unmount, getInstance]
 }
