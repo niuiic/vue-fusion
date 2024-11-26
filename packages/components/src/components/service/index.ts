@@ -1,9 +1,9 @@
 import { inMode } from '@/components/mode'
 
-type BusinessFn<A, R> = (args: A) => Promise<R>
+type ServiceFn<A, R> = (args: A) => Promise<R>
 
 export const service =
-  <A, R>(impl?: BusinessFn<A, R>, mock?: BusinessFn<A, R>, useMock = true) =>
+  <A, R>(impl?: ServiceFn<A, R>, mock?: ServiceFn<A, R>, useMock = true) =>
   async (args: A): Promise<R> => {
     if (inMode('MOCK') && mock && useMock) {
       return mock(args)
