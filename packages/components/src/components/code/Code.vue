@@ -21,9 +21,7 @@ const setCode = async () => {
     if (props.language === 'markdown') {
       bodyRef.value.innerHTML = await parse(props.code)
     } else {
-      bodyRef.value.innerHTML = hljs.highlight(props.code, {
-        language: props.language
-      }).value
+      bodyRef.value.innerHTML = hljs.highlight(props.code, { language: props.language }).value
     }
   } catch {
     bodyRef.value.innerText = props.code
@@ -59,7 +57,7 @@ const copyCode = () =>
 <!-- % template % -->
 <template>
   <div :class="{ code: true, 'code--collapsed': collapsed }">
-    <div class="header" @click="collapsed = !collapsed">
+    <div class="header" @click="(collapsed = !collapsed)">
       <span class="copy" @click.stop="copyCode" />
       <span>
         {{ props.label }}
