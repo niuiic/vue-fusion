@@ -21,6 +21,7 @@ export default ts.config(
       'vue/multi-word-component-names': 'off',
       '@typescript-eslint/consistent-type-imports': 'error',
       'vue/max-attributes-per-line': 'off',
+      'vue/singleline-html-element-content-newline': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

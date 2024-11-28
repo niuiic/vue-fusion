@@ -1,14 +1,17 @@
 <!-- % script % -->
 <script setup lang="ts">
-import { queryUserSvc, updateUserSvc } from '@/service/user'
+import { userModule } from '@/module/user'
 import { notify } from 'components'
 import { onMounted, ref } from 'vue'
 
 // %% 表单数据 %%
 const userId = '1'
 const userName = ref<string>()
+const userService = userModule.resolve('UserService')
+
 onMounted(() =>
-  queryUserSvc({ id: userId })
+  userService
+    .queryUser({ id: userId })
     .then((x) => (userName.value = x.name))
     .catch(() => notify('error', '查询用户信息失败'))
 )
@@ -20,10 +23,11 @@ const onSubmit = () => {
     return
   }
 
-  updateUserSvc({
-    id: userId,
-    name: userName.value
-  })
+  userService
+    .updateUser({
+      id: userId,
+      name: userName.value
+    })
     .then(() => notify('success', '用户信息更新成功'))
     .catch(() => notify('error', '用户信息更新失败'))
 }
@@ -34,6 +38,6 @@ const onSubmit = () => {
   <div class="example">
     <h1>这是一个简单的修改用户名称的案例</h1>
     <el-input v-model="userName" />
-    <el-button @click="onSubmit"> 提交 </el-button>
+    <el-button @click="onSubmit">提交</el-button>
   </div>
 </template>

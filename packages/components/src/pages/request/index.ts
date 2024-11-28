@@ -1,8 +1,8 @@
-import doc from '@/components/service/README.md?raw'
+import doc from '@/components/request/README.md?raw'
 import type { Page } from '@/router'
 
 export default {
-  name: 'service',
+  name: 'request',
   category: 'api',
   docs: [
     {

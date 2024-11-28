@@ -22,9 +22,9 @@ export function useEnum<K extends string | symbol | number, V>(map: Enum<K, V>, 
     return fixedKeys.includes(value)
   }
 
-  function mapObj(): Enum<K, V>
-  function mapObj<Keys extends K[]>(keys: Keys): Enum<Keys[number], V>
-  function mapObj<Keys extends K[]>(keys?: Keys) {
+  function getMapObj(): Enum<K, V>
+  function getMapObj<Keys extends K[]>(keys: Keys): Enum<Keys[number], V>
+  function getMapObj<Keys extends K[]>(keys?: Keys) {
     if (!keys) {
       return map
     }
@@ -32,5 +32,5 @@ export function useEnum<K extends string | symbol | number, V>(map: Enum<K, V>, 
     return Object.fromEntries(keys.map((key) => [key, toValue(key)])) as Enum<Keys[number], V>
   }
 
-  return { toValue, toKey, mapObj, hasKey }
+  return { toValue, toKey, getMapObj, hasKey }
 }

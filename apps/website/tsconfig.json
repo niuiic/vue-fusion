@@ -18,7 +18,9 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["element-plus/global"]
+    "types": ["element-plus/global"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*.ts", "vite.config.ts", "declare/**/*.d.ts", "src/**/*.vue", "src/**/*.js"]
 }
