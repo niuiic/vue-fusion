@@ -8,23 +8,23 @@ export const Mock = (_: any, propertyKey: string, descriptor: PropertyDescriptor
 
   if (inMode('MOCK')) {
     descriptor.value = async function (...args: any[]) {
-      const getMockService = Reflect.get(this, 'getMockService')
-      if (typeof getMockService !== 'function') {
-        throw new Error('getMockService is not a function')
+      const getMockDAO = Reflect.get(this, 'getMockDAO')
+      if (typeof getMockDAO !== 'function') {
+        throw new Error('getMockDAO is not a function')
       }
 
-      const mockServicePromise = getMockService()
-      if (!(mockServicePromise instanceof Promise)) {
-        throw new Error('getMockService should return a Promise')
+      const mockDAOPromise = getMockDAO()
+      if (!(mockDAOPromise instanceof Promise)) {
+        throw new Error('getMockDAO should return a Promise')
       }
 
-      return mockServicePromise.then((mockService: AnyObject) => {
-        const mockFn = Reflect.get(mockService, propertyKey)
+      return mockDAOPromise.then((mockDAO: AnyObject) => {
+        const mockFn = Reflect.get(mockDAO, propertyKey)
         if (typeof mockFn !== 'function') {
           throw new Error(`${propertyKey} is not a method of the mock service`)
         }
 
-        return mockService[propertyKey](...args)
+        return mockDAO[propertyKey](...args)
       })
     }
   }

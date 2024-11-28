@@ -1,8 +1,8 @@
 import type { UserEntity } from './entity'
 import { newUser } from './entity'
-import type { IUserService } from './service'
+import type { IUserDAO } from './dao'
 
-export class UserServiceMock implements IUserService {
+export class UserDAOMock implements IUserDAO {
   private users = [newUser({ name: '用户1' }), newUser({ name: '用户2' })]
 
   async queryUser(args: Pick<UserEntity, 'id'>): Promise<UserEntity> {
@@ -25,4 +25,4 @@ export class UserServiceMock implements IUserService {
   }
 }
 
-export const userServiceMock = new UserServiceMock()
+export const userDAOMock = new UserDAOMock()

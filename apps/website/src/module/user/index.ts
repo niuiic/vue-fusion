@@ -1,6 +1,8 @@
-import { createInjector } from 'typed-inject'
+import { createInjector, Scope } from 'typed-inject'
+import { UserDAO } from './dao'
 import { UserService } from './service'
 
 export const userModule = createInjector()
-  .provideValue('getMockService', () => import('./mock').then((x) => x.userServiceMock))
-  .provideClass('UserService', UserService)
+  .provideValue('getMockDAO', () => import('./mock').then((x) => x.userDAOMock))
+  .provideClass('UserDAO', UserDAO)
+  .provideClass('UserService', UserService, Scope.Transient)

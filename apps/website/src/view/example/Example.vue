@@ -7,10 +7,10 @@ import { onMounted, ref } from 'vue'
 // %% 表单数据 %%
 const userId = '1'
 const userName = ref<string>()
-const userService = userModule.resolve('UserService')
+const userDAO = userModule.resolve('UserDAO')
 
 onMounted(() =>
-  userService
+  userDAO
     .queryUser({ id: userId })
     .then((x) => (userName.value = x.name))
     .catch(() => notify('error', '查询用户信息失败'))
@@ -23,7 +23,7 @@ const onSubmit = () => {
     return
   }
 
-  userService
+  userDAO
     .updateUser({
       id: userId,
       name: userName.value
