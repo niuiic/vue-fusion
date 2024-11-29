@@ -1,5 +1,5 @@
 export const Log =
-  (fn: (type: 'INPUT' | 'OUTPUT' | 'ERROR', msg: unknown) => void) =>
+  (fn: (type: 'INPUT' | 'OUTPUT' | 'ERROR', msg: unknown, instance: unknown) => void) =>
   (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) => {
     const method = descriptor.value
 
@@ -8,30 +8,30 @@ export const Log =
     }
 
     descriptor.value = function (...args: any[]) {
-      fn('INPUT', args)
+      fn('INPUT', args, this)
 
       let result: unknown
       try {
         result = method.apply(this, args)
       } catch (e) {
-        fn('ERROR', e)
+        fn('ERROR', e, this)
         throw e
       }
 
       if (result instanceof Promise) {
         return result.then(
           (x) => {
-            fn('OUTPUT', x)
+            fn('OUTPUT', x, this)
             return x
           },
           (e) => {
-            fn('ERROR', e)
+            fn('ERROR', e, this)
             throw e
           }
         )
       }
 
-      fn('OUTPUT', result)
+      fn('OUTPUT', result, this)
       return result
     }
   }
