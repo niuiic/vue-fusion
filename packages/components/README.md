@@ -27,7 +27,7 @@
 2. 导入样式。
 
 ```typescript
-import 'components/dist/css/style.css'
+import 'components/dist/css/components.css'
 ```
 
 3. 引入组件使用。

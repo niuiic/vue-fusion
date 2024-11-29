@@ -3,8 +3,8 @@ import type { UserEntity } from './entity'
 import type { UserDAOMock } from './mock'
 
 export interface IUserDAO {
-  queryUser(args: Pick<UserEntity, 'id'>): Promise<UserEntity>
-  updateUser(args: UserEntity): Promise<unknown>
+  queryUsers(): Promise<UserEntity[]>
+  deleteUser(args: Pick<UserEntity, 'id'>): Promise<unknown>
 }
 
 export class UserDAO implements IUserDAO {
@@ -12,12 +12,12 @@ export class UserDAO implements IUserDAO {
   constructor(protected getMockDAO: () => Promise<UserDAOMock>) {}
 
   @Mock
-  async queryUser(_: Pick<UserEntity, 'id'>): Promise<UserEntity> {
-    throw new Error('Method not implemented.')
+  async queryUsers(): Promise<UserEntity[]> {
+    throw new Error('not implemented')
   }
 
   @Mock
-  async updateUser(_: UserEntity): Promise<unknown> {
-    throw new Error('Method not implemented.')
+  async deleteUser(_: Pick<UserEntity, 'id'>): Promise<unknown> {
+    throw new Error('not implemented')
   }
 }

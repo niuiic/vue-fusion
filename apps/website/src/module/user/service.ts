@@ -1,15 +1,55 @@
 import type { IUserDAO, UserDAO } from './dao'
-import type { DAOToService } from 'components'
+import { notify, Result, type DAOToService } from 'components'
+import type { UserEntity } from './entity'
+import { ref } from 'vue'
+import { ElMessageBox } from 'element-plus'
 
 export class UserService implements DAOToService<IUserDAO> {
   static inject = ['UserDAO'] as const
   constructor(protected userDAO: UserDAO) {}
 
-  queryUser(..._args: any[]): Promise<unknown> {
-    throw new Error('Method not implemented.')
+  public users = ref<UserEntity[]>([])
+
+  async queryUsers(): Promise<unknown> {
+    return this.userDAO
+      .queryUsers()
+      .then((x) => (this.users.value = x))
+      .catch((e) => {
+        notify('error', '查询用户列表失败')
+        throw e
+      })
   }
 
-  updateUser(_args: string): Promise<unknown> {
-    throw new Error('Method not implemented.')
+  async deleteUser({ id }: Pick<UserEntity, 'id'>): Promise<unknown> {
+    const { promise, resolve, reject } = Promise.withResolvers()
+
+    ElMessageBox.alert('确认删除该用户？', '删除', {
+      confirmButtonText: '确认',
+      callback: (action: string) => {
+        if (action === 'cancel') {
+          resolve(Result.Cancel)
+          return
+        }
+
+        this.userDAO
+          .deleteUser({ id })
+          .then(() => {
+            resolve(Result.Done)
+            notify('success', '删除用户成功')
+            this.queryUsers().catch(() => {})
+          })
+          .catch((e) => {
+            notify('error', '删除用户失败')
+            reject(e)
+          })
+      }
+    })
+
+    return promise
+  }
+
+  async initOrReset() {
+    this.users.value = []
+    this.queryUsers().catch(() => {})
   }
 }

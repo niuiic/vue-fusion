@@ -5,22 +5,17 @@ import type { IUserDAO } from './dao'
 export class UserDAOMock implements IUserDAO {
   private users = [newUser({ name: '用户1' }), newUser({ name: '用户2' })]
 
-  async queryUser(args: Pick<UserEntity, 'id'>): Promise<UserEntity> {
-    const user = this.users.find((x) => x.id === args.id)
-    if (!user) {
-      throw new Error('没有该用户')
-    }
-
-    return user
+  async queryUsers(): Promise<UserEntity[]> {
+    return structuredClone(this.users)
   }
 
-  async updateUser(args: UserEntity): Promise<unknown> {
-    const user = this.users.find((x) => x.id === args.id)
-    if (!user) {
-      throw new Error('没有该用户')
+  async deleteUser(args: Pick<UserEntity, 'id'>): Promise<unknown> {
+    const index = this.users.findIndex((user) => user.id === args.id)
+    if (index === -1) {
+      throw new Error('User not found')
     }
 
-    user.name = args.name
+    this.users.splice(index, 1)
     return
   }
 }

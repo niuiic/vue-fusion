@@ -10,13 +10,19 @@
       "dependsOn": ["build#build"]
     },
     "components#dev": {
-      "dependsOn": ["build#build"]
+      "dependsOn": ["build#build"],
+      "persistent": true
     },
     "website#build": {
       "dependsOn": ["build#build", "components#build"]
     },
     "website#dev": {
-      "dependsOn": ["build#build", "components#build"]
+      "dependsOn": ["build#build", "components#build"],
+      "persistent": true
+    },
+    "website#dev:mock": {
+      "dependsOn": ["build#build", "components#build"],
+      "persistent": true
     }
   }
 }
