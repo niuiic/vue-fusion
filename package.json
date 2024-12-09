@@ -17,7 +17,6 @@
     "@vitejs/plugin-legacy": "^6.0.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "autoprefixer": "^10.4.20",
-    "cypress": "^13.16.1",
     "eslint": "^9.16.0",
     "eslint-plugin-vue": "^9.32.0",
     "lefthook": "^1.9.0",
