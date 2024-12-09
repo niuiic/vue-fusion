@@ -1,10 +1,10 @@
-import type { IUserDAO, UserDAO } from './dao'
-import { notify, Result, type DAOToService } from 'components'
+import type { UserDAO } from './dao'
+import { notify, Result } from 'components'
 import type { UserEntity } from './entity'
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 
-export class UserService implements DAOToService<IUserDAO> {
+export class UserService {
   static inject = ['UserDAO'] as const
   constructor(protected userDAO: UserDAO) {}
 

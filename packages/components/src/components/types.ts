@@ -9,7 +9,3 @@ export type ComponentEmits<T> = T extends abstract new (...args: any[]) => any ?
 export type FixedPromise<T> = Promise<Awaited<T>>
 
 export type MaybePromise<T> = T | FixedPromise<T>
-
-export type DAOToService<T> = {
-  [key in keyof T]: (...args: any[]) => Promise<unknown>
-}
