@@ -1,5 +1,5 @@
 export const Log =
-  (fn: (type: 'INPUT' | 'OUTPUT' | 'ERROR', msg: unknown, instance: unknown) => void) =>
+  (fn: (type: 'INPUT' | 'OUTPUT' | 'ERROR', msg: unknown, instance: unknown) => void = console.trace) =>
   (_target: any, _propertyKey: string, descriptor: PropertyDescriptor) => {
     const method = descriptor.value
 
