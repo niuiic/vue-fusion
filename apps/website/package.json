@@ -8,6 +8,8 @@
     "build": "vite build",
     "build:mock": "vite build --mode buildmock",
     "preview": "vite preview",
+    "test:ts": "vitest run",
+    "test:e2e": "cypress run",
     "lint:ts": "vue-tsc --noEmit",
     "lint:eslint": "eslint \"**/*.{js,ts,vue}\"",
     "lint:stylelint": "stylelint \"**/*.{css,scss,vue}\"",
