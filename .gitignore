@@ -3,4 +3,5 @@ node_modules/
 dist/
 .nvim/
 .vscode/
-cypress/
+playwright-report/
+test-results/
