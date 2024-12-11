@@ -4,10 +4,11 @@ import type { UserEntity } from './entity'
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import { inject, injectable } from 'inversify'
+import { userModuleSymbols } from './symbol'
 
 @injectable()
 export class UserService {
-  constructor(@inject('UserDAO') protected userDAO: UserDAO) {}
+  constructor(@inject(userModuleSymbols.userDAO) protected userDAO: UserDAO) {}
 
   public users = ref<UserEntity[]>([])
 
