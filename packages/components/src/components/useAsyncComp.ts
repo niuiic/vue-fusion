@@ -18,9 +18,15 @@ export const useAsyncComp = <T extends Component>(
 ): [(props: ComponentProps<T>) => Promise<unknown>, () => Promise<unknown>, () => VNode | undefined] => {
   let container: HTMLElement | undefined | null
   let useTempContainer = false
-  let vnode: VNode
+  let vnode: VNode | undefined
 
-  const mount = (props: ComponentProps<T>, children?: RawChildren) =>
+  const isMounted = () => Boolean(vnode)
+
+  const mount = async (props: ComponentProps<T>, children?: RawChildren) => {
+    if (isMounted()) {
+      throw new Error('component is already mounted')
+    }
+
     loadComponent().then((mod) => {
       vnode = h(mod.default, props, children)
       vnode.appContext = globalAppContext
@@ -36,6 +42,7 @@ export const useAsyncComp = <T extends Component>(
 
       render(vnode, container)
     })
+  }
 
   const unmount = async () => {
     if (!container) {
@@ -46,7 +53,9 @@ export const useAsyncComp = <T extends Component>(
 
     if (useTempContainer) {
       document.body.removeChild(container)
+      container = undefined
       useTempContainer = false
+      vnode = undefined
     }
   }
 
