@@ -16,16 +16,13 @@ export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => undefined
 ) => {
-  type GetProps = (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>
-  type GetChildren = (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren
+  type GetProps = ({
+    unmount,
+    getVNode
+  }: { unmount: () => Promise<unknown>; getVNode: () => VNode }) => ComponentProps<T>
+  type GetChildren = ({ unmount, getVNode }: { unmount: () => Promise<unknown>; getVNode: () => VNode }) => RawChildren
 
-  const mount = async ({
-    getProps,
-    getChildren
-  }: {
-    getProps: GetProps
-    getChildren?: GetChildren
-  }) => {
+  const mount = async (getProps: GetProps, getChildren?: GetChildren) => {
     let container: HTMLElement | undefined | null
     let useTempContainer = false
     let vnode: VNode | undefined
@@ -57,7 +54,11 @@ export const useAsyncComp = <T extends Component>(
       getProps,
       getChildren
     }: { component: T; getProps: GetProps; getChildren?: GetChildren }) => {
-      vnode = h(component, getProps(unmount, getVNode), getChildren ? getChildren(unmount, getVNode) : undefined)
+      vnode = h(
+        component,
+        getProps({ unmount, getVNode }),
+        getChildren ? getChildren({ unmount, getVNode }) : undefined
+      )
       vnode.appContext = globalAppContext
 
       if (!container) {
@@ -72,18 +73,12 @@ export const useAsyncComp = <T extends Component>(
       render(vnode, container)
     }
 
-    const update = ({
-      getProps,
-      getChildren
-    }: {
-      getProps: GetProps
-      getChildren?: GetChildren
-    }) =>
+    const update = (getProps: GetProps, getChildren?: GetChildren) =>
       loadComponent()
         .then((mod) => renderComponent({ component: mod.default, getProps, getChildren }))
         .then(() => update)
 
-    return update({ getProps, getChildren })
+    return update(getProps, getChildren)
   }
 
   return mount

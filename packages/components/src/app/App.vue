@@ -17,18 +17,17 @@ const router = useRouter()
 const route = useRoute()
 
 // %% entry %%
-const [mountInfo, unmountInfo] = useAsyncComp(() => import('./CompInfo.vue'))
+const mountInfo = useAsyncComp(() => import('./CompInfo.vue'))
 const showInfo = (el: HTMLElement, route: RouteRecordRaw) => {
   const pos = el.getBoundingClientRect()
   if (route.meta) {
-    mountInfo({
-      info: route.meta.page as Page,
-      top: pos.top,
-      left: pos.left
+    mountInfo(({ unmount }) => {
+      hideInfo = () => unmount().catch(() => {})
+      return { info: route.meta?.page as Page, top: pos.top, left: pos.left }
     })
   }
 }
-const hideInfo = unmountInfo
+let hideInfo: () => void
 const onClickMenu = (route: RouteRecordRaw) => router.push({ name: route.name })
 
 // %% code %%
