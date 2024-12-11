@@ -1,25 +1,43 @@
 import vue from 'eslint-plugin-vue'
-import js from '@eslint/js'
-import ts from 'typescript-eslint'
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
 
-export default ts.config(
-  js.configs.recommended,
-  ...ts.configs.recommended,
-  ...vue.configs['flat/recommended'],
+export default tseslint.config(
+  eslint.configs.recommended,
+  tseslint.configs.recommendedTypeChecked,
+  vue.configs['flat/recommended'],
   {
-    files: ['*.vue', '**/*.vue'],
+    files: ['**/*.vue'],
     languageOptions: {
       parserOptions: {
-        parser: '@typescript-eslint/parser'
+        parser: '@typescript-eslint/parser',
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: import.meta.dirname,
+        extraFileExtensions: ['.vue']
+      }
+    }
+  },
+  {
+    files: ['**/*.ts', '**/*.mts', '**/*.mjs'],
+    languageOptions: {
+      parserOptions: {
+        project: './tsconfig.eslint.json',
+        tsconfigRootDir: import.meta.dirname
       }
     }
   },
   {
     rules: {
+      '@typescript-eslint/consistent-type-imports': 'error',
+      '@typescript-eslint/consistent-type-exports': 'error',
+      '@typescript-eslint/no-unsafe-argument': 'off',
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
       'vue/multi-word-component-names': 'off',
-      '@typescript-eslint/consistent-type-imports': 'error',
       'vue/max-attributes-per-line': 'off',
       'vue/singleline-html-element-content-newline': 'off',
       '@typescript-eslint/no-unused-vars': [
