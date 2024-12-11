@@ -15,20 +15,42 @@ type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() 
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => undefined
-): [(props: ComponentProps<T>) => Promise<unknown>, () => Promise<unknown>, () => VNode | undefined] => {
-  let container: HTMLElement | undefined | null
-  let useTempContainer = false
-  let vnode: VNode | undefined
+): ((
+  getProps: (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>,
+  getChildren?: (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren
+) => Promise<unknown>) => {
+  const mount = async (
+    getProps: (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>,
+    getChildren: (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren = () => []
+  ) => {
+    let container: HTMLElement | undefined | null
+    let useTempContainer = false
+    let vnode: VNode | undefined
 
-  const isMounted = () => Boolean(vnode)
+    const unmount = async () => {
+      if (!container) {
+        throw new Error('container does not exist')
+      }
 
-  const mount = async (props: ComponentProps<T>, children?: RawChildren) => {
-    if (isMounted()) {
-      throw new Error('component is already mounted')
+      render(null, container)
+
+      if (useTempContainer) {
+        document.body.removeChild(container)
+        container = undefined
+        useTempContainer = false
+        vnode = undefined
+      }
+    }
+
+    const getVNode = (): VNode => {
+      if (!vnode) {
+        throw new Error('component is not mounted')
+      }
+      return vnode
     }
 
     loadComponent().then((mod) => {
-      vnode = h(mod.default, props, children)
+      vnode = h(mod.default, getProps(unmount, getVNode), getChildren(unmount, getVNode))
       vnode.appContext = globalAppContext
 
       if (!container) {
@@ -44,22 +66,5 @@ export const useAsyncComp = <T extends Component>(
     })
   }
 
-  const unmount = async () => {
-    if (!container) {
-      throw new Error('container does not exist')
-    }
-
-    render(null, container)
-
-    if (useTempContainer) {
-      document.body.removeChild(container)
-      container = undefined
-      useTempContainer = false
-      vnode = undefined
-    }
-  }
-
-  const getVNode = (): VNode | undefined => vnode
-
-  return [mount, unmount, getVNode]
+  return mount
 }
