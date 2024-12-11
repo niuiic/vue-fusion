@@ -15,15 +15,7 @@ type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() 
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => undefined
-): (({
-  getProps,
-  getChildren,
-  enableUpdate
-}: {
-  getProps: (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>
-  getChildren?: (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren
-  enableUpdate?: boolean
-}) => Promise<unknown>) => {
+) => {
   const mount = async ({
     getProps,
     getChildren,
