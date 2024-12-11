@@ -1,5 +1,5 @@
 export const userModuleSymbols = {
-  getMockDAO: Symbol('getMockDAO'),
-  userDAO: Symbol('userDAO'),
-  userService: Symbol('userService')
+  getMockDAO: Symbol(),
+  userDAO: Symbol(),
+  userService: Symbol()
 }
