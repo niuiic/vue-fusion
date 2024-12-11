@@ -1,22 +1,25 @@
-import { Mock } from 'components'
+import { mock, MockedDAO } from 'components'
 import type { UserEntity } from './entity'
 import type { UserDAOMock } from './mock'
+import { inject, injectable } from 'inversify'
 
 export interface IUserDAO {
   queryUsers(): Promise<UserEntity[]>
   deleteUser(args: Pick<UserEntity, 'id'>): Promise<unknown>
 }
 
-export class UserDAO implements IUserDAO {
-  static inject = ['getMockDAO'] as const
-  constructor(protected getMockDAO: () => Promise<UserDAOMock>) {}
+@injectable()
+export class UserDAO extends MockedDAO<IUserDAO> implements IUserDAO {
+  constructor(@inject('getMockDAO') protected getMockDAO: () => Promise<UserDAOMock>) {
+    super()
+  }
 
-  @Mock
+  @mock
   async queryUsers(): Promise<UserEntity[]> {
     throw new Error('not implemented')
   }
 
-  @Mock
+  @mock
   async deleteUser(_: Pick<UserEntity, 'id'>): Promise<unknown> {
     throw new Error('not implemented')
   }

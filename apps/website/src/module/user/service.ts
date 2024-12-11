@@ -3,10 +3,11 @@ import { notify, Result } from 'components'
 import type { UserEntity } from './entity'
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
+import { inject, injectable } from 'inversify'
 
+@injectable()
 export class UserService {
-  static inject = ['UserDAO'] as const
-  constructor(protected userDAO: UserDAO) {}
+  constructor(@inject('UserDAO') protected userDAO: UserDAO) {}
 
   public users = ref<UserEntity[]>([])
 

@@ -1,7 +1,9 @@
 import type { UserEntity } from './entity'
 import { newUser } from './entity'
 import type { IUserDAO } from './dao'
+import { injectable } from 'inversify'
 
+@injectable()
 export class UserDAOMock implements IUserDAO {
   private users = [newUser({ name: '用户1' }), newUser({ name: '用户2' })]
 

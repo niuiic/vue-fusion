@@ -1,7 +1,7 @@
 import { inMode } from './mode'
 import type { AnyObject } from './types'
 
-export const Mock = (_: any, propertyKey: string, descriptor: PropertyDescriptor) => {
+export const mock = (_: any, propertyKey: string, descriptor: PropertyDescriptor) => {
   if (typeof descriptor.value !== 'function') {
     throw new Error('Mock decorator can only be applied to methods')
   }

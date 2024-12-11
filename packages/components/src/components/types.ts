@@ -9,3 +9,7 @@ export type ComponentEmits<T> = T extends abstract new (...args: any[]) => any ?
 export type FixedPromise<T> = Promise<Awaited<T>>
 
 export type MaybePromise<T> = T | FixedPromise<T>
+
+export abstract class MockedDAO<T> {
+  protected abstract getMockDAO(): Promise<T>
+}

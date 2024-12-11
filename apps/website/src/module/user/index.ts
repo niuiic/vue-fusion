@@ -1,8 +1,9 @@
-import { createInjector, Scope } from 'typed-inject'
 import { UserDAO } from './dao'
 import { UserService } from './service'
+import { Container } from 'inversify'
 
-export const userModule = createInjector()
-  .provideValue('getMockDAO', () => import('./mock').then((x) => x.userDAOMock))
-  .provideClass('UserDAO', UserDAO)
-  .provideClass('UserService', UserService, Scope.Transient)
+export const userModule = new Container()
+
+userModule.bind('getMockDAO').toConstantValue(() => import('./mock').then((x) => x.userDAOMock))
+userModule.bind('UserDAO').to(UserDAO).inSingletonScope()
+userModule.bind('UserService').to(UserService).inTransientScope()
