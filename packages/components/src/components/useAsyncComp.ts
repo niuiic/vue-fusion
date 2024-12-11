@@ -1,5 +1,5 @@
 import type { App, AppContext, Component, VNode, VNodeArrayChildren } from 'vue'
-import { h, render } from 'vue'
+import { computed, h, render } from 'vue'
 import type { AnyObject } from './types'
 
 type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
@@ -15,14 +15,24 @@ type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() 
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => undefined
-): ((
-  getProps: (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>,
+): (({
+  getProps,
+  getChildren,
+  enableUpdate
+}: {
+  getProps: (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>
   getChildren?: (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren
-) => Promise<unknown>) => {
-  const mount = async (
-    getProps: (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>,
-    getChildren: (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren = () => []
-  ) => {
+  enableUpdate?: boolean
+}) => Promise<unknown>) => {
+  const mount = async ({
+    getProps,
+    getChildren,
+    enableUpdate
+  }: {
+    getProps: (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>
+    getChildren?: (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren
+    enableUpdate?: boolean
+  }) => {
     let container: HTMLElement | undefined | null
     let useTempContainer = false
     let vnode: VNode | undefined
@@ -49,8 +59,8 @@ export const useAsyncComp = <T extends Component>(
       return vnode
     }
 
-    loadComponent().then((mod) => {
-      vnode = h(mod.default, getProps(unmount, getVNode), getChildren(unmount, getVNode))
+    const renderComponent = (component: T) => {
+      vnode = h(component, getProps(unmount, getVNode), getChildren ? getChildren(unmount, getVNode) : undefined)
       vnode.appContext = globalAppContext
 
       if (!container) {
@@ -63,6 +73,14 @@ export const useAsyncComp = <T extends Component>(
       }
 
       render(vnode, container)
+    }
+
+    loadComponent().then((mod) => {
+      if (enableUpdate) {
+        computed(() => renderComponent(mod.default))
+      } else {
+        renderComponent(mod.default)
+      }
     })
   }
 
