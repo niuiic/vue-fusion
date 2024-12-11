@@ -1,5 +1,5 @@
 import type { App, AppContext, Component, VNode, VNodeArrayChildren } from 'vue'
-import { computed, h, render } from 'vue'
+import { h, render } from 'vue'
 import type { AnyObject } from './types'
 
 type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
@@ -16,14 +16,15 @@ export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => undefined
 ) => {
+  type GetProps = (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>
+  type GetChildren = (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren
+
   const mount = async ({
     getProps,
-    getChildren,
-    enableUpdate
+    getChildren
   }: {
-    getProps: (unmount: () => Promise<unknown>, getVNode: () => VNode) => ComponentProps<T>
-    getChildren?: (unmount: () => Promise<unknown>, getVNode: () => VNode) => RawChildren
-    enableUpdate?: boolean
+    getProps: GetProps
+    getChildren?: GetChildren
   }) => {
     let container: HTMLElement | undefined | null
     let useTempContainer = false
@@ -51,7 +52,11 @@ export const useAsyncComp = <T extends Component>(
       return vnode
     }
 
-    const renderComponent = (component: T) => {
+    const renderComponent = ({
+      component,
+      getProps,
+      getChildren
+    }: { component: T; getProps: GetProps; getChildren?: GetChildren }) => {
       vnode = h(component, getProps(unmount, getVNode), getChildren ? getChildren(unmount, getVNode) : undefined)
       vnode.appContext = globalAppContext
 
@@ -67,13 +72,18 @@ export const useAsyncComp = <T extends Component>(
       render(vnode, container)
     }
 
-    return loadComponent().then((mod) => {
-      if (enableUpdate) {
-        computed(() => renderComponent(mod.default))
-      } else {
-        renderComponent(mod.default)
-      }
-    })
+    const update = ({
+      getProps,
+      getChildren
+    }: {
+      getProps: GetProps
+      getChildren?: GetChildren
+    }) =>
+      loadComponent()
+        .then((mod) => renderComponent({ component: mod.default, getProps, getChildren }))
+        .then(() => update)
+
+    return update({ getProps, getChildren })
   }
 
   return mount
