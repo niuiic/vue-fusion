@@ -1,3 +1,3 @@
 export * from './page'
 export * from './router'
-export * from './type'
+export type * from './type'

@@ -11,7 +11,7 @@
     "test:ts": "vitest run",
     "test:e2e": "playwright test",
     "lint:ts": "vue-tsc --noEmit",
-    "lint:eslint": "eslint \"**/*.{js,ts,vue}\"",
+    "lint:eslint": "eslint \"**/*.{js,mjs,ts,mts,vue}\"",
     "lint:stylelint": "stylelint \"**/*.{css,scss,vue}\"",
     "debug:cmd": "vite build"
   },

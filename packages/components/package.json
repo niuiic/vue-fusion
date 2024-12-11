@@ -7,6 +7,13 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsx build.ts",
-    "build:doc": "vite build"
+    "build:doc": "vite build",
+    "preview": "vite preview",
+    "test:ts": "vitest run",
+    "test:e2e": "playwright test",
+    "lint:ts": "vue-tsc --noEmit",
+    "lint:eslint": "eslint \"**/*.{js,mjs,ts,mts,vue}\"",
+    "lint:stylelint": "stylelint \"**/*.{css,scss,vue}\"",
+    "debug:cmd": "vite build"
   }
 }

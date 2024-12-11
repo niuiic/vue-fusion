@@ -5,5 +5,5 @@ import { hljsDefineVue } from './highlightVue'
 
 hljs.registerLanguage('vue', hljsDefineVue)
 
-export * from './nonBusiness'
+export type * from './nonBusiness'
 export { Code }

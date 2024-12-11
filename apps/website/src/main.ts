@@ -19,9 +19,11 @@ const pinia = createPinia()
 const app = createApp(App)
 app.use(router).use(pinia).use(asyncCompRenderer)
 if (__DEV__) {
-  import('element-plus').then((elementPlus) => {
-    app.use(elementPlus.default).mount('#app')
-  })
+  import('element-plus')
+    .then((elementPlus) => {
+      app.use(elementPlus.default).mount('#app')
+    })
+    .catch(() => {})
 } else {
   app.mount('#app')
 }

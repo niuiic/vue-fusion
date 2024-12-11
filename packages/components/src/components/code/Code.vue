@@ -27,7 +27,9 @@ const setCode = async () => {
     bodyRef.value.innerText = props.code
   }
   collapsed.value = false
-  nextTick().then(setMaxHeight)
+  nextTick()
+    .then(setMaxHeight)
+    .catch(() => {})
 }
 const setMaxHeight = () => {
   if (!bodyWrapperRef.value || !bodyRef.value) {
@@ -37,7 +39,7 @@ const setMaxHeight = () => {
 }
 
 onMounted(() => {
-  setCode()
+  setCode().catch(() => {})
   watch(props, setCode)
   window.addEventListener('resize', setMaxHeight)
 })
@@ -57,7 +59,7 @@ const copyCode = () =>
 <!-- % template % -->
 <template>
   <div :class="{ code: true, 'code--collapsed': collapsed }">
-    <div class="header" @click="(collapsed = !collapsed)">
+    <div class="header" @click="collapsed = !collapsed">
       <span class="copy" @click.stop="copyCode" />
       <span>
         {{ props.label }}

@@ -45,7 +45,7 @@ export class UserService {
             reject(e)
           })
       }
-    })
+    }).catch(() => {})
 
     return promise
   }

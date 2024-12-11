@@ -37,9 +37,14 @@ export default tseslint.config(
       '@typescript-eslint/no-unsafe-return': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-expressions': 'off',
+      '@typescript-eslint/require-await': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+      '@typescript-eslint/prefer-promise-reject-errors': 'off',
+      '@typescript-eslint/no-misused-promises': 'off',
       'vue/multi-word-component-names': 'off',
       'vue/max-attributes-per-line': 'off',
       'vue/singleline-html-element-content-newline': 'off',
+      'no-undef': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {

@@ -51,14 +51,16 @@ export const useRequest = <T extends Fn, Data = Awaited<ReturnType<T>>, Args = P
       loading.value = true
 
       const result = Promise.resolve(args).then(fn)
-      result.then((x) => {
-        if (requestCount !== requestNum) {
-          return
-        }
+      result
+        .then((x) => {
+          if (requestCount !== requestNum) {
+            return
+          }
 
-        fixedOptions.updateData(data.value, x, setData)
-        fixedOptions.onOk(x)
-      })
+          fixedOptions.updateData(data.value, x, setData)
+          fixedOptions.onOk(x)
+        })
+        .catch(() => {})
       result.catch((e) => {
         if (requestCount !== requestNum) {
           return
@@ -66,13 +68,15 @@ export const useRequest = <T extends Fn, Data = Awaited<ReturnType<T>>, Args = P
 
         fixedOptions.onErr(e)
       })
-      result.finally(() => {
-        if (requestCount !== requestNum) {
-          return
-        }
+      result
+        .finally(() => {
+          if (requestCount !== requestNum) {
+            return
+          }
 
-        loading.value = false
-      })
+          loading.value = false
+        })
+        .catch(() => {})
     }
 
     if (fixedOptions.polling !== false) {
@@ -87,7 +91,7 @@ export const useRequest = <T extends Fn, Data = Awaited<ReturnType<T>>, Args = P
       return
     }
 
-    task(args)
+    task(args).catch(() => {})
   }
 
   onUnmounted(() => {

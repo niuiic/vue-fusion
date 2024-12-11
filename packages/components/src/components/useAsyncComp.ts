@@ -67,7 +67,7 @@ export const useAsyncComp = <T extends Component>(
       render(vnode, container)
     }
 
-    loadComponent().then((mod) => {
+    return loadComponent().then((mod) => {
       if (enableUpdate) {
         computed(() => renderComponent(mod.default))
       } else {

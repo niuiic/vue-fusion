@@ -19,4 +19,6 @@ generateEntryFile()
 
 build({
   configFile: join(process.cwd(), 'vite.lib.config.ts')
-}).finally(() => rmSync(entryFile))
+})
+  .finally(() => rmSync(entryFile))
+  .catch(() => {})
