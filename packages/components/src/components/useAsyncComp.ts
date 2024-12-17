@@ -18,11 +18,25 @@ export const useAsyncComp = <T extends Component>(
 ) => {
   type GetProps = ({
     unmount,
-    getVNode
-  }: { unmount: () => Promise<unknown>; getVNode: () => VNode }) => ComponentProps<T>
-  type GetChildren = ({ unmount, getVNode }: { unmount: () => Promise<unknown>; getVNode: () => VNode }) => RawChildren
+    getVNode,
+    update
+  }: {
+    unmount: () => Promise<unknown>
+    getVNode: () => VNode
+    update: MountFn
+  }) => ComponentProps<T>
+  type GetChildren = ({
+    unmount,
+    getVNode,
+    update
+  }: {
+    unmount: () => Promise<unknown>
+    getVNode: () => VNode
+    update: MountFn
+  }) => RawChildren
+  type MountFn = (getProps: GetProps, getChildren?: GetChildren) => Promise<void>
 
-  const mount = async (getProps: GetProps, getChildren?: GetChildren) => {
+  const mount: MountFn = async (getProps: GetProps, getChildren?: GetChildren) => {
     let container: HTMLElement | undefined | null
     let useTempContainer = false
     let vnode: VNode | undefined
@@ -52,12 +66,13 @@ export const useAsyncComp = <T extends Component>(
     const renderComponent = ({
       component,
       getProps,
-      getChildren
-    }: { component: T; getProps: GetProps; getChildren?: GetChildren }) => {
+      getChildren,
+      update
+    }: { component: T; getProps: GetProps; getChildren?: GetChildren; update: MountFn }) => {
       vnode = h(
         component,
-        getProps({ unmount, getVNode }),
-        getChildren ? getChildren({ unmount, getVNode }) : undefined
+        getProps({ unmount, getVNode, update }),
+        getChildren ? getChildren({ unmount, getVNode, update }) : undefined
       )
       vnode.appContext = globalAppContext
 
@@ -74,9 +89,7 @@ export const useAsyncComp = <T extends Component>(
     }
 
     const update = (getProps: GetProps, getChildren?: GetChildren) =>
-      loadComponent()
-        .then((mod) => renderComponent({ component: mod.default, getProps, getChildren }))
-        .then(() => update)
+      loadComponent().then((mod) => renderComponent({ component: mod.default, getProps, getChildren, update }))
 
     return update(getProps, getChildren)
   }
