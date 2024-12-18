@@ -1,14 +1,13 @@
-import type { UserDAO } from './dao'
+import { UserDAO } from './dao'
 import { notify, Result } from 'components'
 import type { UserEntity } from './entity'
 import { ref } from 'vue'
 import { ElMessageBox } from 'element-plus'
 import { inject, injectable } from 'inversify'
-import { userModuleSymbols } from './symbol'
 
 @injectable()
 export class UserService {
-  constructor(@inject(userModuleSymbols.userDAO) protected userDAO: UserDAO) {}
+  constructor(@inject(UserDAO) protected userDAO: UserDAO) {}
 
   public users = ref<UserEntity[]>([])
 

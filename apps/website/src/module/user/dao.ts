@@ -2,16 +2,17 @@ import { mock, MockedDAO } from 'components'
 import type { UserEntity } from './entity'
 import type { UserDAOMock } from './mock'
 import { inject, injectable } from 'inversify'
-import { userModuleSymbols } from './symbol'
 
 export interface IUserDAO {
   queryUsers(): Promise<UserEntity[]>
   deleteUser(args: Pick<UserEntity, 'id'>): Promise<unknown>
 }
 
+export const getMockDAOSymbol = Symbol()
+
 @injectable()
 export class UserDAO extends MockedDAO<IUserDAO> implements IUserDAO {
-  constructor(@inject(userModuleSymbols.getMockDAO) protected getMockDAO: () => Promise<UserDAOMock>) {
+  constructor(@inject(getMockDAOSymbol) protected getMockDAO: () => Promise<UserDAOMock>) {
     super()
   }
 

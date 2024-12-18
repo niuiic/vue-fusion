@@ -1,11 +1,10 @@
 <!-- % script % -->
 <script setup lang="ts">
 import { userModule } from '@/module/user'
-import type { UserService } from '@/module/user/service'
-import { userModuleSymbols } from '@/module/user/symbol'
+import { UserService } from '@/module/user/service'
 import { onMounted } from 'vue'
 
-const userService = userModule.get<UserService>(userModuleSymbols.userService)
+const userService = userModule.get<UserService>(UserService)
 const { users } = userService
 onMounted(() => userService.initOrReset())
 </script>
