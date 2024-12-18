@@ -12,31 +12,31 @@ export const asyncCompRenderer = (app: App) => {
 
 type RawChildren = string | number | boolean | VNode | VNodeArrayChildren | (() => any)
 
+type GetProps<T> = ({
+  unmount,
+  getVNode,
+  update
+}: {
+  unmount: () => Promise<unknown>
+  getVNode: () => VNode
+  update: MountFn<T>
+}) => ComponentProps<T>
+type GetChildren<T> = ({
+  unmount,
+  getVNode,
+  update
+}: {
+  unmount: () => Promise<unknown>
+  getVNode: () => VNode
+  update: MountFn<T>
+}) => RawChildren
+type MountFn<T> = (getProps: GetProps<T>, getChildren?: GetChildren<T>) => Promise<void>
+
 export const useAsyncComp = <T extends Component>(
   loadComponent: () => Promise<{ default: T }>,
   getContainer: () => HTMLElement | undefined | null = () => undefined
 ) => {
-  type GetProps = ({
-    unmount,
-    getVNode,
-    update
-  }: {
-    unmount: () => Promise<unknown>
-    getVNode: () => VNode
-    update: MountFn
-  }) => ComponentProps<T>
-  type GetChildren = ({
-    unmount,
-    getVNode,
-    update
-  }: {
-    unmount: () => Promise<unknown>
-    getVNode: () => VNode
-    update: MountFn
-  }) => RawChildren
-  type MountFn = (getProps: GetProps, getChildren?: GetChildren) => Promise<void>
-
-  const mount: MountFn = async (getProps: GetProps, getChildren?: GetChildren) => {
+  const mount: MountFn<T> = async (getProps: GetProps<T>, getChildren?: GetChildren<T>) => {
     let container: HTMLElement | undefined | null
     let useTempContainer = false
     let vnode: VNode | undefined
@@ -68,7 +68,7 @@ export const useAsyncComp = <T extends Component>(
       getProps,
       getChildren,
       update
-    }: { component: T; getProps: GetProps; getChildren?: GetChildren; update: MountFn }) => {
+    }: { component: T; getProps: GetProps<T>; getChildren?: GetChildren<T>; update: MountFn<T> }) => {
       vnode = h(
         component,
         getProps({ unmount, getVNode, update }),
@@ -88,7 +88,7 @@ export const useAsyncComp = <T extends Component>(
       render(vnode, container)
     }
 
-    const update = (getProps: GetProps, getChildren?: GetChildren) =>
+    const update = (getProps: GetProps<T>, getChildren?: GetChildren<T>) =>
       loadComponent().then((mod) => renderComponent({ component: mod.default, getProps, getChildren, update }))
 
     return update(getProps, getChildren)
