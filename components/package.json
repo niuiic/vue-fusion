@@ -14,5 +14,9 @@
     "lint:ts": "vue-tsc --noEmit",
     "lint:eslint": "eslint \"**/*.{js,mjs,ts,mts,vue}\"",
     "lint:stylelint": "stylelint \"**/*.{css,scss,vue}\""
+  },
+  "dependencies": {
+    "marked": "^15.0.6",
+    "highlight.js": "^11.11.1"
   }
 }

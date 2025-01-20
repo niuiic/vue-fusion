@@ -1,6 +1,9 @@
+import { collectDeps } from 'dependencies'
 import { readdirSync, rmSync, writeFileSync } from 'fs'
 import { join } from 'path'
 import { build } from 'vite'
+
+collectDeps()
 
 const componentDir = join(process.cwd(), 'src/components')
 const styleDir = join(process.cwd(), 'src/styles')
