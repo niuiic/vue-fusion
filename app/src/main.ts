@@ -6,6 +6,8 @@ import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
 import App from './App.vue'
 import { routes } from './share/routes'
+import './share/adaptation.scss'
+import '@csstools/normalize.css'
 
 registerMode({ DEV: __DEV__, MOCK: __MOCK__ })
 registerPage(import.meta.glob(['./view/**/*.vue', '!**/components/**/*.vue']), './view/')
