@@ -27,6 +27,7 @@
     "postcss-pxtorem": "^6.1.0",
     "postcss-scss": "^4.0.9",
     "prettier": "^3.4.2",
+    "rollup-plugin-visualizer": "^5.14.0",
     "sass-embedded": "^1.83.4",
     "sharp": "^0.33.5",
     "stylelint": "^16.13.2",
@@ -58,7 +59,7 @@
     "inversify": "^6.2.1",
     "inversify-inject-decorators": "^3.1.0",
     "pinia": "^2.3.0",
-    "pixi": "^0.3.1",
+    "pixi.js": "^8.6.6",
     "reflect-metadata": "^0.2.2",
     "three": "^0.172.0",
     "vue": "^3.5.13"

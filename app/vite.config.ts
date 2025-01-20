@@ -1,7 +1,8 @@
 import legacy from '@vitejs/plugin-legacy'
 import vue from '@vitejs/plugin-vue'
 import autoprefixer from 'autoprefixer'
-import { viteChunks, viteHtml } from 'build'
+import { visualizer } from 'rollup-plugin-visualizer'
+import { viteHtml } from 'build'
 import { join } from 'path'
 import removeComments from 'postcss-discard-comments'
 // @ts-expect-error no declaration
@@ -32,7 +33,8 @@ export default defineConfig(({ command, mode }) => {
           Components({
             resolvers: [ElementPlusResolver()],
             dts: false
-          })
+          }),
+          visualizer()
         ]
       : []
 
@@ -78,7 +80,6 @@ export default defineConfig(({ command, mode }) => {
     build: {
       rollupOptions: {
         output: {
-          manualChunks: viteChunks,
           entryFileNames: 'js/[name].[hash].js',
           chunkFileNames: 'js/[name].[hash].js',
           assetFileNames: '[ext]/[name].[hash].[ext]'
