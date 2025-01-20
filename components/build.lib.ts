@@ -6,16 +6,12 @@ import { build } from 'vite'
 collectDeps()
 
 const componentDir = join(process.cwd(), 'src/components')
-const styleDir = join(process.cwd(), 'src/styles')
 const entryFile = join(process.cwd(), 'src/index.ts')
 
 const generateEntryFile = () => {
   const components = readdirSync(componentDir)
   const exportContent = components.map((x) => `export * from './components/${x.split('.')[0]}'`).join('\n')
-
-  const styles = readdirSync(styleDir)
-  const importStylesContent = styles.map((x) => `import './styles/${x}'`).join('\n')
-  writeFileSync(entryFile, [importStylesContent, exportContent].join('\n'))
+  writeFileSync(entryFile, [exportContent].join('\n'))
 }
 
 generateEntryFile()
