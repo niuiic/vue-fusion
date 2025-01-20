@@ -11,6 +11,8 @@ import { ref, watch } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import { useRoute, useRouter } from 'vue-router'
 import MenuTree from './MenuTree.vue'
+import './adaptation.scss'
+import './reset.scss'
 
 // %% router %%
 const router = useRouter()

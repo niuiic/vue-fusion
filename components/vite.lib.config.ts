@@ -29,7 +29,7 @@ export default defineConfig(
     plugins: [
       vue(),
       dts({
-        exclude: ['vite.config.ts', 'vite.lib.config.ts', 'build.ts']
+        exclude: ['vite.config.ts', 'vite.lib.config.ts', 'build.lib.ts', 'build.doc.ts', 'dependencies.ts']
       }),
       libAssetsPlugin(),
       ViteImageOptimizer(),
