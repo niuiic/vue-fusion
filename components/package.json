@@ -6,14 +6,13 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "dev": "vite --host",
-    "build": "tsx build.ts",
-    "build:doc": "vite build",
+    "build": "tsx build.lib.ts",
+    "build:doc": "tsx build.doc.ts",
     "preview": "vite preview",
     "test:ts": "vitest run",
     "test:e2e": "playwright test",
     "lint:ts": "vue-tsc --noEmit",
     "lint:eslint": "eslint \"**/*.{js,mjs,ts,mts,vue}\"",
-    "lint:stylelint": "stylelint \"**/*.{css,scss,vue}\"",
-    "debug:cmd": "vite build"
+    "lint:stylelint": "stylelint \"**/*.{css,scss,vue}\""
   }
 }
