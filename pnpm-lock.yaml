@@ -176,14 +176,14 @@ importers:
     dependencies:
       build:
         specifier: workspace:*
-        version: link:../packages/build
+        version: link:../build
       components:
         specifier: workspace:*
-        version: link:../packages/components
+        version: link:../components
 
-  packages/build: {}
+  build: {}
 
-  packages/components: {}
+  components: {}
 
 packages:
 
