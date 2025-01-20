@@ -23,6 +23,7 @@ body {
     $scaling-scale * math.div($draft-width, $draft-height) * px($draft-height * $min-zoom-radio)
   );
   height: max(100vh, px($draft-height * $min-zoom-radio));
+  margin: unset;
   font-size: $normal-font * 1px;
 }
 
