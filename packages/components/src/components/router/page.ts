@@ -1,3 +1,5 @@
+import { assert } from '../assert'
+
 type Pages = Record<string, () => Promise<unknown>>
 
 let pages: Pages
@@ -13,9 +15,7 @@ export const registerPage = (pageMap: Pages, pagePrefix?: string) => {
 export const usePage = (page: string) => {
   const fixedPage = prefix ? `${prefix}${page}.vue` : `${page}.vue`
 
-  if (!Reflect.has(pages, fixedPage)) {
-    throw new Error(`usePage: router page ${page} not found`)
-  }
+  assert(Reflect.has(pages, fixedPage), `usePage: router page ${page} not found`)
 
   return Reflect.get(pages, fixedPage)
 }
