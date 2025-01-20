@@ -2,6 +2,7 @@ import type { UserEntity } from './entity'
 import { newUser } from './entity'
 import type { IUserDAO } from './dao'
 import { injectable } from 'inversify'
+import { assert } from 'components'
 
 @injectable()
 export class UserDAOMock implements IUserDAO {
@@ -13,9 +14,7 @@ export class UserDAOMock implements IUserDAO {
 
   async deleteUser(args: Pick<UserEntity, 'id'>): Promise<unknown> {
     const index = this.users.findIndex((user) => user.id === args.id)
-    if (index === -1) {
-      throw new Error('User not found')
-    }
+    assert(index !== -1, 'User not found')
 
     this.users.splice(index, 1)
     return

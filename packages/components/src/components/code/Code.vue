@@ -104,8 +104,8 @@ const copyCode = () =>
   width: 16px;
   height: 16px;
   margin-inline: 8px;
-
   border-radius: 50%;
+
   box-shadow: 0 0 8px 0 #74829a inset;
 
   &:hover {

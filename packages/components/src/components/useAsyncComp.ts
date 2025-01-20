@@ -1,6 +1,7 @@
 import type { App, AppContext, Component, VNode, VNodeArrayChildren } from 'vue'
 import { h, render } from 'vue'
 import type { AnyObject } from './types'
+import { assert } from './assert'
 
 type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
 
@@ -42,9 +43,7 @@ export const useAsyncComp = <T extends Component>(
     let vnode: VNode | undefined
 
     const unmount = async () => {
-      if (!container) {
-        throw new Error('container does not exist')
-      }
+      assert(container, 'container does not exist')
 
       render(null, container)
 
@@ -57,9 +56,7 @@ export const useAsyncComp = <T extends Component>(
     }
 
     const getVNode = (): VNode => {
-      if (!vnode) {
-        throw new Error('component is not mounted')
-      }
+      assert(vnode, 'component is not mounted')
       return vnode
     }
 
