@@ -117,8 +117,8 @@ watch(
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #74829a;
   border-radius: 5px;
+  background-color: #74829a;
 }
 
 ::-webkit-scrollbar-thumb:hover {

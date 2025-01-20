@@ -27,8 +27,8 @@ defineProps<Props>()
   min-width: 300px;
   min-height: 300px;
   padding: 16px;
-
   border-radius: 8px;
+
   box-shadow: 0 0 3px 0 rgb(0 0 0 / 50%);
 }
 </style>
