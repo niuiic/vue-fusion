@@ -2,8 +2,6 @@
   "name": "components",
   "version": "0.1.0",
   "type": "module",
-  "module": "dist/js/index.mjs",
-  "types": "dist/src/index.d.ts",
   "scripts": {
     "dev": "vite --host",
     "build": "tsx build.lib.ts",
@@ -18,5 +16,107 @@
   "dependencies": {
     "marked": "^15.0.6",
     "highlight.js": "^11.11.1"
+  },
+  "exports": {
+    "./assert": {
+      "import": "./dist/js/assert.mjs",
+      "types": "./dist/components/assert.d.ts"
+    },
+    "./clipboard": {
+      "import": "./dist/js/clipboard.mjs",
+      "types": "./dist/components/clipboard.d.ts"
+    },
+    "./code": {
+      "import": "./dist/js/code.mjs",
+      "types": "./dist/components/code/index.d.ts"
+    },
+    "./concurrent": {
+      "import": "./dist/js/concurrent.mjs",
+      "types": "./dist/components/concurrent/index.d.ts"
+    },
+    "./enum": {
+      "import": "./dist/js/enum.mjs",
+      "types": "./dist/components/enum.d.ts"
+    },
+    "./factory": {
+      "import": "./dist/js/factory.mjs",
+      "types": "./dist/components/factory.d.ts"
+    },
+    "./id": {
+      "import": "./dist/js/id.mjs",
+      "types": "./dist/components/id.d.ts"
+    },
+    "./isNil": {
+      "import": "./dist/js/isNil.mjs",
+      "types": "./dist/components/isNil.d.ts"
+    },
+    "./log": {
+      "import": "./dist/js/log.mjs",
+      "types": "./dist/components/log.d.ts"
+    },
+    "./mock": {
+      "import": "./dist/js/mock.mjs",
+      "types": "./dist/components/mock.d.ts"
+    },
+    "./mode": {
+      "import": "./dist/js/mode.mjs",
+      "types": "./dist/components/mode.d.ts"
+    },
+    "./nextFrame": {
+      "import": "./dist/js/nextFrame.mjs",
+      "types": "./dist/components/nextFrame.d.ts"
+    },
+    "./notify": {
+      "import": "./dist/js/notify.mjs",
+      "types": "./dist/components/notify.d.ts"
+    },
+    "./request": {
+      "import": "./dist/js/request.mjs",
+      "types": "./dist/components/request/index.d.ts"
+    },
+    "./result": {
+      "import": "./dist/js/result.mjs",
+      "types": "./dist/components/result.d.ts"
+    },
+    "./router": {
+      "import": "./dist/js/router.mjs",
+      "types": "./dist/components/router/index.d.ts"
+    },
+    "./strategy": {
+      "import": "./dist/js/strategy.mjs",
+      "types": "./dist/components/strategy.d.ts"
+    },
+    "./time": {
+      "import": "./dist/js/time.mjs",
+      "types": "./dist/components/time.d.ts"
+    },
+    "./toStr": {
+      "import": "./dist/js/toStr.mjs",
+      "types": "./dist/components/toStr.d.ts"
+    },
+    "./types": {
+      "import": "./dist/js/types.mjs",
+      "types": "./dist/components/types.d.ts"
+    },
+    "./useAsyncComp": {
+      "import": "./dist/js/useAsyncComp.mjs",
+      "types": "./dist/components/useAsyncComp.d.ts"
+    },
+    "./useAsyncFn": {
+      "import": "./dist/js/useAsyncFn.mjs",
+      "types": "./dist/components/useAsyncFn.d.ts"
+    },
+    "./useCachedFn": {
+      "import": "./dist/js/useCachedFn.mjs",
+      "types": "./dist/components/useCachedFn/index.d.ts"
+    },
+    "./useDebouncedFn": {
+      "import": "./dist/js/useDebouncedFn.mjs",
+      "types": "./dist/components/useDebouncedFn.d.ts"
+    },
+    "./useRequest": {
+      "import": "./dist/js/useRequest.mjs",
+      "types": "./dist/components/useRequest/index.d.ts"
+    }
   }
 }

@@ -47,6 +47,7 @@ export default defineConfig(
     },
     build: {
       rollupOptions: {
+        input: JSON.parse(readFileSync(join(process.cwd(), 'input')).toString()),
         output: {
           inlineDynamicImports: false,
           entryFileNames: 'js/[name].mjs',
