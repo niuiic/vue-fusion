@@ -31,12 +31,12 @@ export class Request {
     }, defaultCacheLifetime * 100)
   }
 
-  public async get<R>(url: string, options?: AxiosRequestConfig, cacheOptions?: CacheOptions): Promise<R> {
+  public async get<R = any>(url: string, options?: AxiosRequestConfig, cacheOptions?: CacheOptions): Promise<R> {
     const request = () => this.instance.get(url, fixedOptions(options)).then(resolveResult)
     return this.cachedRequest(request, url, options, cacheOptions)
   }
 
-  public async post<R>(
+  public async post<R = any>(
     url: string,
     data?: AnyObject,
     options?: AxiosRequestConfig,
@@ -46,7 +46,7 @@ export class Request {
     return this.cachedRequest(request, url, options, cacheOptions)
   }
 
-  public async rawGet<R>(
+  public async rawGet<R = any>(
     url: string,
     options?: AxiosRequestConfig,
     cacheOptions?: CacheOptions
@@ -55,7 +55,7 @@ export class Request {
     return this.cachedRequest(request, url, options, cacheOptions)
   }
 
-  public async rawPost<R>(
+  public async rawPost<R = any>(
     url: string,
     data?: AnyObject,
     options?: AxiosRequestConfig,
