@@ -123,7 +123,7 @@ const resolveResult = (response?: AxiosResponse) => {
   if (response?.data?.code === 200) {
     return response.data.data
   }
-  throw new Error(response?.data?.code)
+  throw new Error(response?.data?.code ?? '' + '@' + (response?.data?.msg ?? ''))
 }
 
 const getCacheKey = (url: string, key: string, baseURL?: string) => `${baseURL ?? '-'}:${url}:${key}`
