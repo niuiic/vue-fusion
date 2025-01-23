@@ -22,6 +22,13 @@ export class Request {
 
   public constructor(args: CreateAxiosDefaults) {
     this.instance = axios.create(args)
+    setInterval(() => {
+      this.cache.forEach((value, key) => {
+        if (value.expiry < new Date().getTime()) {
+          this.cache.delete(key)
+        }
+      })
+    }, defaultCacheLifetime * 100)
   }
 
   public async get<R>(url: string, options?: AxiosRequestConfig, cacheOptions?: CacheOptions): Promise<R> {
@@ -88,7 +95,7 @@ export class Request {
       return
     }
 
-    if (cacheValue.expiry > new Date().getTime()) {
+    if (cacheValue.expiry < new Date().getTime()) {
       this.cache.delete(cacheKey)
       return
     }
