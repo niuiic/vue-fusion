@@ -1,7 +1,7 @@
 let lastTime: number | undefined
 let count = 0
 
-export const localUniqId = (): string => {
+export const getLocalUniqId = (): string => {
   const now = new Date().getTime()
 
   if (lastTime === now) {
