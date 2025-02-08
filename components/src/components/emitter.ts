@@ -22,6 +22,7 @@ export class Emitter<T extends Events> {
     if (!handlers) {
       return
     }
+
     const index = handlers.indexOf(handler)
     if (index >= 0) {
       handlers.splice(index, 1)
@@ -40,10 +41,11 @@ export class Emitter<T extends Events> {
   once<E extends keyof T>(event: E, handler: T[E]) {
     assert(typeof event === 'string', 'typeof event should be string')
 
-    this.on(event, ((data: unknown) => {
-      this.off(event, handler)
-      handler(data)
-    }) as T[E])
+    const newHandler = ((data: unknown) => {
+      this.off(event, newHandler)
+      return handler(data)
+    }) as T[E]
+    this.on(event, newHandler)
   }
 
   dispose() {
