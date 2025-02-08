@@ -1,7 +1,7 @@
 <!-- % script % -->
 <script setup lang="ts">
 import hljs from 'highlight.js'
-import { parse } from 'marked'
+import markdownit from 'markdown-it'
 import { nextTick, onMounted, onUnmounted, ref, watch } from 'vue'
 import { copyToClipboard } from '../clipboard'
 import { notify } from '../notify'
@@ -19,7 +19,14 @@ const setCode = async () => {
   }
   try {
     if (props.language === 'markdown') {
-      bodyRef.value.innerHTML = await parse(props.code)
+      bodyRef.value.innerHTML = markdownit({
+        highlight: function (str, lang) {
+          if (lang && hljs.getLanguage(lang)) {
+            return hljs.highlight(str, { language: lang }).value
+          }
+          return ''
+        }
+      }).render(props.code)
     } else {
       bodyRef.value.innerHTML = hljs.highlight(props.code, { language: props.language }).value
     }
@@ -121,6 +128,7 @@ const copyCode = () =>
 
 .body__wrapper {
   overflow: hidden;
+  padding: 8px;
   transition: max-height 0.5s;
 }
 
