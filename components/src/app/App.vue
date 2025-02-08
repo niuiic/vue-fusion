@@ -22,11 +22,14 @@ const showInfo = (el: HTMLElement, data: Exclude<Menu['data'], undefined>) => {
   })
 }
 let hideInfo: () => void
+const onRightClickMenu = (data: Exclude<Menu['data'], undefined>) => {
+  window.open(window.location.origin + '#' + data.id)
+}
 const onClickMenu = (data: Exclude<Menu['data'], undefined>) => {
   window.location.hash = data.id
   switchPage(data)
 }
-const isSelectedMenu = (menu: Menu) => window.location.hash === menu.data?.id
+const isSelectedMenu = (menu: Menu) => window.location.hash.slice(1) === menu.data?.id
 const switchPage = (page: Page) => {
   PageComp.value = defineAsyncComponent(page.component ?? Empty)
   docList.value = page.docs ?? []
@@ -62,16 +65,19 @@ const docList = ref<CodeProps[]>([])
   <el-config-provider :locale="zhCn">
     <div class="app">
       <div class="nav">
+        <div class="toggle-doc-btn">
+          <el-button plain round @click="setShowDoc(!showDoc)">
+            {{ showDoc ? '隐藏文档' : '显示文档' }}
+          </el-button>
+        </div>
         <MenuTree
           :pages="pages"
           :is-selected-menu="isSelectedMenu"
           @click-menu="onClickMenu"
+          @right-click-menu="onRightClickMenu"
           @enter-menu="showInfo"
           @leave-menu="hideInfo"
         />
-        <el-button type="info" plain round @click="setShowDoc(!showDoc)">
-          {{ showDoc ? '隐藏文档' : '显示文档' }}
-        </el-button>
       </div>
       <div class="page">
         <PageComp />
@@ -106,12 +112,22 @@ const docList = ref<CodeProps[]>([])
 /* %% nav %% */
 .nav {
   overflow: auto;
+  flex-direction: column;
   padding: 4px;
   background-color: #1e1f26;
 }
 
-.menu-tree {
-  background-color: #1e1f26;
+.toggle-doc-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+}
+
+:deep(.menu-tree) {
+  .menus {
+    background-color: #1e1f26;
+  }
 }
 
 /* %% page %% */

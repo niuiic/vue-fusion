@@ -10,6 +10,7 @@ export default {
     { files: '**/*.ts', customSyntax: 'postcss-html' }
   ],
   rules: {
-    'selector-class-pattern': null
+    'selector-class-pattern': null,
+    'selector-pseudo-class-no-unknown': null
   }
 }

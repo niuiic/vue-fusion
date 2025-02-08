@@ -1,3 +1,4 @@
+import { assert } from '@/components/assert'
 import type { Page } from '@/page'
 
 export interface Menu {
@@ -9,37 +10,46 @@ export interface Menu {
 }
 
 export const generateMenusFromPages = (pages: Record<string, Page>): Menu[] => {
-  // const categorizedRoutes = categorizeRoutes(routes)
-  //
-  // const menus: Menu[] = []
-  // categorizedRoutes.forEach((routesInCategory, category) => {
-  //   const childMenus = routesInCategory.map(
-  //     (x): Menu => ({
-  //       label: (x.meta?.page as Page).name,
-  //       data: x
-  //     })
-  //   )
-  //
-  //   menus.push({
-  //     label: category,
-  //     children: childMenus
-  //   })
-  // })
-  //
-  // return menus
+  const menus: Menu[] = []
+
+  Object.entries(pages).forEach(([id, page]) => {
+    const categories = page.category?.split('/') ?? []
+    setMenu(menus, categories, id, page)
+  })
+
+  return menus
 }
 
-// const categorizeRoutes = (routes: RouteRecordRaw[]): Map<string, RouteRecordRaw[]> => {
-//   const categorizedRoutes = new Map<string, RouteRecordRaw[]>()
-//
-//   routes.forEach((route) => {
-//     const category = (route.meta?.page as Page)?.category ?? '未分类'
-//
-//     if (!categorizedRoutes.has(category)) {
-//       categorizedRoutes.set(category, [])
-//     }
-//     categorizedRoutes.get(category)?.push(route)
-//   })
-//
-//   return categorizedRoutes
-// }
+const setMenu = (menus: Menu[], categories: string[], id: string, data: Page) => {
+  let parentMenu: Menu | undefined
+
+  categories.forEach((category) => {
+    if (parentMenu && !parentMenu.children) {
+      parentMenu.children = []
+    }
+    const targetMenus = parentMenu ? parentMenu.children! : menus
+
+    parentMenu = targetMenus.find((menu) => isCategory(menu) && menu.label === category)
+    if (!parentMenu) {
+      parentMenu = {
+        label: category,
+        children: []
+      }
+      targetMenus.push(parentMenu)
+    }
+  })
+
+  assert(parentMenu)
+  if (!parentMenu.children) {
+    parentMenu.children = []
+  }
+  parentMenu.children.push({
+    label: data.name,
+    data: {
+      ...data,
+      id
+    }
+  })
+}
+
+const isCategory = (menu: Menu): boolean => !menu.data
