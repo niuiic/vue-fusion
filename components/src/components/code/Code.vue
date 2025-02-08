@@ -129,10 +129,13 @@ const copyCode = () =>
 .body__wrapper {
   overflow: hidden;
   padding: 8px;
-  transition: max-height 0.5s;
+  transition:
+    max-height 0.5s,
+    padding-block 0.5s;
 }
 
 .code--collapsed .body__wrapper {
   max-height: 0 !important;
+  padding-block: 0;
 }
 </style>
