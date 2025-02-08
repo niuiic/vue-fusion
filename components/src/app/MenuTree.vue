@@ -4,7 +4,7 @@ import { ElTree, ElSelect, ElOption, ElInput } from 'element-plus'
 import { computed, ref } from 'vue'
 import type { Menu } from './menu'
 import { generateMenusFromPages } from './menu'
-import type { CompStatus } from '@/page'
+import { CompStatus } from '@/page'
 import { compStatusLabel, type Page } from '@/page'
 
 // %% 组件配置 %%
@@ -29,6 +29,14 @@ const menus = computed(() => {
   )
   return generateMenusFromPages(pages)
 })
+const menuStatusClass = {
+  [CompStatus.Approved]: 'status--approved',
+  [CompStatus.PendingReview]: 'status--pending-review',
+  [CompStatus.Deprecated]: 'status--deprecated',
+  [CompStatus.Developing]: 'status--developing',
+  [CompStatus.Rejected]: 'status--rejected'
+}
+const getMenuStatusClass = (menu: Menu) => menu.data?.status?.map((x) => menuStatusClass[x])?.join(' ') ?? ''
 
 // %% 树 %%
 const treeProps = {
@@ -107,7 +115,11 @@ const isPageValid = ({
     <el-tree class="menus" :props="treeProps" :data="menus" default-expand-all>
       <template #default="{ data }">
         <div
-          :class="{ 'menu-node': true, 'menu-node--selected': isSelectedMenu(data) }"
+          :class="{
+            'menu-node': true,
+            'menu-node--selected': isSelectedMenu(data),
+            [getMenuStatusClass(data)]: true
+          }"
           @contextmenu="data.data && emit('right-click-menu', data.data)"
           @click="data.data && emit('click-menu', data.data)"
         >
@@ -141,6 +153,7 @@ const isPageValid = ({
 }
 
 .menu-node {
+  position: relative;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -148,5 +161,26 @@ const isPageValid = ({
 
 .menu-node--selected {
   color: #409eff;
+}
+
+.menu-node::before {
+  content: '';
+
+  position: absolute;
+  right: 0;
+
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.status--approved::before {
+  display: block;
+  background-color: #67c23a;
+}
+
+.status--rejected::before {
+  display: block;
+  background-color: #f56c6c;
 }
 </style>
