@@ -2,25 +2,26 @@
 <script setup lang="ts">
 import { ElTree } from 'element-plus'
 import { computed } from 'vue'
-import { useRoute, type RouteRecordRaw } from 'vue-router'
-import { generateMenusFromRoutes } from './menu'
+import type { Menu } from './menu'
+import { generateMenusFromPages } from './menu'
+import type { Page } from '@/page'
 
 // %% 组件配置 %%
 interface Props {
-  routes: RouteRecordRaw[]
+  pages: Record<string, Page>
+  isSelectedMenu: (menu: Menu) => boolean
 }
 const props = defineProps<Props>()
 
 interface Emits {
-  (e: 'click-menu', route: RouteRecordRaw): void
-  (e: 'enter-menu', el: HTMLElement, route: RouteRecordRaw): void
-  (e: 'leave-menu', el: HTMLElement, route: RouteRecordRaw): void
+  (e: 'click-menu', data: Exclude<Menu['data'], undefined>): void
+  (e: 'enter-menu', el: HTMLElement, data: Exclude<Menu['data'], undefined>): void
+  (e: 'leave-menu', el: HTMLElement, data: Exclude<Menu['data'], undefined>): void
 }
 const emit = defineEmits<Emits>()
 
 // %% 菜单项 %%
-const route = useRoute()
-const menus = computed(() => generateMenusFromRoutes(props.routes))
+const menus = computed(() => generateMenusFromPages(props.pages))
 
 // %% 树 %%
 const treeProps = {
@@ -34,10 +35,10 @@ const treeProps = {
   <el-tree class="menu-tree" :props="treeProps" :data="menus" default-expand-all>
     <template #default="{ data }">
       <div
-        :class="{ 'menu-node': true, 'menu-node--selected': route.name === data.data?.name }"
-        @click="data.data && emit('click-menu', data.data)"
-        @mouseenter="(e) => data.data && emit('enter-menu', e.target as HTMLElement, data.data)"
-        @mouseleave="(e) => data.data && emit('leave-menu', e.target as HTMLElement, data.data)"
+        :class="{ 'menu-node': true, 'menu-node--selected': isSelectedMenu(data) }"
+        @click="data.data && emit('click-menu', data)"
+        @mouseenter="(e) => data.data && emit('enter-menu', e.target as HTMLElement, data)"
+        @mouseleave="(e) => data.data && emit('leave-menu', e.target as HTMLElement, data)"
       >
         {{ data.label }}
       </div>

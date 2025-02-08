@@ -1,5 +1,13 @@
-export function assert(value: unknown, error: string | Error): asserts value {
+import { isNil } from './isNil'
+
+export function assert(value: unknown, error?: string | Error): asserts value {
   if (!value) {
-    throw typeof error === 'string' ? new Error(error) : error
+    if (error instanceof Error) {
+      throw error
+    }
+    if (isNil(error)) {
+      throw new Error('value is not truthy')
+    }
+    throw new Error(error)
   }
 }
