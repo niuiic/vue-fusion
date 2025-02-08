@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import type { CodeProps } from '@/components/code'
 import { Code } from '@/components/code'
-import { useAsyncComp } from '@/components/useAsyncComp'
 import { ElConfigProvider, ElButton } from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { defineAsyncComponent, onBeforeMount, ref, shallowRef } from 'vue'
@@ -11,17 +10,9 @@ import type { Page } from '@/page'
 import { queryPages } from '@/page'
 import type { Menu } from './menu'
 import { assert } from '@/components/assert'
+import CompInfo from './CompInfo.vue'
 
 // %% menu %%
-const mountInfo = useAsyncComp(() => import('./CompInfo.vue'))
-const showInfo = (el: HTMLElement, data: Exclude<Menu['data'], undefined>) => {
-  const pos = el.getBoundingClientRect()
-  mountInfo(({ unmount }) => {
-    hideInfo = () => unmount().catch(() => {})
-    return { info: data, top: pos.top, left: pos.left }
-  })
-}
-let hideInfo: () => void
 const onRightClickMenu = (data: Exclude<Menu['data'], undefined>) => {
   window.open(window.location.origin + '#' + data.id)
 }
@@ -33,6 +24,7 @@ const isSelectedMenu = (menu: Menu) => window.location.hash.slice(1) === menu.da
 const switchPage = (page: Page) => {
   PageComp.value = defineAsyncComponent(page.component ?? Empty)
   docList.value = page.docs ?? []
+  compInfo.value = page
 }
 const pages = shallowRef<Record<string, Page>>({})
 const initPage = async () => {
@@ -49,6 +41,7 @@ onBeforeMount(initPage)
 // %% page %%
 const Empty = () => import('./Empty.vue')
 const PageComp = shallowRef(defineAsyncComponent(Empty))
+const compInfo = ref<Page>()
 
 // %% doc %%
 const setShowDoc = (value: boolean) => {
@@ -75,14 +68,13 @@ const docList = ref<CodeProps[]>([])
           :is-selected-menu="isSelectedMenu"
           @click-menu="onClickMenu"
           @right-click-menu="onRightClickMenu"
-          @enter-menu="showInfo"
-          @leave-menu="hideInfo"
         />
       </div>
       <div class="page">
         <PageComp />
       </div>
       <div v-if="showDoc && docList.length > 0" class="code-list">
+        <CompInfo v-if="compInfo" :data="compInfo" />
         <div class="code-list__inner">
           <Code v-for="(x, i) in docList" :key="i" :code="x.code" :language="x.language" :label="x.label" />
         </div>
@@ -112,8 +104,11 @@ const docList = ref<CodeProps[]>([])
 /* %% nav %% */
 .nav {
   overflow: auto;
+  display: flex;
   flex-direction: column;
-  padding: 4px;
+
+  padding: 8px;
+
   background-color: #1e1f26;
 }
 
@@ -125,6 +120,8 @@ const docList = ref<CodeProps[]>([])
 }
 
 :deep(.menu-tree) {
+  flex: 1;
+
   .menus {
     background-color: #1e1f26;
   }

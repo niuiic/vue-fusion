@@ -4,10 +4,11 @@ import { CompStatus, type Page } from '@/page'
 export default {
   name: 'request',
   component: () => import('./Request.vue'),
-  status: [CompStatus.Approved],
+  status: [CompStatus.Approved, CompStatus.Deprecated],
   author: 'nsc',
   auditor: 'nsc',
   category: 'api',
+  tags: ['api'],
   docs: [
     {
       label: '文档',

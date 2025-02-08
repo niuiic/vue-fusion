@@ -4,7 +4,8 @@ import { ElTree, ElSelect, ElOption, ElInput } from 'element-plus'
 import { computed, ref } from 'vue'
 import type { Menu } from './menu'
 import { generateMenusFromPages } from './menu'
-import { CompStatus, type Page } from '@/page'
+import type { CompStatus } from '@/page'
+import { compStatusLabel, type Page } from '@/page'
 
 // %% 组件配置 %%
 interface Props {
@@ -16,8 +17,6 @@ const props = defineProps<Props>()
 interface Emits {
   (e: 'click-menu', data: Exclude<Menu['data'], undefined>): void
   (e: 'right-click-menu', data: Exclude<Menu['data'], undefined>): void
-  (e: 'enter-menu', el: HTMLElement, data: Exclude<Menu['data'], undefined>): void
-  (e: 'leave-menu', el: HTMLElement, data: Exclude<Menu['data'], undefined>): void
 }
 const emit = defineEmits<Emits>()
 
@@ -53,13 +52,6 @@ const tags = computed(() =>
     )
   )
 )
-const compStatus = {
-  [CompStatus.Approved]: '审核通过',
-  [CompStatus.PendingReview]: '待审核',
-  [CompStatus.Deprecated]: '废弃',
-  [CompStatus.Developing]: '开发中',
-  [CompStatus.Rejected]: '审核不通过'
-}
 const isPageValid = ({
   page,
   tags,
@@ -108,7 +100,7 @@ const isPageValid = ({
         :max-collapse-tags="1"
         collapse-tags
       >
-        <el-option v-for="[k, v] in Object.entries(compStatus)" :key="k" :label="v" :value="k" />
+        <el-option v-for="[k, v] in Object.entries(compStatusLabel)" :key="k" :label="v" :value="k" />
       </el-select>
       <el-input v-model="formData.name" clearable placeholder="组件名称" />
     </div>
@@ -118,8 +110,6 @@ const isPageValid = ({
           :class="{ 'menu-node': true, 'menu-node--selected': isSelectedMenu(data) }"
           @contextmenu="data.data && emit('right-click-menu', data.data)"
           @click="data.data && emit('click-menu', data.data)"
-          @mouseenter="(e) => data.data && emit('enter-menu', e.target as HTMLElement, data.data)"
-          @mouseleave="(e) => data.data && emit('leave-menu', e.target as HTMLElement, data.data)"
         >
           {{ data.label }}
         </div>
@@ -130,6 +120,11 @@ const isPageValid = ({
 
 <!-- % style % -->
 <style lang="scss" scoped>
+.menu-tree {
+  display: flex;
+  flex-direction: column;
+}
+
 .form {
   display: flex;
   flex-direction: column;
@@ -141,12 +136,12 @@ const isPageValid = ({
   --el-tree-node-hover-bg-color: #74829a;
 
   overflow: auto;
+  flex: 1;
   color: #fff;
 }
 
 .menu-node {
   overflow: hidden;
-  min-width: 100%;
   text-overflow: ellipsis;
   white-space: nowrap;
 }

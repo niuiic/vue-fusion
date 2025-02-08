@@ -21,6 +21,14 @@ export const enum CompStatus {
   Developing
 }
 
+export const compStatusLabel = {
+  [CompStatus.Approved]: '审核通过',
+  [CompStatus.PendingReview]: '待审核',
+  [CompStatus.Deprecated]: '废弃',
+  [CompStatus.Developing]: '开发中',
+  [CompStatus.Rejected]: '审核不通过'
+}
+
 const modules = import.meta.glob(['./pages/*/index.ts', '!./pages/*/components/**/index.ts'])
 export const queryPages = () =>
   Promise.all(Object.entries(modules).map(([k, v]) => v().then((x: any) => [k, x.default]))).then(
