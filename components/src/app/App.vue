@@ -39,6 +39,12 @@ const initPage = async () => {
 onBeforeMount(initPage)
 
 // %% page %%
+const setShowPage = (value: boolean) => {
+  showPage.value = value
+  localStorage.setItem('showPage', value.toString())
+}
+const getShowPage = () => localStorage.getItem('showPage') === 'true'
+const showPage = ref(getShowPage())
 const Empty = () => import('./Empty.vue')
 const PageComp = shallowRef(defineAsyncComponent(Empty))
 const compInfo = ref<Page>()
@@ -58,9 +64,12 @@ const docList = ref<CodeProps[]>([])
   <el-config-provider :locale="zhCn">
     <div class="app">
       <div class="nav">
-        <div class="toggle-doc-btn">
+        <div class="btns">
           <el-button plain round @click="setShowDoc(!showDoc)">
-            {{ showDoc ? '隐藏文档' : '显示文档' }}
+            {{ showDoc ? '显示文档' : '隐藏文档' }}
+          </el-button>
+          <el-button plain round @click="setShowPage(!showPage)">
+            {{ showPage ? '显示示例' : '隐藏示例' }}
           </el-button>
         </div>
         <MenuTree
@@ -70,7 +79,7 @@ const docList = ref<CodeProps[]>([])
           @right-click-menu="onRightClickMenu"
         />
       </div>
-      <div class="page">
+      <div v-if="showPage" class="page">
         <PageComp />
       </div>
       <div v-if="showDoc && docList.length > 0" class="code-list">
@@ -93,11 +102,15 @@ const docList = ref<CodeProps[]>([])
   background-color: #131417;
 }
 
-.app:has(.code-list) {
+.app:has(> .code-list) {
   grid-template-columns: 200px 2fr 1fr;
 }
 
-.app:has(#empty) {
+.app:not(.app:has(> .page)) {
+  grid-template-columns: 200px 1fr;
+}
+
+.app:has(> .page #empty) {
   grid-template-columns: 200px 1fr;
 }
 
@@ -112,10 +125,9 @@ const docList = ref<CodeProps[]>([])
   background-color: #1e1f26;
 }
 
-.toggle-doc-btn {
+.btns {
   display: flex;
   align-items: center;
-  justify-content: center;
   margin-bottom: 16px;
 }
 
