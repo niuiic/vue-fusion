@@ -16,7 +16,7 @@ export default defineConfig({
     }
   ],
   webServer: {
-    command: 'pnpm dev:mock',
-    url: 'http://127.0.0.1:8000'
+    command: 'pnpm dev',
+    url: 'http://127.0.0.1:9000'
   }
 })
