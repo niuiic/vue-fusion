@@ -29,7 +29,7 @@ export class Emitter<T extends Events> {
     }
   }
 
-  emit<E extends keyof T>(event: E, data: Parameters<T[E]>[0]): unknown[] {
+  emit<E extends keyof T>(event: E, data: Parameters<T[E]>[0]): ReturnType<T[E]>[] {
     assert(typeof event === 'string', 'typeof event should be string')
 
     const handlers = this.handlers.get(event)
