@@ -26,7 +26,7 @@
     "postcss-html": "^1.8.0",
     "postcss-pxtorem": "^6.1.0",
     "postcss-scss": "^4.0.9",
-    "prettier": "^3.4.2",
+    "prettier": "^3.5.0",
     "rollup-plugin-visualizer": "^5.14.0",
     "sass-embedded": "^1.83.4",
     "sharp": "^0.33.5",
