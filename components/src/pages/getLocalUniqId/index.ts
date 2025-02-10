@@ -1,8 +1,8 @@
-import source from '@/components/id.ts?raw'
+import source from '@/components/getLocalUniqId.ts?raw'
 import { CompStatus, type Page } from '@/page'
 
 export default {
-  name: 'id',
+  name: 'getLocalUniqId',
   status: [CompStatus.Approved],
   author: 'nsc',
   auditor: 'nsc',
