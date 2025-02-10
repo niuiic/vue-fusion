@@ -43,12 +43,14 @@ const fixedOptions: Options<Data> = {
 }
 
 // 预设延迟时间
-/** 用户输入延迟时间 */
-export const INPUT_DELAY = 500
-/** 窗口大小变化延迟时间 */
-export const RESIZE_DELAY = 200
-/** 窗口滚动延迟时间 */
-export const SCROLL_DELAY = 200
+export const DelayTime = {
+  /** 用户输入延迟时间 */
+  Input: 500,
+  /** 窗口大小变化延迟时间 */
+  Resize: 200,
+  /** 窗口滚动延迟时间 */
+  Scroll: 200
+} as const
 ```
 
 同时设置polling和debounce为数字，则debounce无效

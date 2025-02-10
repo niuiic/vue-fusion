@@ -101,10 +101,3 @@ export const useRequest = <T extends Fn, Data = Awaited<ReturnType<T>>, Args = P
 
   return [data, loading, request]
 }
-
-/** 用户输入延迟时间 */
-export const INPUT_DELAY = 500
-/** 窗口大小变化延迟时间 */
-export const RESIZE_DELAY = 200
-/** 窗口滚动延迟时间 */
-export const SCROLL_DELAY = 200
