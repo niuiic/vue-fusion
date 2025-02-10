@@ -4,7 +4,7 @@ import type { CodeProps } from '@/components/code'
 import { Code } from '@/components/code'
 import { ElConfigProvider, ElButton } from 'element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
-import { defineAsyncComponent, onBeforeMount, ref, shallowRef } from 'vue'
+import { defineAsyncComponent, onBeforeMount, ref, shallowRef, watch } from 'vue'
 import MenuTree from './MenuTree.vue'
 import type { Page } from '@/page'
 import { queryPages } from '@/page'
@@ -17,10 +17,12 @@ const onRightClickMenu = (data: Exclude<Menu['data'], undefined>) => {
   window.open(window.location.origin + '#' + data.id)
 }
 const onClickMenu = (data: Exclude<Menu['data'], undefined>) => {
-  window.location.hash = data.id
+  locationHash.value = data.id
   switchPage(data)
 }
-const isSelectedMenu = (menu: Menu) => window.location.hash.slice(1) === menu.data?.id
+const isSelectedMenu = (menu: Menu) => locationHash.value === menu.data?.id
+const locationHash = ref<string>(window.location.hash.slice(1))
+watch(locationHash, () => (window.location.hash = locationHash.value))
 const switchPage = (page: Page) => {
   PageComp.value = defineAsyncComponent(page.component ?? Empty)
   docList.value = page.docs ?? []
@@ -29,7 +31,7 @@ const switchPage = (page: Page) => {
 const pages = shallowRef<Record<string, Page>>({})
 const initPage = async () => {
   pages.value = await queryPages()
-  let curPage = pages.value[window.location.hash]
+  let curPage = pages.value[locationHash.value]
   if (!curPage) {
     curPage = Object.values(pages.value)[0]
   }
