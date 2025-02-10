@@ -1,9 +1,9 @@
-import doc from '@/components/emitter/README.md?raw'
-import source from '@/components/emitter/index.ts?raw'
+import doc from '@/components/useEntityFactory/README.md?raw'
+import source from '@/components/useEntityFactory/index.ts?raw'
 import { CompStatus, type Page } from '@/page'
 
 export default {
-  name: 'emitter',
+  name: 'useEntityFactory',
   status: [CompStatus.Approved],
   author: 'nsc',
   auditor: 'nsc',
@@ -21,5 +21,5 @@ export default {
       code: source
     }
   ],
-  desc: '以消息通信的形式在模块间交换信息。'
+  desc: '实例化类，可选择性地修改成员。'
 } satisfies Page
