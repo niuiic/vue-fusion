@@ -115,7 +115,7 @@ const fixedOptions = (options?: AxiosRequestConfig): AxiosRequestConfig | undefi
 
   return {
     ...options,
-    params: Object.fromEntries(Object.entries(options.params).filter(([_, v]) => v !== undefined))
+    params: Object.fromEntries(Object.entries(options.params).filter(([_, v]) => !isNil(v)))
   }
 }
 

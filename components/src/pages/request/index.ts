@@ -8,6 +8,7 @@ export default {
   author: 'nsc',
   auditor: 'nsc',
   category: 'api',
+  tags: ['desktop', 'mobile'],
   docs: [
     {
       label: '文档',
