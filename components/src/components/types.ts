@@ -13,3 +13,7 @@ export type MaybePromise<T> = T | FixedPromise<T>
 export abstract class MockedDAO<T> {
   protected abstract getMockDAO(): Promise<T>
 }
+
+export interface IService {
+  setup(...args: unknown[]): unknown
+}

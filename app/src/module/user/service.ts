@@ -1,4 +1,5 @@
 import { UserDAO } from './dao'
+import type { IService } from 'components'
 import { notify, Result } from 'components'
 import type { UserEntity } from './entity'
 import { ref } from 'vue'
@@ -6,10 +7,15 @@ import { ElMessageBox } from 'element-plus'
 import { inject, injectable } from 'inversify'
 
 @injectable()
-export class UserService {
+export class UserService implements IService {
   constructor(@inject(UserDAO) protected userDAO: UserDAO) {}
 
-  public users = ref<UserEntity[]>([])
+  async setup() {
+    this.users.value = []
+    await this.queryUsers()
+  }
+
+  users = ref<UserEntity[]>([])
 
   async queryUsers(): Promise<unknown> {
     return this.userDAO
@@ -47,10 +53,5 @@ export class UserService {
     }).catch(() => {})
 
     return promise
-  }
-
-  async initOrReset() {
-    this.users.value = []
-    this.queryUsers().catch(() => {})
   }
 }

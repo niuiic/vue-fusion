@@ -2,11 +2,10 @@
 <script setup lang="ts">
 import { userModule } from '@/module/user'
 import { UserService } from '@/module/user/service'
-import { onMounted } from 'vue'
 
-const userService = userModule.get<UserService>(UserService)
+const userService = userModule.get(UserService)
 const { users } = userService
-onMounted(() => userService.initOrReset())
+userService.setup().catch(() => {})
 </script>
 
 <!-- % template % -->
