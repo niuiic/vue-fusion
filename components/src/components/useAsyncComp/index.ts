@@ -1,7 +1,7 @@
 import type { App, AppContext, Component, VNode, VNodeArrayChildren } from 'vue'
 import { h, render } from 'vue'
-import type { AnyObject } from './types'
-import { assert } from './assert'
+import type { AnyObject } from '../types'
+import { assert } from '../assert'
 
 type ComponentProps<T> = T extends abstract new (...args: any[]) => any ? InstanceType<T>['$props'] : AnyObject
 
