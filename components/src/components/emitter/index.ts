@@ -1,9 +1,9 @@
-import { assert } from './assert'
+import { assert } from '../assert'
 
-type Events = Record<string, (data: unknown) => unknown>
+type Events = Record<string, (data: any) => any>
 
 export class Emitter<T extends Events> {
-  private handlers = new Map<string, ((data: unknown) => unknown)[]>()
+  private handlers = new Map<string, ((data: any) => any)[]>()
 
   on<E extends keyof T>(event: E, handler: T[E]) {
     assert(typeof event === 'string', 'typeof event should be string')
