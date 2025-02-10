@@ -47,7 +47,7 @@ const setMaxHeight = () => {
 
 onMounted(() => {
   setCode().catch(() => {})
-  watch(props, setCode)
+  watch(props, () => nextTick().then(setCode))
   window.addEventListener('resize', setMaxHeight)
 })
 
