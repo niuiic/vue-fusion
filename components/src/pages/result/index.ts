@@ -1,0 +1,19 @@
+import source from '@/components/result.ts?raw'
+import { CompStatus, type Page } from '@/page'
+
+export default {
+  name: 'result',
+  status: [CompStatus.Approved],
+  author: 'nsc',
+  auditor: 'nsc',
+  category: 'api',
+  tags: ['desktop', 'mobile'],
+  docs: [
+    {
+      label: '源码',
+      language: 'typescript',
+      code: source
+    }
+  ],
+  desc: '标准结果状态枚举。'
+} satisfies Page
