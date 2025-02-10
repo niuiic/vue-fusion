@@ -138,4 +138,10 @@ const copyCode = () =>
   max-height: 0 !important;
   padding-block: 0;
 }
+
+:deep(pre) {
+  padding: 4px;
+  border: 1px solid #74829a;
+  border-radius: 8px;
+}
 </style>
