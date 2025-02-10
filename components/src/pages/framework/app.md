@@ -6,11 +6,11 @@
 src/
   module/ -- 业务模块
     module1/
-    dao.ts -- 数据访问层，定义接口函数（包括接口适配逻辑）
-    entity.ts -- 实体层，定义数据结构
-    index.ts -- 模块入口文件，导出模块接口
-    mock.ts -- 模拟数据
-    service.ts -- 业务逻辑层，定义业务逻辑函数
+      dao.ts -- 数据访问层，定义接口函数（包括接口适配逻辑）
+      entity.ts -- 实体层，定义数据结构
+      index.ts -- 模块入口文件，导出模块接口
+      mock.ts -- 模拟数据
+      service.ts -- 业务逻辑层，定义业务逻辑函数
   share/ -- 共享空间
   view/ -- 视图层，仅存放页面组件
     page1/
