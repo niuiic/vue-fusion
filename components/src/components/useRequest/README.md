@@ -1,7 +1,5 @@
 # useRequest
 
-## 用法
-
 1. 定义query。
 
 ```typescript
@@ -53,4 +51,4 @@ export const RESIZE_DELAY = 200
 export const SCROLL_DELAY = 200
 ```
 
-> 同时设置polling和debounce为数字，则debounce无效
+同时设置polling和debounce为数字，则debounce无效
