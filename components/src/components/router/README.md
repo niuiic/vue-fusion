@@ -1,8 +1,6 @@
 # router
 
-## 用法
-
-1. 注册页面。
+- 注册页面。
 
 在`src/main.ts`中。
 
@@ -15,7 +13,7 @@ registerPage(import.meta.glob(['./view/**/*.vue', '!**/components/**/*.vue']), '
 
 `registerPage`的第二个参数为默认前缀，`usePage`中不再需要传入该前缀，如`./view/pages/xxx/Xxx.vue`在`Route.page`中只需指定为`xxx/Xxx`。
 
-3. 创建router。
+- 创建router。
 
 ```typescript
 import { toRouteRecordRaws } from 'components'
@@ -34,8 +32,7 @@ const routes: Route[] = [
         path: 'overview',
         page: 'overview/Overview',
         meta: {
-          label: '总体态势',
-          level: 1
+          label: '总体态势'
         }
       }
     ]
