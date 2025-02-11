@@ -85,9 +85,11 @@ const docList = ref<CodeProps[]>([])
         <PageComp />
       </div>
       <div v-if="showDoc && docList.length > 0" class="code-list">
-        <CompInfo v-if="compInfo" :data="compInfo" />
-        <div class="code-list__inner">
-          <Code v-for="(x, i) in docList" :key="i" :code="x.code" :language="x.language" :label="x.label" />
+        <div class="code-list__wrapper">
+          <CompInfo v-if="compInfo" :data="compInfo" />
+          <div class="code-list__inner">
+            <Code v-for="(x, i) in docList" :key="i" :code="x.code" :language="x.language" :label="x.label" />
+          </div>
         </div>
       </div>
     </div>
@@ -151,6 +153,11 @@ const docList = ref<CodeProps[]>([])
 }
 
 /* %% code %% */
+.code-list__wrapper {
+  width: 100%;
+  min-width: max-content;
+}
+
 .code-list {
   overflow: auto;
   background-color: #1e1f26;
