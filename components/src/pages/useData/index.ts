@@ -7,7 +7,7 @@ export default {
   status: [CompStatus.Approved],
   author: 'nsc',
   auditor: 'nsc',
-  category: 'api',
+  category: '函数/请求',
   tags: ['desktop', 'mobile'],
   docs: [
     {

@@ -6,7 +6,7 @@ export default {
   status: [CompStatus.Approved],
   author: 'nsc',
   auditor: 'nsc',
-  category: 'api',
+  category: '函数/性能优化',
   tags: ['desktop', 'mobile'],
   docs: [
     {

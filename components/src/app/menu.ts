@@ -35,7 +35,7 @@ const setMenu = (menus: Menu[], categories: string[], id: string, data: Page) =>
         label: category,
         children: []
       }
-      targetMenus.push(parentMenu)
+      targetMenus.unshift(parentMenu)
     }
   })
 

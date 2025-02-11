@@ -7,7 +7,7 @@ export default {
   status: [CompStatus.Approved],
   author: 'nsc',
   auditor: 'nsc',
-  category: 'doc',
+  category: '文档',
   docs: [
     {
       label: '应用',
