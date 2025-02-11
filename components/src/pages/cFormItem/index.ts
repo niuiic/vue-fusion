@@ -11,7 +11,7 @@ export default {
   author: 'nsc',
   auditor: 'nsc',
   category: '组件/表单',
-  tags: ['desktop'],
+  tags: ['驾驶舱', '后台管理'],
   docs: [
     {
       label: '文档',

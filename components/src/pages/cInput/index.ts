@@ -8,7 +8,7 @@ export default {
   author: 'nsc',
   auditor: 'nsc',
   category: '组件/表单',
-  tags: ['desktop'],
+  tags: ['驾驶舱'],
   docs: [
     {
       label: '源码',

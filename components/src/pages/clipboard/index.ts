@@ -7,7 +7,7 @@ export default {
   author: 'nsc',
   auditor: 'nsc',
   category: '函数/外设',
-  tags: ['desktop', 'mobile'],
+  tags: ['驾驶舱', '后台管理'],
   docs: [
     {
       label: '源码',

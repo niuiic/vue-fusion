@@ -8,7 +8,7 @@ export default {
   author: 'nsc',
   auditor: 'nsc',
   category: '函数',
-  tags: ['desktop', 'mobile'],
+  tags: ['驾驶舱', '后台管理'],
   docs: [
     {
       label: '文档',
