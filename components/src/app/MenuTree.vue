@@ -23,7 +23,10 @@ const emit = defineEmits<Emits>()
 // %% 菜单项 %%
 const menus = computed(() => {
   const tags = formData.value.tags && formData.value.tags.length > 0 ? new Set(formData.value.tags) : undefined
-  const status = formData.value.status && formData.value.status.length > 0 ? new Set(formData.value.status) : undefined
+  const status =
+    formData.value.status && formData.value.status.length > 0
+      ? new Set(formData.value.status.map((x) => parseInt(x as unknown as string, 10)))
+      : undefined
   const pages = Object.fromEntries(
     Object.entries(props.pages).filter(([_, page]) => isPageValid({ page, tags, name: formData.value.name, status }))
   )
@@ -88,26 +91,10 @@ const isPageValid = ({
 <template>
   <div class="menu-tree">
     <div class="form">
-      <el-select
-        v-model="formData.tags"
-        multiple
-        clearable
-        filterable
-        placeholder="组件标签"
-        :max-collapse-tags="1"
-        collapse-tags
-      >
+      <el-select v-model="formData.tags" multiple clearable filterable placeholder="组件标签" collapse-tags>
         <el-option v-for="x in tags" :key="x" :label="x" :value="x" />
       </el-select>
-      <el-select
-        v-model="formData.status"
-        multiple
-        clearable
-        filterable
-        placeholder="组件状态"
-        :max-collapse-tags="1"
-        collapse-tags
-      >
+      <el-select v-model="formData.status" multiple clearable filterable placeholder="组件状态" collapse-tags>
         <el-option v-for="[k, v] in Object.entries(compStatusLabel)" :key="k" :label="v" :value="k" />
       </el-select>
       <el-input v-model="formData.name" clearable placeholder="组件名称" />
