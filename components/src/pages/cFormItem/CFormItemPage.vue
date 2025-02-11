@@ -42,7 +42,7 @@ const formItems = {
 <!-- % style % -->
 <style lang="scss" scoped>
 .c-form-item-page {
-  height: 400px;
+  height: 100%;
   background-color: #fff;
 }
 </style>
