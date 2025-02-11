@@ -1,5 +1,3 @@
-# useAsyncFn
-
 ```typescript
 // 假设module模块的默认导出是函数。
 const fn = useAsyncFn(() => import('./module').then((x) => x.default))

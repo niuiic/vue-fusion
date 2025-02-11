@@ -1,7 +1,3 @@
-# CFormItem
-
-## 组件配置
-
 ```typescript
 defineOptions({ inheritAttrs: false })
 

@@ -1,5 +1,3 @@
-# strategy
-
 ```typescript
 const sayHello = useStrategies({
   // 每个策略必须具有相同的类型

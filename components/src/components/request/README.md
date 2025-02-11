@@ -1,5 +1,3 @@
-# request
-
 - 初始化request
 
 ```typescript

@@ -1,5 +1,3 @@
-# nextFrame
-
 用于优化性能。
 
 ```typescript

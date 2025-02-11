@@ -1,7 +1,3 @@
-# concurrent
-
-## 用法
-
 ```typescript
 const queryXApi = () => Promise.resolve(1)
 const queryYApi = () => Promise.reject(1)

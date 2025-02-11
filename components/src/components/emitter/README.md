@@ -1,5 +1,3 @@
-# emitter
-
 - 创建emitter。
 
 ```typescript

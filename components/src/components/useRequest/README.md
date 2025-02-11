@@ -1,5 +1,3 @@
-# useRequest
-
 1. 定义query。
 
 ```typescript

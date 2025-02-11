@@ -1,5 +1,3 @@
-# useAsyncComp
-
 - 在vue app处注册插件。
 
 ```typescript

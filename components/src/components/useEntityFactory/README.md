@@ -1,5 +1,3 @@
-# useEntityFactory
-
 ```typescript
 import { useEntityFactory } from 'components'
 

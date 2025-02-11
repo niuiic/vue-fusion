@@ -1,5 +1,3 @@
-# router
-
 - 注册页面。
 
 在`src/main.ts`中。
