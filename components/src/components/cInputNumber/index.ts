@@ -1,0 +1,1 @@
+export { default as CInputNumber } from './CInputNumber.vue'

@@ -1,7 +1,7 @@
 <!-- % script % -->
 <script setup lang="ts">
 import { h, ref } from 'vue'
-import { ElSelect } from 'element-plus'
+import { ElInputNumber } from 'element-plus'
 
 const compRef = ref()
 defineExpose({ getInstance: () => compRef.value })
@@ -9,11 +9,11 @@ defineExpose({ getInstance: () => compRef.value })
 
 <!-- % template % -->
 <template>
-  <component :is="h(ElSelect, $attrs, $slots)" ref="compRef" class="c-select" />
+  <component :is="h(ElInputNumber, $attrs, $slots)" ref="compRef" class="c-input-number" />
 </template>
 
 <!-- % style % -->
 <style lang="scss" scoped>
-.c-select {
+.c-input-number {
 }
 </style>
