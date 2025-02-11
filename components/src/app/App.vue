@@ -45,7 +45,7 @@ const setShowPage = (value: boolean) => {
   showPage.value = value
   localStorage.setItem('showPage', value.toString())
 }
-const getShowPage = () => localStorage.getItem('showPage') === 'true'
+const getShowPage = () => localStorage.getItem('showPage') !== 'false'
 const showPage = ref(getShowPage())
 const Empty = () => import('./Empty.vue')
 const PageComp = shallowRef(defineAsyncComponent(Empty))
@@ -56,7 +56,7 @@ const setShowDoc = (value: boolean) => {
   showDoc.value = value
   localStorage.setItem('showDoc', value.toString())
 }
-const getShowDoc = () => localStorage.getItem('showDoc') === 'true'
+const getShowDoc = () => localStorage.getItem('showDoc') !== 'false'
 const showDoc = ref(getShowDoc())
 const docList = ref<CodeProps[]>([])
 </script>
